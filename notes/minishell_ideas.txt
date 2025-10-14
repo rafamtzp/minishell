@@ -1,0 +1,10 @@
+
+
+Crear una funcion que guarde todas las 
+variables de entorno en una struct
+
+
+Que no pete cuando:
+- estés en una carpeta que borres
+- cuando llamas minishell dentro de minishell
+- 

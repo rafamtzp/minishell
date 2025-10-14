@@ -1,0 +1,8 @@
+
+
+La primera palabra o todo lo siguiente a
+un "|" es un comando.
+
+Todo lo que se encuentre entre este y un operador
+es una flag o parametro
+

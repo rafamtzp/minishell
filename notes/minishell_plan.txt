@@ -1,0 +1,17 @@
+Steps:
+
+Parsing:
+
+1. Lexical analysis: Breaking down input strings into tokens, which
+are words that are of a specific type.
+
+2. Parsing: Organizing tokens into a struct representing each command.
+That is, having each command be associated to each of its parameters inside a struct.
+
+3. Handling quotes: quotes determine the token boundaries.
+"$X" is interpreted as a string containing X's value
+and '$X' is interpreted as the string $X.
+
+4. Identifying operators like pipes and redirections
+
+5. 
