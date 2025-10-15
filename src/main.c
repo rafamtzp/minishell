@@ -6,7 +6,7 @@
 /*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:38:57 by gregueir          #+#    #+#             */
-/*   Updated: 2025/10/15 15:45:48 by gregueir         ###   ########.fr       */
+/*   Updated: 2025/10/15 15:52:34 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	main(int argc, char **argv, char **env)
 
 	while (1)
 	{
-		input = readline("minishell$ ");
+		input = readline("/^•⩊•^\\ michishell✿ ");
 		add_history(input);
 		// split the input
 
