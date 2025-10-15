@@ -38,3 +38,23 @@ void pwd(void)
 		handle_err(errno, 2, "");
 	printf("%s\n", getcwd(buf, PATH_MAX));
 }
+
+void env(char **envars)
+{
+	write_envars(*envars, true);
+}
+
+void unset(void)
+{
+	// this is just deleting a node
+	return ;
+}
+
+void exit(void)
+{
+	// TODO
+	return ;
+}
+
+
+// reminder: look into getenv and remaining ones!!!!

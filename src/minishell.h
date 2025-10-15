@@ -6,7 +6,7 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:39:22 by gregueir          #+#    #+#             */
-/*   Updated: 2025/10/15 18:08:41 by ramarti2         ###   ########.fr       */
+/*   Updated: 2025/10/15 18:39:37 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,5 +53,8 @@ typedef struct s_minishell
 /* environment vars list helpers */
 void envlst_add_back(t_envar **envars, t_envar *new);
 t_envar *envlst_new(t_envar **envars, char *new_var);
+
+/* write env vars */
+void write_envars(t_envar *envar, bool order_alpha);
 
 #endif
