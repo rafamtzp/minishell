@@ -3,24 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:39:22 by gregueir          #+#    #+#             */
-/*   Updated: 2025/10/15 15:53:27 by gregueir         ###   ########.fr       */
+/*   Updated: 2025/10/15 16:48:48 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
-# include <readline/history.h>
-# include <readline/readline.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <stdbool.h>
-# include <unistd.h>
+# include "../libft/libft.h"
 # include <errno.h>
 # include <linux/limits.h>
-# include "../libft/libft.h"
+# include <readline/history.h>
+# include <readline/readline.h>
+# include <stdbool.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
 
 // command node struct
 typedef struct s_cmdnode
@@ -36,9 +36,10 @@ typedef struct s_cmdnode
 typedef struct s_envar
 {
 	char				*varname;
-	char				**values;
+	char				*value;
 	// values instead of paths bc there could be values and paths mixed up (?)
 	// can't remember why we need an index....
+	int					ascii_index;
 	struct s_envar		*next;
 }						t_envar;
 
