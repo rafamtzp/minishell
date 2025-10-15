@@ -1,0 +1,26 @@
+Minishell: Allowed Functions
+
+> Readline Library:
+
+readline, rl_clear_history, rl_on_new_line,
+rl_replace_line, rl_redisplay, add_history,
+
+> Pipex Functions:
+
+access, fork, wait, waitpid, unlink, execve,
+dup, dup2,
+
+> Other Functions for Pipes(?):
+
+ wait3, wait4, pipe,
+
+> Other New Functions:
+
+strerror, perror, getcwd, chdir, stat, lstat, fstat, opendir, readdir, closedir,
+ isatty, ttyname, ttyslot, ioctl, getenv, tcsetattr, tcgetattr, tgetent, tgetflag,
+tgetnum, tgetstr, tgoto, tputs
+
+> Other Known Functions:
+
+printf, malloc, free, write, open, read,
+close, signal, sigaction, sigemptyset, sigaddset, kill, exit,

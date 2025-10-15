@@ -1,13 +1,29 @@
-#include <stdio.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-#include <stdlib.h>
-int main(void)
+#include "minishell.h"
+
+int main(int argc, char **argv, char **env)
 {
-    char *rl;
-    rl = readline("Prompt > ");
-    printf("%s\n", rl);
-	free(rl);
+	char *input;
+	(void) argc;
+	(void) argv;
+	(void) env;
+	
+	// store all env vars into struct
+
+	while (1)
+	{
+		input = readline("minishell$ ");
+		add_history(input);
+		// split the input
+
+		// expand any variables in the input
+
+		// create command nodes
+
+		// execute nodes
+		
+		printf("You said: %s\n", input);
+		free(input);
+	}
     return (0);
 }
 
