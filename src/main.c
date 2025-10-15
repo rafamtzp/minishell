@@ -6,7 +6,7 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:38:57 by gregueir          #+#    #+#             */
-/*   Updated: 2025/10/15 15:31:19 by ramarti2         ###   ########.fr       */
+/*   Updated: 2025/10/15 16:00:02 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	main(int argc, char **argv, char **env)
 	
 	while (1)
 	{
-		input = readline("/^•⩊•^\\ michishell✿ ");
+		input = readline("/^•⩊•^\\ michishell ❀ ");
 		add_history(input);
 		// split the input
 
