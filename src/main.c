@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:38:57 by gregueir          #+#    #+#             */
-/*   Updated: 2025/10/15 13:44:47 by gregueir         ###   ########.fr       */
+/*   Updated: 2025/10/15 15:31:19 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ int	main(int argc, char **argv, char **env)
 	(void)argv;
 	(void)env;
 	// store all env vars into struct
-
+	
 	while (1)
 	{
-		input = readline("minishell$ ");
+		input = readline("/^•⩊•^\\ michishell✿ ");
 		add_history(input);
 		// split the input
 
