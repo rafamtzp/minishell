@@ -6,7 +6,7 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:39:22 by gregueir          #+#    #+#             */
-/*   Updated: 2025/10/16 14:24:56 by ramarti2         ###   ########.fr       */
+/*   Updated: 2025/10/16 17:23:15 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,9 @@ typedef struct s_minishell
 	t_envar				*envars;
 	t_cmdnode			*cmds;
 }						t_minishell;
+
+/*GUI*/
+void	print_cat(void);
 
 /* environment vars list helpers */
 void envlst_add_back(t_envar **envars, t_envar *new);
