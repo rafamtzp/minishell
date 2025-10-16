@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstadd_front_bonus.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gregueir <gregueir@student.42malaga.c      +#+  +:+       +#+        */
+/*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 17:28:17 by gregueir          #+#    #+#             */
-/*   Updated: 2025/05/08 10:11:00 by gregueir         ###   ########.fr       */
+/*   Updated: 2025/10/15 17:23:41 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

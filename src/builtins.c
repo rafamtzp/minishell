@@ -39,7 +39,22 @@ void pwd(void)
 	printf("%s\n", getcwd(buf, PATH_MAX));
 }
 
-void export(t_envar *envar)
+void env(char **envars)
 {
+	write_envars(*envars, true);
+}
+
+void unset(void)
+{
+	// this is just deleting a node
 	return ;
 }
+
+void exit(void)
+{
+	// TODO
+	return ;
+}
+
+
+// reminder: look into getenv and remaining ones!!!!
