@@ -4,7 +4,7 @@ char *getvarname(char *new_var)
 	char *varname;
 	char *ptr;
 
-	varname = ft_strdup(new_var); // remember to free!
+	varname = ft_strdup(new_var);
 	ptr = varname;
 	while (ptr != '=')
 		ptr++;
@@ -20,8 +20,7 @@ t_envar *envlst_new(t_envar **envars, char *new_var)
 	if (!new)
 		return (NULL);
 	new->varname = getvarname(new_var);
-	new->value = ft_strchr(new_var, '=') + 1;
-	//IDK if this is a good way to allocate these
+	new->value = ft_strdup(ft_strchr(new_var, '=') + 1); // free these!
 	new->next = NULL;
 	return (new);
 }

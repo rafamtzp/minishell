@@ -6,7 +6,7 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:39:22 by gregueir          #+#    #+#             */
-/*   Updated: 2025/10/15 18:39:37 by ramarti2         ###   ########.fr       */
+/*   Updated: 2025/10/16 14:24:56 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ typedef struct s_envar
 	// values instead of paths bc there could be values and paths mixed up (?)
 	// can't remember why we need an index....
 	int					ascii_index;
+	int					ascii_sum;
 	struct s_envar		*next;
 }						t_envar;
 
@@ -56,5 +57,8 @@ t_envar *envlst_new(t_envar **envars, char *new_var);
 
 /* write env vars */
 void write_envars(t_envar *envar, bool order_alpha);
+
+/* push swap helpers */
+void	setindices(t_envar **s);
 
 #endif

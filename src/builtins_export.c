@@ -14,7 +14,7 @@ void print_alphabetically(t_envar *envar)
 		envar = head;
 		while (envar->ascii_index != i)
 			envar = envar->next;
-		printf("%s=%s\n", envar->varname, envar->value);
+		printf("declare -x %s=\"%s\"\n", envar->varname, envar->value);
 		i++;
 	}
 }
@@ -33,21 +33,12 @@ void write_envars(t_envar *envar, bool order_alpha)
 	}
 }
 
-void update_env_indexes(t_envar **envars)
-{
-	// TODO!!!
-
-
-	return ;
-}
-
 void	add_envars(t_envar **envars, char **cmd)
 {
 	t_envar *new;
 	int i;
 
-	// assume params are valid (guille's job)????
-	// add the variables
+	// assume params have format name=value
 	i = 1;
 	while (cmd[i] != NULL)
 	{
@@ -58,11 +49,9 @@ void	add_envars(t_envar **envars, char **cmd)
 		free(new);
 		i++;
 	}
-	// update their alphabetical index
-	update_env_indexes(envars); //TODO
+	set_ascii_indices(envars);
 }
 
-// move this somewhere else!!!!
 int count_args(char **cmd)
 {
 	int i;

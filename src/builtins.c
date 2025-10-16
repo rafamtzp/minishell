@@ -39,18 +39,59 @@ void pwd(void)
 	printf("%s\n", getcwd(buf, PATH_MAX));
 }
 
-void env(char **envars)
+void env(t_envar **envars)
 {
 	write_envars(*envars, true);
 }
 
-void unset(void)
+void	del_env(t_envar **ptr1, t_envar **ptr2, t_envar **ptr3, bool ishead)
 {
-	// this is just deleting a node
-	return ;
+	if (ishead == true)
+	{
+		free_env_content(*ptr1);
+		*ptr1 = (*ptr1)->next;
+		free(ptr2);
+		*ptr2 = *ptr1;
+	}
+	else
+	{
+		free_env_content(*ptr1);
+		*ptr3 = *ptr1;
+		*ptr1 = (*ptr1)->next;
+		free(*ptr3);
+		(*ptr2)->next = *ptr1;
+	}
 }
 
-void exit(void)
+void unset(t_envar **envars, char **cmd)
+{
+	int i;
+	t_envar *ptr1;
+	t_envar *ptr2;
+	t_envar *ptr3;
+
+	i = 1;
+	ptr1 = *envars;
+	ptr2 = *envars;
+	while (cmd[i] != NULL)
+	{
+		while (ptr1->varname != cmd[i])
+		{
+			ptr1 = ptr1->next;
+			if (ptr1->varname != cmd[i])
+				ptr2 = ptr2->next;
+		}
+		if (ptr1 == *envars)
+		{
+			*envars = (*envars)->next;
+			del_env(&ptr1, &ptr2, &ptr3, true);
+		}
+		else
+			del_env(&ptr1, &ptr2, &ptr3, false);  // Not sure if this logic checks out....
+	}
+}
+
+void michi_exit(void)
 {
 	// TODO
 	return ;
