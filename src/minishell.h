@@ -6,7 +6,7 @@
 /*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:39:22 by gregueir          #+#    #+#             */
-/*   Updated: 2025/10/15 15:53:27 by gregueir         ###   ########.fr       */
+/*   Updated: 2025/10/15 16:17:21 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,11 @@ typedef struct s_minishell
 	t_envar				*envars;
 	t_cmdnode			*cmds;
 }						t_minishell;
+
+//GUI
+void	print_cat(void);
+
+
+
 
 #endif
