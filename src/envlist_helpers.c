@@ -1,8 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   envlist_helpers.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/20 13:19:56 by ramarti2          #+#    #+#             */
+/*   Updated: 2025/10/20 13:20:01 by ramarti2         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
-char *getvarname(char *new_var)
+
+char	*getvarname(char *new_var)
 {
-	char *varname;
-	char *ptr;
+	char	*varname;
+	char	*ptr;
 
 	varname = ft_strdup(new_var);
 	ptr = varname;
@@ -12,7 +25,7 @@ char *getvarname(char *new_var)
 	return (varname);
 }
 
-t_envar *envlst_new(t_envar **envars, char *new_var)
+t_envar	*envlst_new(t_envar **envars, char *new_var)
 {
 	t_envar	*new;
 
@@ -25,9 +38,9 @@ t_envar *envlst_new(t_envar **envars, char *new_var)
 	return (new);
 }
 
-void envlst_add_back(t_envar **envars, t_envar *new)
+void	envlst_add_back(t_envar **envars, t_envar *new)
 {
-	t_envar	*ptr;
+	t_envar *ptr;
 
 	if (ptr == 0 || new == 0)
 		return ;

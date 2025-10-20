@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   push_swap_helpers.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/20 13:19:33 by ramarti2          #+#    #+#             */
+/*   Updated: 2025/10/20 13:19:36 by ramarti2         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 t_envar	*findmin(t_envar **s, t_envar *prevmin)
@@ -29,7 +41,8 @@ t_envar	*findmax(t_envar **s, t_envar *prevmax)
 	candidate = NULL;
 	while (ptr != NULL)
 	{
-		if ((prevmax == NULL || ptr->ascii_sum < prevmax->ascii_sum) && (candidate == NULL
+		if ((prevmax == NULL || ptr->ascii_sum < prevmax->ascii_sum)
+			&& (candidate == NULL
 				|| ptr->ascii_sum > candidate->ascii_sum))
 			candidate = ptr;
 		ptr = ptr->next;
@@ -55,11 +68,11 @@ static void	set_empty_indices(t_envar **s)
 	return ;
 }
 
-static void set_ascii_sums(t_envar **s)
+static void	set_ascii_sums(t_envar **s)
 {
-	t_envar *ptr;
-	int i;
-	int sum;
+	t_envar	*ptr;
+	int		i;
+	int		sum;
 
 	// assuming all vars are properly sent
 	if (*s == NULL || s == NULL)
@@ -118,6 +131,3 @@ void	set_ascii_indices(t_envar **s)
 	}
 	return ;
 }
-
-
-

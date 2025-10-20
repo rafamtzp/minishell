@@ -1,10 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   builtins_export.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/20 13:17:07 by ramarti2          #+#    #+#             */
+/*   Updated: 2025/10/20 13:17:09 by ramarti2         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-void print_alphabetically(t_envar *envar)
+static void	print_alphabetically(t_envar *envar)
 {
-	int i;
-	int size;
-	t_envar *head;
+	int		i;
+	int		size;
+	t_envar	*head;
 
 	head = envar;
 	size = env_lstsize(head);
@@ -19,7 +31,7 @@ void print_alphabetically(t_envar *envar)
 	}
 }
 
-void write_envars(t_envar *envar, bool order_alpha)
+void	write_envars(t_envar *envar, bool order_alpha)
 {
 	if (order_alpha == true)
 		print_alphabetically(envar);
@@ -33,10 +45,10 @@ void write_envars(t_envar *envar, bool order_alpha)
 	}
 }
 
-void	add_envars(t_envar **envars, char **cmd)
+static void	add_envars(t_envar **envars, char **cmd)
 {
-	t_envar *new;
-	int i;
+	t_envar	*new;
+	int		i;
 
 	// assume params have format name=value
 	i = 1;
@@ -44,7 +56,7 @@ void	add_envars(t_envar **envars, char **cmd)
 	{
 		new = envlst_new(envars, cmd[i]);
 		if (!new)
-			handle_err(0, 0, ""); //TOFIX
+			handle_err(errno, 0, ""); // TO IMPROVE
 		envlst_add_back(envars, new);
 		free(new);
 		i++;
@@ -52,18 +64,18 @@ void	add_envars(t_envar **envars, char **cmd)
 	set_ascii_indices(envars);
 }
 
-int count_args(char **cmd)
+int	count_args(char **cmd)
 {
-	int i;
+	int	argcount;
 
-	i = 1;
+	argcount = 1;
 	// assuming cmd ends in NULL
-	while (cmd[i] != NULL)
-		i++;
-	return (i);
+	while (cmd[argcount] != NULL)
+		argcount++;
+	return (argcount);
 }
 
-void export(t_envar **envars, char **cmd)
+void	export(t_envar **envars, char **cmd)
 {
 	if (count_args(cmd) == 0)
 		write_envars(*envars, true);

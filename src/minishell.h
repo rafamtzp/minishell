@@ -6,7 +6,7 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:39:22 by gregueir          #+#    #+#             */
-/*   Updated: 2025/10/16 17:23:15 by ramarti2         ###   ########.fr       */
+/*   Updated: 2025/10/20 13:19:11 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 // command node struct
 typedef struct s_cmdnode
 {
-	char				**cmd;
+	char **cmd; // last ptr is NULL
 	char				*path;
 	int					infile;
 	int					outfile;
@@ -38,7 +38,6 @@ typedef struct s_envar
 	char				*varname;
 	char				*value;
 	// values instead of paths bc there could be values and paths mixed up (?)
-	// can't remember why we need an index....
 	int					ascii_index;
 	int					ascii_sum;
 	struct s_envar		*next;
@@ -52,16 +51,30 @@ typedef struct s_minishell
 }						t_minishell;
 
 /*GUI*/
-void	print_cat(void);
+void					print_cat(void);
 
 /* environment vars list helpers */
-void envlst_add_back(t_envar **envars, t_envar *new);
-t_envar *envlst_new(t_envar **envars, char *new_var);
+void					envlst_add_back(t_envar **envars, t_envar *new);
+t_envar					*envlst_new(t_envar **envars, char *new_var);
 
-/* write env vars */
-void write_envars(t_envar *envar, bool order_alpha);
+/* builtins */
+void					cd(char *path);
+void					pwd(void);
+void					env(t_envar **envars);
+void					unset(t_envar **envars, char **cmd);
+void					michi_exit(void);
+
+/* builtins: export */
+void					write_envars(t_envar *envar, bool order_alpha);
+
+/* builtins: unset */
+void					unset(t_envar **envars, char **cmd);
+int	count_args(char **cmd); // seems useful but idk...
 
 /* push swap helpers */
-void	setindices(t_envar **s);
+void					setindices(t_envar **s);
+
+/* error handling */
+void					handle_err(int errnum, int err, char *msg);
 
 #endif
