@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_export.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 13:17:07 by ramarti2          #+#    #+#             */
-/*   Updated: 2025/10/20 13:17:09 by ramarti2         ###   ########.fr       */
+/*   Updated: 2025/10/21 16:28:42 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,20 +45,19 @@ void	write_envars(t_envar *envar, bool order_alpha)
 	}
 }
 
-static void	add_envars(t_envar **envars, char **cmd)
+void	add_envars(t_envar **envars, char **cmd, bool is_not_parsing)
 {
 	t_envar	*new;
 	int		i;
 
 	// assume params have format name=value
-	i = 1;
-	while (cmd[i] != NULL)
+	i = is_not_parsing;
+	while (cmd[i])
 	{
-		new = envlst_new(envars, cmd[i]);
+		new = envlst_new(cmd[i]);
 		if (!new)
 			handle_err(errno, 0, ""); // TO IMPROVE
 		envlst_add_back(envars, new);
-		free(new);
 		i++;
 	}
 	set_ascii_indices(envars);
@@ -80,5 +79,5 @@ void	export(t_envar **envars, char **cmd)
 	if (count_args(cmd) == 0)
 		write_envars(*envars, true);
 	else
-		add_envars(envars, cmd);
+		add_envars(envars, cmd, true);
 }

@@ -15,3 +15,7 @@ and '$X' is interpreted as the string $X.
 4. Identifying operators like pipes and redirections
 
 5. 
+
+For the ENVs, we'll use a linked list that we'll return to a char **env whenever needed.
+For Export, we'll print all elements of the list, including those with value == NULL. 
+For Env, we'll print all elements except those that have value == NULL. Note that "" != NULL.

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:39:22 by gregueir          #+#    #+#             */
-/*   Updated: 2025/10/20 13:19:11 by ramarti2         ###   ########.fr       */
+/*   Updated: 2025/10/21 13:49:14 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 // command node struct
 typedef struct s_cmdnode
 {
-	char **cmd; // last ptr is NULL
+	char				**cmd; // last ptr is NULL
 	char				*path;
 	int					infile;
 	int					outfile;
@@ -54,8 +54,9 @@ typedef struct s_minishell
 void					print_cat(void);
 
 /* environment vars list helpers */
+int						env_lstsize(t_envar *env);
 void					envlst_add_back(t_envar **envars, t_envar *new);
-t_envar					*envlst_new(t_envar **envars, char *new_var);
+t_envar					*envlst_new(char *new_var);
 
 /* builtins */
 void					cd(char *path);
@@ -69,12 +70,16 @@ void					write_envars(t_envar *envar, bool order_alpha);
 
 /* builtins: unset */
 void					unset(t_envar **envars, char **cmd);
-int	count_args(char **cmd); // seems useful but idk...
+int						count_args(char **cmd); // seems useful but idk...
 
 /* push swap helpers */
-void					setindices(t_envar **s);
+void					set_ascii_indices(t_envar **s);
 
 /* error handling */
 void					handle_err(int errnum, int err, char *msg);
+
+//Extract envars
+void					add_envars(t_envar **envars, char **cmd, bool is_not_parsing);
+
 
 #endif

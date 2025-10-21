@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_handling.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 13:17:01 by ramarti2          #+#    #+#             */
-/*   Updated: 2025/10/20 13:17:04 by ramarti2         ###   ########.fr       */
+/*   Updated: 2025/10/21 13:26:30 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 void	handle_err(int errnum, int err, char *msg)
 {
+	(void)errnum;
+
 	if (err == 1)
 		printf("cd: %s: %s\n", strerror(errno), msg); // handle_err()
 	else

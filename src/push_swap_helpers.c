@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap_helpers.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 13:19:33 by ramarti2          #+#    #+#             */
-/*   Updated: 2025/10/20 13:19:36 by ramarti2         ###   ########.fr       */
+/*   Updated: 2025/10/21 17:14:10 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ static void	set_ascii_sums(t_envar **s)
 	int		i;
 	int		sum;
 
-	// assuming all vars are properly sent
 	if (*s == NULL || s == NULL)
 		return ;
 	ptr = *s;
@@ -84,6 +83,7 @@ static void	set_ascii_sums(t_envar **s)
 		sum = 0;
 		while (ptr->varname[i] != '\0')
 			sum += ptr->varname[i++];
+		ptr->ascii_sum = sum;
 		ptr = ptr->next;
 	}
 }
@@ -114,6 +114,7 @@ void	set_ascii_indices(t_envar **s)
 	if (ptr == NULL)
 		return ;
 	set_empty_indices(s);
+	set_ascii_sums(s);
 	min = findmin(s, NULL);
 	i = 0;
 	while (indices_set(s) != 1)

@@ -2,7 +2,8 @@ NAME = minishell
 
 CC		= cc
 CFLAGS 	= -Wall -Werror -Wextra -g
-SRC 	= src/main.c src/gui.c
+SRC 	= src/main.c src/gui.c src/builtins_export.c src/builtins_unset.c \
+			src/builtins.c src/envlist_helpers.c src/error_handling.c src/push_swap_helpers.c
 OBJ 	= $(SRC:src/%.c=obj/%.o)
 OBJ_DIR	= ./obj
 

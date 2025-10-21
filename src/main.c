@@ -6,21 +6,36 @@
 /*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:38:57 by gregueir          #+#    #+#             */
-/*   Updated: 2025/10/16 15:10:12 by gregueir         ###   ########.fr       */
+/*   Updated: 2025/10/21 13:56:31 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+static t_minishell *init_michishell(char **env)
+{
+	t_minishell	*michi;
+
+	michi = malloc(sizeof(t_minishell));
+	if (!michi)
+		exit(1);
+	michi->envars = NULL;
+	michi->cmds = NULL;
+	add_envars(&michi->envars, env, false);
+	return (michi);
+}
+
 int	main(int argc, char **argv, char **env)
 {
 	char	*input;
+	t_minishell	*michishell;
 
 	(void)argc;
 	(void)argv;
 	(void)env;
-	// store all env vars into struct
 	print_cat();
+	michishell = init_michishell(env);
+	write_envars(michishell->envars, true);
 	while (1)
 	{
 		input = readline("/^•⩊•^\\ ❀ michishell ❀ $ ");
