@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:39:22 by gregueir          #+#    #+#             */
-/*   Updated: 2025/10/21 13:49:14 by gregueir         ###   ########.fr       */
+/*   Updated: 2025/10/21 18:50:14 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,7 @@ typedef struct s_envar
 {
 	char				*varname;
 	char				*value;
-	// values instead of paths bc there could be values and paths mixed up (?)
 	int					ascii_index;
-	int					ascii_sum;
 	struct s_envar		*next;
 }						t_envar;
 

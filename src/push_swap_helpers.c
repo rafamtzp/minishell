@@ -3,55 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap_helpers.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 13:19:33 by ramarti2          #+#    #+#             */
-/*   Updated: 2025/10/21 17:14:10 by gregueir         ###   ########.fr       */
+/*   Updated: 2025/10/21 18:49:34 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-t_envar	*findmin(t_envar **s, t_envar *prevmin)
-{
-	t_envar	*candidate;
-	t_envar	*ptr;
-
-	ptr = *s;
-	candidate = NULL;
-	while (ptr != NULL)
-	{
-		if ((prevmin == NULL || ptr->ascii_sum > prevmin->ascii_sum)
-			&& (candidate == NULL || ptr->ascii_sum < candidate->ascii_sum))
-			candidate = ptr;
-		ptr = ptr->next;
-	}
-	if (candidate == NULL)
-		return (findmin(s, NULL));
-	return (candidate);
-}
-
-/* could be helpful........
-t_envar	*findmax(t_envar **s, t_envar *prevmax)
-{
-	t_envar	*candidate;
-	t_envar	*ptr;
-
-	ptr = *s;
-	candidate = NULL;
-	while (ptr != NULL)
-	{
-		if ((prevmax == NULL || ptr->ascii_sum < prevmax->ascii_sum)
-			&& (candidate == NULL
-				|| ptr->ascii_sum > candidate->ascii_sum))
-			candidate = ptr;
-		ptr = ptr->next;
-	}
-	if (candidate == NULL)
-		return (findmax(s, NULL));
-	return (candidate);
-}
-*/
 
 static void	set_empty_indices(t_envar **s)
 {
@@ -62,73 +21,41 @@ static void	set_empty_indices(t_envar **s)
 	ptr = *s;
 	while (ptr != NULL)
 	{
-		ptr->ascii_index = -1;
+		ptr->ascii_index = 0;
 		ptr = ptr->next;
 	}
 	return ;
 }
 
-static void	set_ascii_sums(t_envar **s)
+int	max_strlen(char *s1, char *s2)
 {
-	t_envar	*ptr;
-	int		i;
-	int		sum;
-
-	if (*s == NULL || s == NULL)
-		return ;
-	ptr = *s;
-	while (ptr != NULL)
-	{
-		i = 0;
-		sum = 0;
-		while (ptr->varname[i] != '\0')
-			sum += ptr->varname[i++];
-		ptr->ascii_sum = sum;
-		ptr = ptr->next;
-	}
+	if (ft_strlen(s1) > ft_strlen(s2))
+		return (ft_strlen(s1));
+	return (ft_strlen(s2));
 }
 
-static int	indices_set(t_envar **s)
-{
-	t_envar	*ptr;
-
-	ptr = *s;
-	if (ptr == NULL)
-		return (1);
-	while (ptr != NULL)
-	{
-		if (ptr->ascii_index == -1)
-			return (0);
-		ptr = ptr->next;
-	}
-	return (1);
-}
 
 void	set_ascii_indices(t_envar **s)
 {
 	t_envar	*ptr;
-	t_envar	*min;
+	t_envar *ptr2;
 	int		i;
 
 	ptr = *s;
 	if (ptr == NULL)
 		return ;
 	set_empty_indices(s);
-	set_ascii_sums(s);
-	min = findmin(s, NULL);
 	i = 0;
-	while (indices_set(s) != 1)
+	while (ptr != NULL)
 	{
-		if (ptr == min)
+		ptr2 = *s;
+		while (ptr2 != NULL)
 		{
-			ptr->ascii_index = i++;
-			min = findmin(s, min);
-			ptr = *s;
+			if (ft_strncmp(ptr->varname, ptr2->varname, max_strlen(ptr->varname, ptr2->varname)) > 0)
+				ptr->ascii_index++;
+			ptr2 = ptr2->next;
 		}
-		else if (ptr == NULL)
-			ptr = *s;
-		else
-			ptr = ptr->next;
+		ptr = ptr->next;
 	}
 	return ;
 }

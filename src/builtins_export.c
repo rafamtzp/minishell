@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_export.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 13:17:07 by ramarti2          #+#    #+#             */
-/*   Updated: 2025/10/21 16:28:42 by gregueir         ###   ########.fr       */
+/*   Updated: 2025/10/21 18:45:16 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,10 @@ static void	print_alphabetically(t_envar *envar)
 	while (i < size)
 	{
 		envar = head;
-		while (envar->ascii_index != i)
+		while (envar && envar->ascii_index != i)
 			envar = envar->next;
-		printf("declare -x %s=\"%s\"\n", envar->varname, envar->value);
+		if (envar)
+			printf("declare -x %s=\"%s\"\n", envar->varname, envar->value);
 		i++;
 	}
 }
