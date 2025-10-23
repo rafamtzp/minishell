@@ -6,7 +6,7 @@
 /*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 13:19:56 by ramarti2          #+#    #+#             */
-/*   Updated: 2025/10/21 14:12:09 by gregueir         ###   ########.fr       */
+/*   Updated: 2025/10/22 13:07:04 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ t_envar	*envlst_new(char *new_var)
 	else
 		new->value = NULL;
 	new->ascii_index = 0;
-	new->ascii_sum = 0;
 	new->next = NULL;
 	return (new);
 }

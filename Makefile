@@ -15,12 +15,12 @@ INLCUDES = -Iinclude -I$(LIBFT_DIR)
 all : $(NAME)
 
 $(NAME) : $(OBJ) $(LIBFT)
-	$(CC) $(CFLAGS) $(INLCUDES) $(OBJ) $(LIBFT) -lreadline -o $(NAME)
+	$(CC) -g $(INLCUDES) $(OBJ) $(LIBFT) -lreadline -o $(NAME)
 
 obj/%.o: src/%.c
 
 	@mkdir -p $(OBJ_DIR)
-	$(CC) $(CFLAGS) $(INLCUDES) -c $< -o $@
+	$(CC) -g $(INLCUDES) -c $< -o $@
 
 $(LIBFT):
 
