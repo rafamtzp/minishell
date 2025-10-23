@@ -6,7 +6,7 @@
 /*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:38:57 by gregueir          #+#    #+#             */
-/*   Updated: 2025/10/22 13:43:57 by gregueir         ###   ########.fr       */
+/*   Updated: 2025/10/23 16:15:54 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,9 @@ int	main(int argc, char **argv, char **env)
 	{
 		input = readline("/^•⩊•^\\ ❀ michishell ❀ $ ");
 		add_history(input);
-		// split the input
-
+		
+		//Split the input
+		
 		// expand any variables in the input
 
 		// create command nodes
@@ -50,4 +51,4 @@ int	main(int argc, char **argv, char **env)
 	return (0);
 }
 
-// 213,317k still reachables in readline
+// 210,317k still reachables in readline

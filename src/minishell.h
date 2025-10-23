@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:39:22 by gregueir          #+#    #+#             */
-/*   Updated: 2025/10/21 18:50:14 by ramarti2         ###   ########.fr       */
+/*   Updated: 2025/10/23 14:53:38 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ void					set_ascii_indices(t_envar **s);
 
 /* error handling */
 void					handle_err(int errnum, int err, char *msg);
+int						clean_env_list(t_minishell *michi);
 
 //Extract envars
 void					add_envars(t_envar **envars, char **cmd, bool is_not_parsing);

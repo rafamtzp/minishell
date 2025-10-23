@@ -6,7 +6,7 @@
 /*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 13:19:56 by ramarti2          #+#    #+#             */
-/*   Updated: 2025/10/22 13:07:04 by gregueir         ###   ########.fr       */
+/*   Updated: 2025/10/23 14:44:10 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ char	*getvarname(char *new_var)
 	char	*ptr;
 
 	varname = ft_strdup(new_var);
+	if (!varname)
+		return (NULL);
 	ptr = varname;
 	while (*ptr != '=')
 		ptr++;
@@ -25,6 +27,7 @@ char	*getvarname(char *new_var)
 	return (varname);
 }
 
+//TODO: Free those lists when done
 t_envar	*envlst_new(char *new_var)
 {
 	t_envar	*new;
@@ -34,7 +37,14 @@ t_envar	*envlst_new(char *new_var)
 		return (NULL);
 	new->varname = getvarname(new_var);
 	if (ft_strchr(new_var, '=') != 0)
-		new->value = ft_strdup(ft_strchr(new_var, '=') + 1); // free these!
+	{
+		new->value = ft_strdup(ft_strchr(new_var, '=') + 1);
+		if (!new->value)
+		{
+			free(new);
+			return (NULL);
+		}
+	}
 	else
 		new->value = NULL;
 	new->ascii_index = 0;
