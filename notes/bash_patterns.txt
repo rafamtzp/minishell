@@ -1,8 +1,40 @@
+Está mal lo que dije antes.
+
+He descubierto que los siguientes comandos son equivalentes:
+
+1. > outfile cat < infile | >outfile2 cat
+
+2. cat > outfile < infile | cat > outfile2
+
+3. < infile cat > outfile | cat > outfile2
+
+es decir, que los tres tokens:
+[redireccion stdout] [comando] [redireccion stdin]
+pueden estar organizados en cualquier orden.
+
+redirreccion de stdout se refiere a: [> o >>] + [archivo]
+redirreccion de stdin se refiera a: [< o <<] + [archivo o delimitador]
+----------------------------------------------------------------------------------------------------
+
+Otro descubrimiento:
+
+Pensaba que "cat <infile <<LIM" iba a imprimir los contenidos de infile hasta llegar a LIM
+pero en realidad lo que hace es "cat <<LIM" (solo lee de stdin hasta LIM y a infile no le hace caso).
+
+Implica que la ultima redireccion de stdin le gana a la previa.
+Porque el decirle "cat <infile <<LIM" es como decirle a la shell "Imprime los contenidos de infile pero imprime los contenidos de stdin hasta LIM."
+Tiene que elegir una.
+
+Para redirecciones de stdout es igual pero puede haber efectos secundarios de la primera redireccion.
+Es decir si outfile contiene "hola\n" y haces "echo "was this appended?" > outfile >> outfile", se va
+a sobreescribir el archivo en vez de hacer append porque en lo que se aplica la segunda, la primera ya
+limpia el archivo.  Entonces sí que hace el append pero a un archivo que fué limpiado por la primera.
+---------------------------------------------------------------------------------------------------------
+
+"echo "hello" -n" imprime "hello -n\n" pero "echo -n "hello"" imprime "hello".
+
+Lo mismo pasa con "echo -n >outfile "hello"".  La única regla es que el -n vaya antes del mensaje.  (pero creo que de esto me encargo yo).
 
 
-La primera palabra o todo lo siguiente a
-un "|" es un comando.
 
-Todo lo que se encuentre entre este y un operador
-es una flag o parametro
 

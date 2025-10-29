@@ -10,3 +10,5 @@ asegurate de que cada parametro (e.g. nom1=val1), esté formateado de la siguien
 - El nombre no tiene caracteres especiales.  Solo letras (creo).
 
 >> Haz que el ultimo 'string' de char **cmd apunte a NULL.
+
+>> Siento que no es necesario distinguir entre argumento y flag....

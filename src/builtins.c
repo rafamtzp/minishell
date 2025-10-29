@@ -12,6 +12,7 @@
 
 #include "minishell.h"
 
+// TODO: make echo $? print exit status of last command!!!!!!!!!!!!
 void	echo(char *msg, bool newline)
 {
 	if (newline == true)
