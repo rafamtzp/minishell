@@ -6,7 +6,7 @@
 /*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:39:22 by gregueir          #+#    #+#             */
-/*   Updated: 2025/10/23 14:53:38 by gregueir         ###   ########.fr       */
+/*   Updated: 2025/11/03 14:27:02 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ int						count_args(char **cmd); // seems useful but idk...
 
 /* push swap helpers */
 void					set_ascii_indices(t_envar **s);
+int						max_strlen(char *s1, char *s2);
 
 /* error handling */
 void					handle_err(int errnum, int err, char *msg);
@@ -80,5 +81,7 @@ int						clean_env_list(t_minishell *michi);
 //Extract envars
 void					add_envars(t_envar **envars, char **cmd, bool is_not_parsing);
 
+//Input handler
+int						parse_pipes(t_minishell *michi, char *input);
 
 #endif

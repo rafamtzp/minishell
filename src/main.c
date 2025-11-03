@@ -6,7 +6,7 @@
 /*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:38:57 by gregueir          #+#    #+#             */
-/*   Updated: 2025/10/23 16:15:54 by gregueir         ###   ########.fr       */
+/*   Updated: 2025/11/03 17:03:10 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,12 @@ int	main(int argc, char **argv, char **env)
 
 	print_cat();
 	michishell = init_michishell(env);
+	clean_env_list(michishell);
 	while (1)
 	{
 		input = readline("/^•⩊•^\\ ❀ michishell ❀ $ ");
 		add_history(input);
-		
+		parse_pipes(michishell, input);
 		//Split the input
 		
 		// expand any variables in the input
@@ -45,7 +46,7 @@ int	main(int argc, char **argv, char **env)
 
 		// execute nodes
 		
-		printf("You said: %s\n", input);
+		//printf("You said: %s\n", input);
 		free(input);
 	}
 	return (0);
