@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   input_splitting.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 16:02:11 by gregueir          #+#    #+#             */
-/*   Updated: 2025/11/03 17:54:18 by gregueir         ###   ########.fr       */
+/*   Updated: 2025/11/10 15:10:09 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	is_builtin(t_cmdnode *node)
+int	is_builtin(t_cmd *node)
 {
 	char	*base;
 

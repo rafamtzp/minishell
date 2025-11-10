@@ -6,7 +6,7 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 13:17:07 by ramarti2          #+#    #+#             */
-/*   Updated: 2025/10/21 18:45:16 by ramarti2         ###   ########.fr       */
+/*   Updated: 2025/11/10 14:39:03 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	print_alphabetically(t_envar *envar)
 	t_envar	*head;
 
 	head = envar;
-	size = env_lstsize(head);
+	size = env_list_size(head);
 	i = 0;
 	while (i < size)
 	{
@@ -55,10 +55,10 @@ void	add_envars(t_envar **envars, char **cmd, bool is_not_parsing)
 	i = is_not_parsing;
 	while (cmd[i])
 	{
-		new = envlst_new(cmd[i]);
+		new = env_list_new(cmd[i]);
 		if (!new)
 			handle_err(errno, 0, ""); // TO IMPROVE
-		envlst_add_back(envars, new);
+		env_list_add_back(envars, new);
 		i++;
 	}
 	set_ascii_indices(envars);

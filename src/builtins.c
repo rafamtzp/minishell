@@ -6,7 +6,7 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 13:18:48 by ramarti2          #+#    #+#             */
-/*   Updated: 2025/10/20 13:18:51 by ramarti2         ###   ########.fr       */
+/*   Updated: 2025/11/10 13:59:50 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,13 @@ the shell follows fork on exec mechanism.
 So, it doesn't affect the current shell.
 */
 
-void	cd(char *path)
+// way more complicated.........
+// TODO: update OLDPWD
+// TODO: update PWD
+// maybe implement 'cd -'?
+void	cd(t_cmd **cmd)
 {
-	if (chdir(path) != 0)
+	if (chdir((*cmd)->cmd[1]) != 0)
 		handle_err(errno, 1, "filename");
 }
 
@@ -41,6 +45,13 @@ void	pwd(void)
 	buf = ft_calloc(1, PATH_MAX);
 	if (!buf)
 		handle_err(errno, 2, "");
+	getcwd(buf, PATH_MAX);
+	if (!buf)
+	{
+		perror("Error");
+		return ;
+	}
+	
 	printf("%s\n", getcwd(buf, PATH_MAX));
 }
 

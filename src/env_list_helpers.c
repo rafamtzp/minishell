@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   envlist_helpers.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 13:19:56 by ramarti2          #+#    #+#             */
-/*   Updated: 2025/10/23 14:44:10 by gregueir         ###   ########.fr       */
+/*   Updated: 2025/11/10 14:39:03 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	*getvarname(char *new_var)
 }
 
 //TODO: Free those lists when done
-t_envar	*envlst_new(char *new_var)
+t_envar	*env_list_new(char *new_var)
 {
 	t_envar	*new;
 
@@ -52,7 +52,7 @@ t_envar	*envlst_new(char *new_var)
 	return (new);
 }
 
-void	envlst_add_back(t_envar **envars, t_envar *new)
+void	env_list_add_back(t_envar **envars, t_envar *new)
 {
 	t_envar *ptr;
 
@@ -69,7 +69,7 @@ void	envlst_add_back(t_envar **envars, t_envar *new)
 	ptr->next = new;
 }
 
-int	env_lstsize(t_envar *env)
+int	env_list_size(t_envar *env)
 {
 	int		count;
 
