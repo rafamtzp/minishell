@@ -6,12 +6,16 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:39:22 by gregueir          #+#    #+#             */
-/*   Updated: 2025/11/10 14:47:51 by ramarti2         ###   ########.fr       */
+/*   Updated: 2025/11/11 13:38:32 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
+
+# define READ_END 0
+# define WRITE_END 1
+
 # include "../libft/libft.h"
 # include <errno.h>
 # include <linux/limits.h>
@@ -57,9 +61,11 @@ void				print_cat(void);
 int					env_list_size(t_envar *env);
 void				env_list_add_back(t_envar **envars, t_envar *new);
 t_envar				*env_list_new(char *new_var);
+char				*getvarname(char *new_var);
+t_envar				*find_envar(char *varname, t_envar *ptr);
 
 // command list helpers (pipex)
-int	cmd_list_size(t_cmd *cmd);
+int					cmd_list_size(t_cmd *cmd);
 
 
 // builtins
@@ -74,7 +80,7 @@ void				write_envars(t_envar *envar, bool order_alpha);
 
 // builtins: export helpers
 void				set_ascii_indices(t_envar **s);
-int					max_strlen(char *s1, char *s2);
+int					max_strncmp(char *s1, char *s2);
 
 // builtins: unset
 void				unset(t_envar **envars, char **cmd);
@@ -90,6 +96,18 @@ void				add_envars(t_envar **envars, char **cmd, bool is_not_parsing);
 // Input splitting
 int					parse_pipes(t_minishell *michi, char *input);
 int					is_builtin(t_cmd *node);
+
+// executor
+int					executor(t_cmd **cmds, t_envar **envars);
+// executor helpers
+void	start_children(t_cmd *cmds, pid_t *pids, int **pfds, char **env);
+
+// pipe handling
+int					**setup_pipes(t_cmd **cmds);
+int					**create_pipes(t_cmd *cmds, int **pfds);
+void				close_pipe_ends(int i, int **pfds, int size);
+void				free_pipe_arr(int **pfds);
+
 
 
 #endif

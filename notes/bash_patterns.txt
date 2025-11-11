@@ -35,6 +35,9 @@ limpia el archivo.  Entonces sí que hace el append pero a un archivo que fué l
 
 Lo mismo pasa con "echo -n >outfile "hello"".  La única regla es que el -n vaya antes del mensaje.  (pero creo que de esto me encargo yo).
 
-
+La importancia de hacer tokens es que aunq 'echo -n hola mundo' tenga
+4 argumentos, se tiene que separar en 3.  echo, -n, y 'hola mundo'.
+-n y hola y mundo pertenecen a diferentes categorías, pero al ponerlos en
+la lista, terminan siendo lo mismo otra vez (pero organizado). 
 
 

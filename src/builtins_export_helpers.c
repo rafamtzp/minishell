@@ -6,7 +6,7 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 13:19:33 by ramarti2          #+#    #+#             */
-/*   Updated: 2025/11/10 13:27:41 by ramarti2         ###   ########.fr       */
+/*   Updated: 2025/11/11 13:34:45 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,15 @@ static void	set_empty_indices(t_envar **s)
 	return ;
 }
 
-int	max_strlen(char *s1, char *s2)
+int	max_strncmp(char *s1, char *s2)
 {
+	int max_len;
+	
 	if (ft_strlen(s1) > ft_strlen(s2))
-		return (ft_strlen(s1));
-	return (ft_strlen(s2));
+		max_len = ft_strlen(s1);
+	else
+		max_len = ft_strlen(s2);
+	return (ft_strncmp(s1, s2, max_len));
 }
 
 
@@ -51,7 +55,7 @@ void	set_ascii_indices(t_envar **s)
 		ptr2 = *s;
 		while (ptr2 != NULL)
 		{
-			if (ft_strncmp(ptr->varname, ptr2->varname, max_strlen(ptr->varname, ptr2->varname)) > 0)
+			if (max_strncmp(ptr->varname, ptr2->varname) > 0)
 				ptr->ascii_index++;
 			ptr2 = ptr2->next;
 		}
