@@ -9,8 +9,8 @@ void executor(t_minishell *michi)
 	int		i;
 	int		status;
 
-    if (max_strncmp(michi->cmds->cmd[0], "exit") == 0 && cmd_list_size(michi->cmds) == 1)
-        michi_exit(michi, true);
+	if (max_strncmp(michi->cmds->cmd[0], "exit") == 0 && cmd_list_size(michi->cmds) == 1)
+		michi_exit(michi, true);
 	michi->pfds = setup_pipes(&michi->cmds);
 	michi->pids = malloc(cmd_list_size(michi->cmds) * sizeof(pid_t));
 	if (!michi->pids)
@@ -25,9 +25,8 @@ void executor(t_minishell *michi)
 		printf("child exit unsuccessful\n");
 	free(michi->pids);
 	free_pipe_arr(michi->pfds);
-	close_first_and_last(&michi->cmds);
+	//close_first_and_last(&michi->cmds);
 	free_cmds(&michi->cmds);
 	free(michi->input);
-	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:39:22 by gregueir          #+#    #+#             */
-/*   Updated: 2025/11/12 16:39:06 by ramarti2         ###   ########.fr       */
+/*   Updated: 2025/11/12 17:18:14 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <sys/wait.h>
 
 // command node struct (CHANGED FROM t_cmdnode to t_cmd)
 typedef struct s_cmd
@@ -71,6 +72,9 @@ char				*getvarname(char *new_var);
 t_envar				*find_envar(char *varname, t_envar *ptr);
 void				clean_env_list(t_minishell *michi);
 
+// Extract envars
+void	add_envars(t_minishell *michi, char **cmd, bool is_not_parsing);
+
 // command list helpers (pipex)
 int					cmd_list_size(t_cmd *cmd);
 void				free_cmds(t_cmd **cmds);
@@ -80,7 +84,7 @@ void				cmd_list_add_back(t_cmd **cmds, t_cmd *new);
 // builtins
 void				echo(char **cmd);
 void				cd(char **cmd, t_minishell *michi);
-void				pwd(t_envar **envars);
+void				pwd(t_minishell *michi);
 void				env(t_envar *envars);
 void				michi_exit(t_minishell *michi, bool print_msg);
 
@@ -98,10 +102,6 @@ int					count_args(char **cmd);
 
 // error handling
 void				handle_err(int errnum, int err, char *msg);
-
-// Extract envars
-void				add_envars(t_envar **envars, char **cmd,
-						bool is_not_parsing);
 
 // Input splitting
 int					parse_pipes(t_minishell *michi, char *input);

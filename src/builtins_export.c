@@ -6,7 +6,7 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 13:17:07 by ramarti2          #+#    #+#             */
-/*   Updated: 2025/11/12 14:19:22 by ramarti2         ###   ########.fr       */
+/*   Updated: 2025/11/12 17:19:11 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	count_args(char **cmd)
 void	export(t_minishell *michi, char **cmd)
 {
 	if (count_args(cmd) == 0)
-		write_envars(michi, true);
+		write_envars(michi->envars, true);
 	else
-		add_envars(michi->envars, cmd, true);
+		add_envars(michi, cmd, true);
 }

@@ -2,9 +2,14 @@ NAME = minishell
 
 CC		= cc
 CFLAGS 	= -Wall -Werror -Wextra -g
-SRC 	= src/main.c src/gui.c src/builtins_export.c src/builtins_unset.c \
-			src/builtins.c src/env_list_helpers.c src/error_handling.c src/push_swap_helpers.c \
-			src/memory_cleanup.c src/input_splitting.c src/cmd_list_helpers.c 
+SRC 	= src/builtins.c   src/executor.c\
+		  src/builtins_export.c   src/executor_helpers.c\
+		  src/builtins_export_helpers.c  src/gui.c\
+		  src/builtins_unset.c           src/input_splitting.c\
+		  src/cmd_list_helpers.c         src/main.c\
+		  src/env_list_cleanup.c         src/minishell.h\
+		  src/env_list_helpers.c         src/pipe_handling.c\
+		  src/error_handling.c           src/TESTING.c
 OBJ 	= $(SRC:src/%.c=obj/%.o)
 OBJ_DBG	= $(SRC:src/%.c=dbg_obj/%.o)
 OBJ_DIR	= ./obj

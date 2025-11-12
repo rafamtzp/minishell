@@ -6,7 +6,7 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 13:18:48 by ramarti2          #+#    #+#             */
-/*   Updated: 2025/11/12 15:46:15 by ramarti2         ###   ########.fr       */
+/*   Updated: 2025/11/12 17:12:57 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ So, it doesn't affect the current shell.
 // maybe implement 'cd -'?
 void	cd(char **cmd, t_minishell *michi)
 {
-	char *buf;
 	t_envar *oldpwd;
 	t_envar *pwd;
 	
