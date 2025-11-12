@@ -35,6 +35,13 @@ limpia el archivo.  Entonces sí que hace el append pero a un archivo que fué l
 
 Lo mismo pasa con "echo -n >outfile "hello"".  La única regla es que el -n vaya antes del mensaje.  (pero creo que de esto me encargo yo).
 
+----------------------------------------------------------------------------------------------------------------------------
+
+si haces cat << 77 y escribes hola\n77777777\n77, para en el 77.  No en el 777777777.
+Es decir, que no vale que se encuentre el delimitador como substring.  Tiene que ser el delimitador tal cual.
+(otro ejemplo: si haces " 77" en vez de "77", no pararía).
+
+---------------------------------------------------------------------------
 
 
 

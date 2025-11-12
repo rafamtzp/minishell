@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:39:22 by gregueir          #+#    #+#             */
-/*   Updated: 2025/10/23 14:53:38 by gregueir         ###   ########.fr       */
+/*   Updated: 2025/10/30 14:08:36 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ typedef struct s_cmdnode
 	char				*path;
 	int					infile;
 	int					outfile;
+	bool				is_append; // false by default
+	char				*delim; // NULL by default
 	struct s_cmdnode	*next;
 }						t_cmdnode;
 
