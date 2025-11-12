@@ -3,7 +3,8 @@
 // receives cmd list, and env vars list
 // sets up pipes
 // starts children (needs to be modified in case builtin is passed)
-int executor(t_minishell *michi)
+// NOTE: only frees cmds, pipes, and pids but NOT env list so the user can keep using it!
+void executor(t_minishell *michi)
 {
 	int		i;
 	int		status;
@@ -25,7 +26,8 @@ int executor(t_minishell *michi)
 	free(michi->pids);
 	free_pipe_arr(michi->pfds);
 	close_first_and_last(&michi->cmds);
-	free_cmds(&michi->cmds); // maybe sub this for a michi_exit without the printf?  Make it your standard cleanup func?
+	free_cmds(&michi->cmds);
+	free(michi->input);
 	return (0);
 }
 

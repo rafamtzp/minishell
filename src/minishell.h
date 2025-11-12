@@ -6,7 +6,7 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:39:22 by gregueir          #+#    #+#             */
-/*   Updated: 2025/11/12 14:49:30 by ramarti2         ###   ########.fr       */
+/*   Updated: 2025/11/12 16:39:06 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,11 @@ typedef struct s_minishell
 	t_cmd			*cmds;
 	int 			**pfds; // stands for pipe file descriptors
 	int				*pids;
+	char			*input;
 }					t_minishell;
+
+// TEMPORARY TEST
+void				parsing_storing_checking(int argc, char **argv, t_cmd **cmds);
 
 // GUI
 void				print_cat(void);
@@ -104,7 +108,7 @@ int					parse_pipes(t_minishell *michi, char *input);
 int					is_builtin(t_cmd *node);
 
 // executor
-int					executor(t_cmd **cmds, t_envar **envars);
+void				executor(t_minishell *michi);
 
 // executor helpers
 void				start_children(t_minishell *michi);

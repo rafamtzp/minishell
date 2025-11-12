@@ -6,7 +6,7 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 13:18:48 by ramarti2          #+#    #+#             */
-/*   Updated: 2025/11/12 14:49:01 by ramarti2         ###   ########.fr       */
+/*   Updated: 2025/11/12 15:46:15 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,5 +84,6 @@ void	michi_exit(t_minishell *michi, bool print_msg)
 	clean_env_list(michi);
 	if (print_msg == true)
 		printf("exit\n");
+	free(michi->input);
 	exit(0);
 }
