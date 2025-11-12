@@ -6,7 +6,7 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 13:17:07 by ramarti2          #+#    #+#             */
-/*   Updated: 2025/11/10 14:39:03 by ramarti2         ###   ########.fr       */
+/*   Updated: 2025/11/12 14:19:22 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	write_envars(t_envar *envar, bool order_alpha)
 	}
 }
 
-void	add_envars(t_envar **envars, char **cmd, bool is_not_parsing)
+void	add_envars(t_minishell *michi, char **cmd, bool is_not_parsing)
 {
 	t_envar	*new;
 	int		i;
@@ -58,10 +58,10 @@ void	add_envars(t_envar **envars, char **cmd, bool is_not_parsing)
 		new = env_list_new(cmd[i]);
 		if (!new)
 			handle_err(errno, 0, ""); // TO IMPROVE
-		env_list_add_back(envars, new);
+		env_list_add_back(&michi->envars, new);
 		i++;
 	}
-	set_ascii_indices(envars);
+	set_ascii_indices(&michi->envars);
 }
 
 int	count_args(char **cmd)
@@ -75,10 +75,10 @@ int	count_args(char **cmd)
 	return (argcount);
 }
 
-void	export(t_envar **envars, char **cmd)
+void	export(t_minishell *michi, char **cmd)
 {
 	if (count_args(cmd) == 0)
-		write_envars(*envars, true);
+		write_envars(michi, true);
 	else
-		add_envars(envars, cmd, true);
+		add_envars(michi->envars, cmd, true);
 }

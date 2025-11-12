@@ -6,7 +6,7 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:39:22 by gregueir          #+#    #+#             */
-/*   Updated: 2025/11/12 11:55:26 by ramarti2         ###   ########.fr       */
+/*   Updated: 2025/11/12 14:49:30 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ typedef struct s_cmd
 	int				outfile;
 	struct s_cmd	*next;
 }					t_cmd;
-//Note: I think is_append might not be necessary.
+// Note: I think is_append might not be necessary.
 
 // environment variable struct
 typedef struct s_envar
@@ -52,6 +52,8 @@ typedef struct s_minishell
 {
 	t_envar			*envars;
 	t_cmd			*cmds;
+	int 			**pfds; // stands for pipe file descriptors
+	int				*pids;
 }					t_minishell;
 
 // GUI
@@ -63,20 +65,24 @@ void				env_list_add_back(t_envar **envars, t_envar *new);
 t_envar				*env_list_new(char *new_var);
 char				*getvarname(char *new_var);
 t_envar				*find_envar(char *varname, t_envar *ptr);
+void				clean_env_list(t_minishell *michi);
 
 // command list helpers (pipex)
 int					cmd_list_size(t_cmd *cmd);
-
+void				free_cmds(t_cmd **cmds);
+t_cmd				*cmd_list_new(char *cmd, char *delim);
+void				cmd_list_add_back(t_cmd **cmds, t_cmd *new);
 
 // builtins
-void				cd(char *path);
-void				pwd(void);
-void				env(t_envar **envars);
-void				unset(t_envar **envars, char **cmd);
-void				michi_exit(void);
+void				echo(char **cmd);
+void				cd(char **cmd, t_minishell *michi);
+void				pwd(t_envar **envars);
+void				env(t_envar *envars);
+void				michi_exit(t_minishell *michi, bool print_msg);
 
 // builtins: export
-void				write_envars(t_envar *envar, bool order_alpha);
+void				export(t_minishell *michi, char **cmd);
+void 				write_envars(t_envar *envar, bool order_alpha);
 
 // builtins: export helpers
 void				set_ascii_indices(t_envar **s);
@@ -84,14 +90,14 @@ int					max_strncmp(char *s1, char *s2);
 
 // builtins: unset
 void				unset(t_envar **envars, char **cmd);
-int					count_args(char **cmd); // seems useful but idk...
+int					count_args(char **cmd);
 
 // error handling
 void				handle_err(int errnum, int err, char *msg);
-int					clean_env_list(t_minishell *michi);
 
 // Extract envars
-void				add_envars(t_envar **envars, char **cmd, bool is_not_parsing);
+void				add_envars(t_envar **envars, char **cmd,
+						bool is_not_parsing);
 
 // Input splitting
 int					parse_pipes(t_minishell *michi, char *input);
@@ -99,15 +105,14 @@ int					is_builtin(t_cmd *node);
 
 // executor
 int					executor(t_cmd **cmds, t_envar **envars);
+
 // executor helpers
-void	start_children(t_cmd *cmds, pid_t *pids, int **pfds, char **env);
+void				start_children(t_minishell *michi);
 
 // pipe handling
 int					**setup_pipes(t_cmd **cmds);
 int					**create_pipes(t_cmd *cmds, int **pfds);
 void				close_pipe_ends(int i, int **pfds, int size);
 void				free_pipe_arr(int **pfds);
-
-
 
 #endif

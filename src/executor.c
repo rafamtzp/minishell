@@ -3,32 +3,29 @@
 // receives cmd list, and env vars list
 // sets up pipes
 // starts children (needs to be modified in case builtin is passed)
-int executor(t_cmd **cmds, t_envar **envars)
+int executor(t_minishell *michi)
 {
-    pid_t	*pids;
 	int		i;
-	int		**pfds;
 	int		status;
 
-    if (max_strncmp((*cmds)->cmd[0], "exit") == 0)
-        michi_exit(); // make sure to free everything!!!!!!
-	pfds = NULL;
-	pfds = setup_pipes(&cmds);
-	pids = malloc(cmd_list_size(cmds) * sizeof(pid_t));
-	if (!pids)
+    if (max_strncmp(michi->cmds->cmd[0], "exit") == 0 && cmd_list_size(michi->cmds) == 1)
+        michi_exit(michi, true);
+	michi->pfds = setup_pipes(&michi->cmds);
+	michi->pids = malloc(cmd_list_size(michi->cmds) * sizeof(pid_t));
+	if (!michi->pids)
 		exit(1); //handle_err(&cmds, pfds);
-	start_children(cmds, pids, pfds, env);
-	close_pipe_ends(-1, pfds, cmd_list_size(cmds));
+	start_children(michi);
+	close_pipe_ends(-1, michi->pfds, cmd_list_size(michi->cmds));
 	i = 0;
 	status = 0;
-	while (i < cmd_list_size(cmds) && status == 0)
-		waitpid(pids[i++], &status, 0);
+	while (i < cmd_list_size(michi->cmds) && status == 0)
+		waitpid(michi->pids[i++], &status, 0);
 	if (status != 0)
 		printf("child exit unsuccessful\n");
-	free(pids);
-	free_pipe_arr(pfds);
-	close_first_and_last(&cmds);
-	free_cmds(&cmds);
+	free(michi->pids);
+	free_pipe_arr(michi->pfds);
+	close_first_and_last(&michi->cmds);
+	free_cmds(&michi->cmds); // maybe sub this for a michi_exit without the printf?  Make it your standard cleanup func?
 	return (0);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:38:57 by gregueir          #+#    #+#             */
-/*   Updated: 2025/11/03 17:03:10 by gregueir         ###   ########.fr       */
+/*   Updated: 2025/11/12 13:59:51 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,9 @@ static t_minishell *init_michishell(char **env)
 		exit(1);
 	michi->envars = NULL;
 	michi->cmds = NULL;
-	add_envars(&michi->envars, env, false);
+	michi->pfds = NULL;
+	michi->pids = NULL;
+	add_envars(michi, env, false);
 	return (michi);
 }
 

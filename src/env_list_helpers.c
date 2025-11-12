@@ -6,7 +6,7 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 13:19:56 by ramarti2          #+#    #+#             */
-/*   Updated: 2025/11/11 13:53:39 by ramarti2         ###   ########.fr       */
+/*   Updated: 2025/11/12 14:17:57 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ char	*getvarname(char *new_var)
 	return (varname);
 }
 
-//TODO: Free those lists when done
 t_envar	*env_list_new(char *new_var)
 {
 	t_envar	*new;

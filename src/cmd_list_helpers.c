@@ -6,11 +6,11 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 11:43:31 by rafamtz           #+#    #+#             */
-/*   Updated: 2025/11/10 12:16:17 by ramarti2         ###   ########.fr       */
+/*   Updated: 2025/11/12 14:38:19 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "minishell.h"
 
 t_cmd	*cmd_list_new(char *cmd, char *delim)
 {
@@ -34,7 +34,6 @@ t_cmd	*cmd_list_new(char *cmd, char *delim)
 	n->path = NULL;
 	n->delim = delim_nl; // remember to free this!
 	n->cmd = ft_split(cmd, ' ');
-	n->is_append = false;
 	n->infile = STDIN_FILENO;
 	n->outfile = STDOUT_FILENO;
 	n->next = NULL;
@@ -71,4 +70,31 @@ int	cmd_list_size(t_cmd *cmd)
 		size++;
 	}
 	return (size);
+}
+
+void	free_cmds(t_cmd **cmds)
+{
+	t_cmd	*current;
+	t_cmd	*next;
+	int		i;
+
+	if (!cmds || !(*cmds))
+		return ;
+	current = *cmds;
+	while (current)
+	{
+		next = current->next;
+		i = 0;
+		if (current->delim)
+			free(current->delim);
+		if (current->path)
+			free(current->path);
+		while (current->cmd && current->cmd[i])
+			free(current->cmd[i++]);
+		if (current->cmd)
+			free(current->cmd);
+		free(current);
+		current = next;
+	}
+	*cmds = NULL;
 }

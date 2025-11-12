@@ -6,19 +6,19 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 13:18:48 by ramarti2          #+#    #+#             */
-/*   Updated: 2025/11/11 13:53:07 by ramarti2         ###   ########.fr       */
+/*   Updated: 2025/11/12 14:49:01 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 // Note: guille se encarga de expandir '$?'
-void	echo(t_cmd *cmd)
+void	echo(char **cmd)
 {
-	if (max_strncmp(cmd->cmd[1], "-n") == 0 && cmd->cmd[2])
-		printf("%s\n", cmd->cmd[2]);
-	else if (cmd->cmd[1])
-		printf("%s", cmd->cmd[1]);
+	if (max_strncmp(cmd[1], "-n") == 0 && cmd[2])
+		printf("%s\n", cmd[2]);
+	else if (cmd[1])
+		printf("%s", cmd[1]);
 }
 /*
 Note: cd should change the working directory of a process!!!
@@ -29,14 +29,14 @@ So, it doesn't affect the current shell.
 */
 
 // maybe implement 'cd -'?
-void	cd(t_cmd *cmd, t_envar **envars)
+void	cd(char **cmd, t_minishell *michi)
 {
 	char *buf;
 	t_envar *oldpwd;
 	t_envar *pwd;
 	
-	oldpwd = find_envar("OLDPWD", *envars);
-	pwd = find_envar("PWD", *envars);
+	oldpwd = find_envar("OLDPWD", michi->envars);
+	pwd = find_envar("PWD", michi->envars);
 	if (!oldpwd || !pwd)
 		exit(1); // handle error
 	free(oldpwd->value);
@@ -48,7 +48,7 @@ void	cd(t_cmd *cmd, t_envar **envars)
 	getcwd(oldpwd->value, PATH_MAX);
 	if (!oldpwd->value)
 		exit(1); // handle error
-	if (chdir(cmd->cmd[1]) != 0)
+	if (chdir(cmd[1]) != 0)
 		handle_err(errno, 1, "filename"); // fix
 	getcwd(pwd->value, PATH_MAX);
 	if (!pwd->value)
@@ -56,11 +56,11 @@ void	cd(t_cmd *cmd, t_envar **envars)
 	return ;
 }
 
-void	pwd(t_envar **envars)
+void	pwd(t_minishell *michi)
 {
 	t_envar	*pwd;
 
-	pwd = find_envar("PWD", *envars);
+	pwd = find_envar("PWD", michi->envars);
 	if (!pwd)
 	{
 		perror("Couldn't find PWD\n");
@@ -69,13 +69,20 @@ void	pwd(t_envar **envars)
 	printf("%s\n", pwd->value);
 }
 
-void	env(t_envar **envars)
+void	env(t_envar *envars)
 {
-	write_envars(*envars, true);
+	write_envars(envars, true);
 }
 
-void	michi_exit(void)
+void	michi_exit(t_minishell *michi, bool print_msg)
 {
-	// Do later bc it may involve shutting down multiple processes
-	return ;
+	close_pipe_ends(-1, michi->pfds, cmd_list_size(michi->cmds));
+	free_pipe_arr(michi->pfds);
+	if (michi->pids)
+		free(michi->pids);
+	free_cmds(&michi->cmds);
+	clean_env_list(michi);
+	if (print_msg == true)
+		printf("exit\n");
+	exit(0);
 }

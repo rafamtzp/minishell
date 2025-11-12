@@ -6,14 +6,16 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 13:19:23 by ramarti2          #+#    #+#             */
-/*   Updated: 2025/10/20 13:19:29 by ramarti2         ###   ########.fr       */
+/*   Updated: 2025/11/12 14:24:05 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	del_env(t_envar **ptr1, t_envar **ptr2, t_envar **ptr3, bool ishead)
+static void	del_env(t_envar **ptr1, t_envar **ptr2, bool ishead)
 {
+	t_envar *ptr3;
+	
 	free((*ptr1)->varname);
 	free((*ptr1)->value);
 	if (ishead == true)
@@ -26,9 +28,9 @@ static void	del_env(t_envar **ptr1, t_envar **ptr2, t_envar **ptr3, bool ishead)
 	}
 	else
 	{
-		*ptr3 = *ptr1;
+		ptr3 = *ptr1;
 		*ptr1 = (*ptr1)->next;
-		free(*ptr3);
+		free(ptr3);
 		(*ptr2)->next = *ptr1;
 	}
 }
@@ -54,9 +56,9 @@ void	unset(t_envar **envars, char **cmd)
 		if (ptr1 == *envars)
 		{
 			*envars = (*envars)->next;
-			del_env(&ptr1, &ptr2, &ptr3, true);
+			del_env(&ptr1, &ptr2, true);
 		}
 		else
-			del_env(&ptr1, &ptr2, &ptr3, false);
+			del_env(&ptr1, &ptr2, false);
 	}
 }
