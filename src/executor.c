@@ -1,5 +1,17 @@
 #include "minishell.h"
 
+void	prep_for_next_cmd(t_minishell *michi)
+{
+	free(michi->pids);
+	michi->pids = NULL;
+	free_pipe_arr(michi->pfds);
+	michi->pfds = NULL;
+	//close_first_and_last(&michi->cmds);
+	free_cmds(&michi->cmds);
+	michi->cmds = NULL;
+	free(michi->input);
+	michi->input = NULL;
+}
 // receives cmd list, and env vars list
 // sets up pipes
 // starts children (needs to be modified in case builtin is passed)
@@ -23,10 +35,6 @@ void executor(t_minishell *michi)
 		waitpid(michi->pids[i++], &status, 0);
 	if (status != 0)
 		printf("child exit unsuccessful\n");
-	free(michi->pids);
-	free_pipe_arr(michi->pfds);
-	//close_first_and_last(&michi->cmds);
-	free_cmds(&michi->cmds);
-	free(michi->input);
+	prep_for_next_cmd(michi);
 }
 

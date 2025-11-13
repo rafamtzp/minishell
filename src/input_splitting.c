@@ -6,7 +6,7 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 16:02:11 by gregueir          #+#    #+#             */
-/*   Updated: 2025/11/10 15:10:09 by ramarti2         ###   ########.fr       */
+/*   Updated: 2025/11/13 13:50:40 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,13 @@ int	quote_finder(char *input)
 
 int	parse_pipes(t_minishell *michi, char *input)
 {
-	int	i;
-	int	pipes;
+	// int	i;
+	// int	pipes;
 	int	quotes;
 
-	pipes = 0;
-	i = 0;
+	// pipes = 0;
+	// i = 0;
+	(void) michi; // comenté cosas para q el compilador se calle -Rafa
 	quotes = quote_finder(input);
 	if (quotes == -1)
 	{

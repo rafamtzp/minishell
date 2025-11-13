@@ -2,8 +2,28 @@
 
 char 		**env_list_to_arr(t_envar *env)
 {
-	// TODO
-	return (NULL);
+	char **env_arr;
+	char *tmp;
+	int i;
+
+	env_arr = malloc((env_list_size(env) + 1) * sizeof(char *));
+	if (!env_arr)
+		exit(1); // TODO
+	i = 0;
+	while (env)
+	{
+		if (env && !env->varname)
+			exit(1); // TODO
+		tmp = ft_strjoin(env->varname, "=");
+		if (env->value)
+			env_arr[i] = ft_strjoin(tmp, env->value);
+		else
+			env_arr[i] = env->varname;
+		free(tmp);
+		i++;
+		env = env->next;
+	}
+	return (env_arr);
 }
 
 void	builtin_execve(char **cmd, t_minishell *michi)
@@ -13,7 +33,7 @@ void	builtin_execve(char **cmd, t_minishell *michi)
 	else if (max_strncmp(cmd[0], "cd") == 0)
 		cd(cmd, michi);
 	else if (max_strncmp(cmd[0], "pwd") == 0)
-		pwd(michi->envars);
+		pwd(michi);
 	else if (max_strncmp(cmd[0], "export") == 0)
 		export(michi, cmd);
 	else if (max_strncmp(cmd[0], "unset") == 0)
@@ -22,7 +42,6 @@ void	builtin_execve(char **cmd, t_minishell *michi)
 		env(michi->envars);
 	michi_exit(michi, false);
 }
-
 
 static void	start_heredoc(t_cmd *ptr)
 {
@@ -62,9 +81,14 @@ void	start_children(t_minishell *michi)
 				start_heredoc(ptr);
 			dup2(ptr->infile, STDIN_FILENO);
 			close_pipe_ends(i, michi->pfds, cmd_list_size(michi->cmds));
-            if (is_builtin(ptr->cmd) == true)
+            if (is_builtin(ptr) == true)
                 builtin_execve(ptr->cmd, michi);
-			execve(ptr->path, ptr->cmd, env_list_to_arr(env));
+			write(2, "executing non-builtin\n", 23);
+			char **env = env_list_to_arr(michi->envars);
+			for (int j = 0; env[j]; j++)
+				printf("%s\n", env[j]);
+			exit(0);
+			execve(ptr->path, ptr->cmd, env_list_to_arr(michi->envars));
 			exit(1);
 		}
 		i++;

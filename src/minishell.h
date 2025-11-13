@@ -6,7 +6,7 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:39:22 by gregueir          #+#    #+#             */
-/*   Updated: 2025/11/12 17:18:14 by ramarti2         ###   ########.fr       */
+/*   Updated: 2025/11/13 13:19:01 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@
 # include "../libft/libft.h"
 # include <errno.h>
 # include <linux/limits.h>
+# include <stdio.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <stdbool.h>
-# include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <sys/wait.h>
@@ -72,7 +72,7 @@ char				*getvarname(char *new_var);
 t_envar				*find_envar(char *varname, t_envar *ptr);
 void				clean_env_list(t_minishell *michi);
 
-// Extract envars
+// Extract envars (in builtins_export.c)
 void	add_envars(t_minishell *michi, char **cmd, bool is_not_parsing);
 
 // command list helpers (pipex)

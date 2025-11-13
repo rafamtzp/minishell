@@ -6,7 +6,7 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 13:19:33 by ramarti2          #+#    #+#             */
-/*   Updated: 2025/11/11 13:34:45 by ramarti2         ###   ########.fr       */
+/*   Updated: 2025/11/13 13:46:25 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,11 @@ void	set_ascii_indices(t_envar **s)
 {
 	t_envar	*ptr;
 	t_envar *ptr2;
-	int		i;
 
 	ptr = *s;
 	if (ptr == NULL)
 		return ;
 	set_empty_indices(s);
-	i = 0;
 	while (ptr != NULL)
 	{
 		ptr2 = *s;

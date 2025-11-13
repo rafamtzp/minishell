@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_rand.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 15:32:43 by gregueir          #+#    #+#             */
-/*   Updated: 2025/10/09 15:33:05 by gregueir         ###   ########.fr       */
+/*   Updated: 2025/11/13 13:58:31 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static int	ft_gen_rand(int min, int max)
 {
 	int		a;
-	int		m;
+	// int		m; // comentado para que se calle - Rafa
 	int		seed;
 	int		fd;
 	char	c;
@@ -23,7 +23,7 @@ static int	ft_gen_rand(int min, int max)
 	fd = open("/dev/urandom", O_RDONLY);
 	read(fd, &c, 1);
 	a = 16807;
-	m = __INT_MAX__;
+	//m = __INT_MAX__; // comentado para que se calle - Rafa
 	seed = (a * (unsigned int) c) % (max + 1 - min) + min;
 	close(fd);
 	return (seed);
