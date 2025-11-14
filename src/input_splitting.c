@@ -6,7 +6,7 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 16:02:11 by gregueir          #+#    #+#             */
-/*   Updated: 2025/11/13 13:50:40 by ramarti2         ###   ########.fr       */
+/*   Updated: 2025/11/14 13:02:09 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,13 @@
 
 int	is_builtin(t_cmd *node)
 {
-	char	*base;
-
-	base = "echo/cd/pwd/export/unset/env/exit";
-	if (ft_strnstr(base, node->cmd[0], ft_strlen(base)))
+	if (max_strncmp("echo", node->cmd[0]) == 0 
+	|| max_strncmp("cd", node->cmd[0]) == 0
+	|| max_strncmp("pwd", node->cmd[0]) == 0
+	|| max_strncmp("export", node->cmd[0]) == 0
+	|| max_strncmp("unset", node->cmd[0]) == 0
+	|| max_strncmp("env", node->cmd[0]) == 0
+	|| max_strncmp("exit", node->cmd[0]) == 0)
 		return (true);
 	return (false);
 }

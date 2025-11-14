@@ -9,6 +9,7 @@ char 		**env_list_to_arr(t_envar *env)
 	env_arr = malloc((env_list_size(env) + 1) * sizeof(char *));
 	if (!env_arr)
 		exit(1); // TODO
+	env_arr[env_list_size(env)] = NULL;
 	i = 0;
 	while (env)
 	{
@@ -40,6 +41,7 @@ void	builtin_execve(char **cmd, t_minishell *michi)
 		unset(&michi->envars, cmd);
 	else if (max_strncmp(cmd[0], "env") == 0)
 		env(michi->envars);
+	exit(0);
 	michi_exit(michi, false);
 }
 
@@ -85,10 +87,13 @@ void	start_children(t_minishell *michi)
                 builtin_execve(ptr->cmd, michi);
 			write(2, "executing non-builtin\n", 23);
 			char **env = env_list_to_arr(michi->envars);
-			for (int j = 0; env[j]; j++)
-				printf("%s\n", env[j]);
-			exit(0);
-			execve(ptr->path, ptr->cmd, env_list_to_arr(michi->envars));
+			if (!env)
+			{
+				write(2, "failed to create char **env\n", 29);
+				exit(1);
+			}
+			execve(ptr->path, ptr->cmd, env);
+			write(2, "execve error\n", 14);
 			exit(1);
 		}
 		i++;

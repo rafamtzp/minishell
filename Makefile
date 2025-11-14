@@ -7,9 +7,9 @@ SRC 	= src/builtins.c   src/executor.c\
 		  src/builtins_export_helpers.c  src/gui.c\
 		  src/builtins_unset.c           src/input_splitting.c\
 		  src/cmd_list_helpers.c         src/main.c\
-		  src/env_list_cleanup.c         src/minishell.h\
-		  src/env_list_helpers.c         src/pipe_handling.c\
-		  src/error_handling.c           src/TESTING.c
+		  src/env_list_cleanup.c         src/env_list_helpers.c\
+		  src/pipe_handling.c            src/error_handling.c\
+		  src/TESTING.c
 OBJ 	= $(SRC:src/%.c=obj/%.o)
 OBJ_DBG	= $(SRC:src/%.c=dbg_obj/%.o)
 OBJ_DIR	= ./obj

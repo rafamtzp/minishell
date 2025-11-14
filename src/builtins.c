@@ -6,7 +6,7 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 13:18:48 by ramarti2          #+#    #+#             */
-/*   Updated: 2025/11/12 17:12:57 by ramarti2         ###   ########.fr       */
+/*   Updated: 2025/11/14 16:15:42 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,11 @@
 // Note: guille se encarga de expandir '$?'
 void	echo(char **cmd)
 {
+	write(2, "inside echo\n", 13);
 	if (max_strncmp(cmd[1], "-n") == 0 && cmd[2])
-		printf("%s\n", cmd[2]);
+		printf("%s", cmd[2]);
 	else if (cmd[1])
-		printf("%s", cmd[1]);
+		printf("%s\n", cmd[1]);
 }
 /*
 Note: cd should change the working directory of a process!!!
