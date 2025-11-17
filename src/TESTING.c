@@ -140,9 +140,9 @@ void	open_and_store_fds(int argc, char **argv, t_cmd **cmds)
 			ptr->infile = open(argv[1], O_RDONLY);
 		if ((*cmds)->delim && ptr->next == NULL)
 			// if first node delim and last node, append outfile
-			ptr->outfile = open(argv[argc - 1], O_CREAT | O_APPEND | O_RDWR);
+			ptr->outfile = open(argv[argc - 1], O_CREAT | O_APPEND | O_RDWR, 0644);
 		else if (ptr->next == NULL) // if merely last node
-			ptr->outfile = open(argv[argc - 1], O_CREAT | O_WRONLY | O_TRUNC);
+			ptr->outfile = open(argv[argc - 1], O_CREAT | O_WRONLY | O_TRUNC, 0644);
 		if (ptr->infile == -1 || ptr->outfile == -1)
 			t_handle_err(cmds, NULL);
 		ptr = ptr->next;
@@ -153,9 +153,5 @@ void	parsing_storing_checking(int argc, char **argv, t_cmd **cmds)
 {
 	check_and_store_cmds(argc, argv, cmds);
 	open_and_store_fds(argc, argv, cmds);
-	if (find_paths(*cmds) == -1)
-	{
-		printf("command not found\n"); // free and close
-		t_handle_err(cmds, NULL);
-	}
+	find_paths(*cmds);
 }

@@ -12,6 +12,7 @@ void	prep_for_next_cmd(t_minishell *michi)
 	free(michi->input);
 	michi->input = NULL;
 }
+
 // receives cmd list, and env vars list
 // sets up pipes
 // starts children (needs to be modified in case builtin is passed)
@@ -21,6 +22,7 @@ void executor(t_minishell *michi)
 	int		i;
 	int		status;
 
+	// I dont think doing a single-command executor is necessary........
 	if (max_strncmp(michi->cmds->cmd[0], "exit") == 0 && cmd_list_size(michi->cmds) == 1)
 		michi_exit(michi, true);
 	michi->pfds = setup_pipes(&michi->cmds);
