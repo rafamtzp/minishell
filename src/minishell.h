@@ -6,7 +6,7 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:39:22 by gregueir          #+#    #+#             */
-/*   Updated: 2025/11/13 13:19:01 by ramarti2         ###   ########.fr       */
+/*   Updated: 2025/11/17 16:19:20 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ int					is_builtin(t_cmd *node);
 
 // executor
 void				executor(t_minishell *michi);
+
 
 // executor helpers
 void				start_children(t_minishell *michi);

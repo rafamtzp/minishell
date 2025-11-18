@@ -31,18 +31,30 @@ void	builtin_execve(char **cmd, t_minishell *michi)
 {
 	if (max_strncmp(cmd[0], "echo") == 0)
 		echo(cmd);
-	else if (max_strncmp(cmd[0], "cd") == 0)
-		cd(cmd, michi);
 	else if (max_strncmp(cmd[0], "pwd") == 0)
 		pwd(michi);
-	else if (max_strncmp(cmd[0], "export") == 0)
-		export(michi, cmd);
-	else if (max_strncmp(cmd[0], "unset") == 0)
-		unset(&michi->envars, cmd);
 	else if (max_strncmp(cmd[0], "env") == 0)
 		env(michi->envars);
-	exit(0);
+	else if (max_strncmp(cmd[0], "exit") == 0 && cmd_list_size(michi->cmds) == 1)
+		michi_exit(michi, true);
 	michi_exit(michi, false);
+}
+
+bool	unforked_execve(char **cmd, t_minishell *michi)
+{
+	bool executed;
+	//int stdout; // to be continued.....
+
+	executed = true;
+	if (max_strncmp(cmd[0], "cd") == 0) // sin fork // no escribe ni recibe
+		cd(cmd, michi);
+	else if (max_strncmp(cmd[0], "export") == 0) // sin fork // escribe pero no recibe
+		export(michi, cmd);
+	else if (max_strncmp(cmd[0], "unset") == 0) // sin fork // ni escribe ni recibe
+		unset(&michi->envars, cmd);
+	else
+		executed = false;
+	return (executed);
 }
 
 static void	start_heredoc(t_cmd *ptr)
@@ -66,18 +78,29 @@ static void	start_heredoc(t_cmd *ptr)
 	}
 }
 
+
+// while cmd node:
+// 
+
 void	start_children(t_minishell *michi)
 {
 	t_cmd	*ptr;
+	char **env;
 	int		i;
+	bool	executed_unforked;
 
 	ptr = michi->cmds;
 	i = 0;
 	while (ptr)
 	{
+		// dup2(ptr->outfile, STDOUT_FILENO);
+		// dup2(ptr->infile, STDIN_FILENO); // if I put this up here, segfault.
+		executed_unforked = unforked_execve(ptr->cmd, michi);
 		michi->pids[i] = fork();
 		if (michi->pids[i] == 0)
 		{
+			if (executed_unforked == true)
+				michi_exit(michi, false);
 			dup2(ptr->outfile, STDOUT_FILENO);
 			if (ptr->delim)
 				start_heredoc(ptr);
@@ -86,14 +109,14 @@ void	start_children(t_minishell *michi)
             if (is_builtin(ptr) == true)
                 builtin_execve(ptr->cmd, michi);
 			write(2, "executing non-builtin\n", 23);
-			char **env = env_list_to_arr(michi->envars);
+			env = env_list_to_arr(michi->envars);
 			if (!env)
 			{
 				write(2, "failed to create char **env\n", 29);
 				exit(1);
 			}
 			execve(ptr->path, ptr->cmd, env);
-			write(2, "execve error\n", 14);
+			printf("%s: command not found\n", ptr->cmd[0]);
 			exit(1);
 		}
 		i++;
