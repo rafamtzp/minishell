@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_splitting.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 16:02:11 by gregueir          #+#    #+#             */
-/*   Updated: 2025/11/14 13:02:09 by ramarti2         ###   ########.fr       */
+/*   Updated: 2025/11/17 10:18:29 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	is_builtin(t_cmd *node)
 	return (false);
 }
 
-int	quote_finder(char *input)
+/*int	quote_finder(char *input)
 {
 	int	i;
 	int	quotes;
@@ -43,9 +43,9 @@ int	quote_finder(char *input)
 	else if (quotes % 2 == 0)
 		return (quotes / 2);
 	return (-1);
-}
+}*/
 
-int	parse_pipes(t_minishell *michi, char *input)
+/*int	parse_pipes(t_minishell *michi, char *input)
 {
 	// int	i;
 	// int	pipes;
@@ -71,4 +71,19 @@ int	parse_pipes(t_minishell *michi, char *input)
 	// }
 	// Split the input n times, where n is pipes + 1
 	return(ft_printf("Found %d valid quotes\n", quotes));
+}*/
+
+int	input_parsing(t_minishell michi)
+{
+	int		i;
+	char	*input;
+	char	**split;
+
+	input = michi.input;
+	i = 0;
+	while (input && input[i])
+	{
+		
+		i++;
+	}
 }
