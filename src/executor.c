@@ -35,7 +35,7 @@ void executor(t_minishell *michi)
 	{
 		michi->status = 0;
 		waitpid(michi->pids[i++], &michi->status, 0);
-		printf("status: %i\n", michi->status);
+		printf(">> status: %i\n", michi->status);
 	}
 	if (michi->status != 0)
 		printf("child exit unsuccessful\n");

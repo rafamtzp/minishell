@@ -6,7 +6,7 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:38:57 by gregueir          #+#    #+#             */
-/*   Updated: 2025/11/18 16:57:55 by ramarti2         ###   ########.fr       */
+/*   Updated: 2025/11/18 17:06:08 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,14 +105,8 @@ int	main(int argc, char **argv, char **env)
 		
 		//------ TEST ----------------
 		int wc = test_count_words(michi->input);
-		//printf("wc: %i\n", wc + 1);
 		char **args = test_input_splitting(michi->input);
-		// for (int i = 0; args[i]; i++)
-		// 	printf("%s\n", args[i]);
 		parsing_storing_checking(wc + 1, args, &michi->cmds);
-		// parsing doesnt work for multiple args.  Only single commands
-		for (t_cmd *ptr = michi->cmds; ptr; ptr = ptr->next)
-			printf("cmd: %s, arg: %s\n", ptr->cmd[0], ptr->cmd[1]);
 		//----------------------------
 		
 		//Split the input
@@ -123,10 +117,6 @@ int	main(int argc, char **argv, char **env)
 
 		// execute nodes
 		executor(michi);
-		//--------TEST------------------
-		printf("Cannot be looped rn\n");
-		//exit(0);
-		//-----------------------------
 	}
 	return (0);
 }

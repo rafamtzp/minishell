@@ -109,7 +109,6 @@ void	start_children(t_minishell *michi)
 			close_pipe_ends(i, michi->pfds, cmd_list_size(michi->cmds));
             if (is_builtin(ptr) == true)
                 builtin_execve(ptr->cmd, michi);
-			write(2, "executing non-builtin\n", 23);
 			env = env_list_to_arr(michi->envars);
 			if (!env)
 			{

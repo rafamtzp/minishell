@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_splitting.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 16:02:11 by gregueir          #+#    #+#             */
-/*   Updated: 2025/11/17 10:18:29 by gregueir         ###   ########.fr       */
+/*   Updated: 2025/11/18 17:01:44 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,17 +73,17 @@ int	is_builtin(t_cmd *node)
 	return(ft_printf("Found %d valid quotes\n", quotes));
 }*/
 
-int	input_parsing(t_minishell michi)
-{
-	int		i;
-	char	*input;
-	char	**split;
+// int	input_parsing(t_minishell michi)
+// {
+// 	int		i;
+// 	char	*input;
+// 	char	**split;
 
-	input = michi.input;
-	i = 0;
-	while (input && input[i])
-	{
+// 	input = michi.input;
+// 	i = 0;
+// 	while (input && input[i])
+// 	{
 		
-		i++;
-	}
-}
+// 		i++;
+// 	}
+// }

@@ -6,7 +6,7 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 13:18:48 by ramarti2          #+#    #+#             */
-/*   Updated: 2025/11/18 15:34:22 by ramarti2         ###   ########.fr       */
+/*   Updated: 2025/11/18 17:08:17 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 // Note: guille se encarga de expandir '$?'
 void	echo(char **cmd)
 {
-	write(2, "inside echo\n", 13);
 	if (cmd[1] && max_strncmp(cmd[1], "-n") == 0 && cmd[2])
 		printf("%s", cmd[2]);
 	else if (cmd[1])
@@ -85,6 +84,5 @@ void	michi_exit(t_minishell *michi, bool print_msg)
 	if (print_msg == true)
 		printf("exit\n");
 	free(michi->input);
-	dprintf(2, "exit status: %i\n", michi->status);
 	exit(michi->status);
 }
