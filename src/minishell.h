@@ -6,7 +6,7 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:39:22 by gregueir          #+#    #+#             */
-/*   Updated: 2025/11/17 16:19:20 by ramarti2         ###   ########.fr       */
+/*   Updated: 2025/11/18 14:19:22 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ typedef struct s_minishell
 	t_cmd			*cmds;
 	int 			**pfds; // stands for pipe file descriptors
 	int				*pids;
+	int				status;
 	char			*input;
 }					t_minishell;
 
@@ -73,7 +74,7 @@ t_envar				*find_envar(char *varname, t_envar *ptr);
 void				clean_env_list(t_minishell *michi);
 
 // Extract envars (in builtins_export.c)
-void	add_envars(t_minishell *michi, char **cmd, bool is_not_parsing);
+int					add_envars(t_minishell *michi, char **cmd, bool is_not_parsing);
 
 // command list helpers (pipex)
 int					cmd_list_size(t_cmd *cmd);
@@ -83,13 +84,13 @@ void				cmd_list_add_back(t_cmd **cmds, t_cmd *new);
 
 // builtins
 void				echo(char **cmd);
-void				cd(char **cmd, t_minishell *michi);
+int					cd(char **cmd, t_minishell *michi);
 void				pwd(t_minishell *michi);
 void				env(t_envar *envars);
 void				michi_exit(t_minishell *michi, bool print_msg);
 
 // builtins: export
-void				export(t_minishell *michi, char **cmd);
+int					export(t_minishell *michi, char **cmd);
 void 				write_envars(t_envar *envar, bool order_alpha);
 
 // builtins: export helpers
@@ -97,7 +98,7 @@ void				set_ascii_indices(t_envar **s);
 int					max_strncmp(char *s1, char *s2);
 
 // builtins: unset
-void				unset(t_envar **envars, char **cmd);
+int					unset(t_envar **envars, char **cmd);
 int					count_args(char **cmd);
 
 // error handling

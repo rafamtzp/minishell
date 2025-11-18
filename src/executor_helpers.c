@@ -44,14 +44,13 @@ bool	unforked_execve(char **cmd, t_minishell *michi)
 {
 	bool executed;
 	//int stdout; // to be continued.....
-
 	executed = true;
 	if (max_strncmp(cmd[0], "cd") == 0) // sin fork // no escribe ni recibe
-		cd(cmd, michi);
+		michi->status = cd(cmd, michi);
 	else if (max_strncmp(cmd[0], "export") == 0) // sin fork // escribe pero no recibe
-		export(michi, cmd);
+		michi->status = export(michi, cmd);
 	else if (max_strncmp(cmd[0], "unset") == 0) // sin fork // ni escribe ni recibe
-		unset(&michi->envars, cmd);
+		michi->status = unset(&michi->envars, cmd);
 	else
 		executed = false;
 	return (executed);
@@ -88,14 +87,16 @@ void	start_children(t_minishell *michi)
 	char **env;
 	int		i;
 	bool	executed_unforked;
+	int stdout_copy;
 
 	ptr = michi->cmds;
 	i = 0;
+	stdout_copy = dup(STDOUT_FILENO);
 	while (ptr)
 	{
-		// dup2(ptr->outfile, STDOUT_FILENO);
-		// dup2(ptr->infile, STDIN_FILENO); // if I put this up here, segfault.
+		dup2(ptr->outfile, STDOUT_FILENO);
 		executed_unforked = unforked_execve(ptr->cmd, michi);
+		dup2(stdout_copy, STDOUT_FILENO);
 		michi->pids[i] = fork();
 		if (michi->pids[i] == 0)
 		{
@@ -108,7 +109,6 @@ void	start_children(t_minishell *michi)
 			close_pipe_ends(i, michi->pfds, cmd_list_size(michi->cmds));
             if (is_builtin(ptr) == true)
                 builtin_execve(ptr->cmd, michi);
-			write(2, "executing non-builtin\n", 23);
 			env = env_list_to_arr(michi->envars);
 			if (!env)
 			{

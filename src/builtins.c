@@ -6,7 +6,7 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 13:18:48 by ramarti2          #+#    #+#             */
-/*   Updated: 2025/11/14 16:15:42 by ramarti2         ###   ########.fr       */
+/*   Updated: 2025/11/18 17:08:17 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,7 @@
 // Note: guille se encarga de expandir '$?'
 void	echo(char **cmd)
 {
-	write(2, "inside echo\n", 13);
-	if (max_strncmp(cmd[1], "-n") == 0 && cmd[2])
+	if (cmd[1] && max_strncmp(cmd[1], "-n") == 0 && cmd[2])
 		printf("%s", cmd[2]);
 	else if (cmd[1])
 		printf("%s\n", cmd[1]);
@@ -30,7 +29,7 @@ So, it doesn't affect the current shell.
 */
 
 // maybe implement 'cd -'?
-void	cd(char **cmd, t_minishell *michi)
+int	cd(char **cmd, t_minishell *michi) // unforked
 {
 	t_envar *oldpwd;
 	t_envar *pwd;
@@ -38,7 +37,7 @@ void	cd(char **cmd, t_minishell *michi)
 	oldpwd = find_envar("OLDPWD", michi->envars);
 	pwd = find_envar("PWD", michi->envars);
 	if (!oldpwd || !pwd)
-		exit(1); // handle error
+		return (1); // handle error
 	free(oldpwd->value);
 	free(pwd->value);
 	oldpwd->value = ft_calloc(1, PATH_MAX);
@@ -47,13 +46,13 @@ void	cd(char **cmd, t_minishell *michi)
 		handle_err(errno, 2, ""); // fix
 	getcwd(oldpwd->value, PATH_MAX);
 	if (!oldpwd->value)
-		exit(1); // handle error
+		return (1); // handle error
 	if (chdir(cmd[1]) != 0)
 		handle_err(errno, 1, "filename"); // fix
 	getcwd(pwd->value, PATH_MAX);
 	if (!pwd->value)
-		exit(1); // handle
-	return ;
+		return (1); // handle
+	return (0);
 }
 
 void	pwd(t_minishell *michi)
@@ -71,7 +70,7 @@ void	pwd(t_minishell *michi)
 
 void	env(t_envar *envars)
 {
-	write_envars(envars, true);
+	write_envars(envars, false);
 }
 
 void	michi_exit(t_minishell *michi, bool print_msg)
@@ -85,5 +84,5 @@ void	michi_exit(t_minishell *michi, bool print_msg)
 	if (print_msg == true)
 		printf("exit\n");
 	free(michi->input);
-	exit(0);
+	exit(michi->status);
 }

@@ -20,7 +20,6 @@ void	prep_for_next_cmd(t_minishell *michi)
 void executor(t_minishell *michi)
 {
 	int		i;
-	int		status;
 
 	// I dont think doing a single-command executor is necessary........
 	if (max_strncmp(michi->cmds->cmd[0], "exit") == 0 && cmd_list_size(michi->cmds) == 1)
@@ -32,10 +31,13 @@ void executor(t_minishell *michi)
 	start_children(michi);
 	close_pipe_ends(-1, michi->pfds, cmd_list_size(michi->cmds));
 	i = 0;
-	status = 0;
-	while (i < cmd_list_size(michi->cmds) && status == 0)
-		waitpid(michi->pids[i++], &status, 0);
-	if (status != 0)
+	while (i < cmd_list_size(michi->cmds) && michi->status == 0)
+	{
+		michi->status = 0;
+		waitpid(michi->pids[i++], &michi->status, 0);
+		printf(">> status: %i\n", michi->status);
+	}
+	if (michi->status != 0)
 		printf("child exit unsuccessful\n");
 	prep_for_next_cmd(michi);
 }

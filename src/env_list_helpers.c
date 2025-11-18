@@ -6,7 +6,7 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 13:19:56 by ramarti2          #+#    #+#             */
-/*   Updated: 2025/11/12 14:17:57 by ramarti2         ###   ########.fr       */
+/*   Updated: 2025/11/18 15:07:12 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	*getvarname(char *new_var)
 	if (!varname)
 		return (NULL);
 	ptr = varname;
-	while (*ptr != '=')
+	while (*ptr && *ptr != '=')
 		ptr++;
 	*ptr = '\0';
 	return (varname);

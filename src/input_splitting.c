@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   input_splitting.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 16:02:11 by gregueir          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2025/11/18 17:24:23 by gregueir         ###   ########.fr       */
+=======
+/*   Updated: 2025/11/18 17:01:44 by ramarti2         ###   ########.fr       */
+>>>>>>> 7162710d4ee245419d5ee46019eac9a5ee7f87da
 /*                                                                            */
 /* ************************************************************************** */
 
