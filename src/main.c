@@ -6,7 +6,7 @@
 /*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:38:57 by gregueir          #+#    #+#             */
-/*   Updated: 2025/11/18 14:27:01 by gregueir         ###   ########.fr       */
+/*   Updated: 2025/11/18 16:28:08 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,4 +131,3 @@ int	main(int argc, char **argv, char **env)
 }
 
 // 210,317k still reachables in readline
-

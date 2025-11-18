@@ -6,7 +6,7 @@
 /*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 16:02:11 by gregueir          #+#    #+#             */
-/*   Updated: 2025/11/17 10:18:29 by gregueir         ###   ########.fr       */
+/*   Updated: 2025/11/18 17:24:23 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,65 +25,54 @@ int	is_builtin(t_cmd *node)
 	return (false);
 }
 
-/*int	quote_finder(char *input)
+/*int	cmd_count(char *s)
 {
 	int	i;
+	int	count;
 	int	quotes;
 
 	i = 0;
-	quotes = 0;
-	while (input && input[i])
-	{
-		if (input[i] == '"')
-			quotes++;
-		i++;
-	}
-	if (!quotes)
+	count = 0;
+	if (!*s)
 		return (0);
-	else if (quotes % 2 == 0)
-		return (quotes / 2);
-	return (-1);
-}*/
-
-/*int	parse_pipes(t_minishell *michi, char *input)
-{
-	// int	i;
-	// int	pipes;
-	int	quotes;
-
-	// pipes = 0;
-	// i = 0;
-	(void) michi; // comenté cosas para q el compilador se calle -Rafa
-	quotes = quote_finder(input);
-	if (quotes == -1)
+	while (s && s[i])
 	{
-		ft_printf("I'm not dealing with this unclosed quites s*** mate\n");
-		return (1);
+		if (s[i] == ' ' || !s[i])
+		{
+			
+		}
 	}
-	// while (input && input[i])
-	// {
-	// 	if (input[i] == '|')
-	// 	{
-	// 		if (pipe_validator(input, i))
-	// 			pipes++;
-	// 	}
-	// 	i++;
-	// }
-	// Split the input n times, where n is pipes + 1
-	return(ft_printf("Found %d valid quotes\n", quotes));
 }*/
+
+int	pipe_finder(char *s)
+{
+	int	i;
+	int	in_quotes;
+
+	i = 0;
+	in_quotes = 0;
+	while (*s && s[i])
+	{
+		if (in_quotes != 0 && (s[i] == '\'' || s[i] == '\"'))
+		{
+			if (in_quotes < 0 && s[i] == '\'')
+				in_quotes++;
+			if (in_quotes > 0 && s[i] == '\"')
+				in_quotes--;
+		}
+		else if (in_quotes == 0 && (s[i] == '\'' || s[i] == '\"'))
+		{
+			if (s[i] == '\'')
+				in_quotes--;
+			if (s[i] == '\"' && s[i - 1] != '\\')
+				in_quotes++;
+		}
+	}
+}
 
 int	input_parsing(t_minishell michi)
 {
-	int		i;
-	char	*input;
+	int		wcount;
 	char	**split;
 
-	input = michi.input;
-	i = 0;
-	while (input && input[i])
-	{
-		
-		i++;
-	}
 }
