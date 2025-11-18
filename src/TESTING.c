@@ -136,11 +136,15 @@ void	open_and_store_fds(int argc, char **argv, t_cmd **cmds)
 	ptr = *cmds;
 	while (ptr)
 	{
-		if (ptr == *cmds && ptr->delim == NULL) // if merely first node,
+		if (max_strncmp(argv[1], "0") == 0 && ptr == *cmds && ptr->delim == NULL) // TO HAVE INFILE
+			ptr->infile = STDIN_FILENO;
+		else if (ptr == *cmds && ptr->delim == NULL) // if merely first node,
 			ptr->infile = open(argv[1], O_RDONLY);
 		if ((*cmds)->delim && ptr->next == NULL)
 			// if first node delim and last node, append outfile
 			ptr->outfile = open(argv[argc - 1], O_CREAT | O_APPEND | O_RDWR, 0644);
+		else if (max_strncmp(argv[argc - 1], "1") == 0 && ptr->next == NULL) // FOR OUTFILE TO BE STDOUT
+			ptr->outfile = STDOUT_FILENO;
 		else if (ptr->next == NULL) // if merely last node
 			ptr->outfile = open(argv[argc - 1], O_CREAT | O_WRONLY | O_TRUNC, 0644);
 		if (ptr->infile == -1 || ptr->outfile == -1)

@@ -6,7 +6,7 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:38:57 by gregueir          #+#    #+#             */
-/*   Updated: 2025/11/17 16:16:52 by ramarti2         ###   ########.fr       */
+/*   Updated: 2025/11/18 14:47:08 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ static t_minishell *init_michishell(char **env)
 	michi->pfds = NULL;
 	michi->pids = NULL;
 	michi->input = NULL;
+	michi->status = 0;
 	add_envars(michi, env, false);
 	return (michi);
 }
