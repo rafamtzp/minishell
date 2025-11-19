@@ -40,10 +40,13 @@ void	builtin_execve(char **cmd, t_minishell *michi)
 	michi_exit(michi, false);
 }
 
-bool	unforked_execve(char **cmd, t_minishell *michi)
+bool	exec_unforked(t_cmd *ptr, char **cmd, t_minishell *michi)
 {
 	bool executed;
-	//int stdout; // to be continued.....
+	int stdout_copy;
+	
+	stdout_copy = dup(STDOUT_FILENO);
+	dup2(ptr->outfile, STDOUT_FILENO);
 	executed = true;
 	if (max_strncmp(cmd[0], "cd") == 0) // sin fork // no escribe ni recibe
 		michi->status = cd(cmd, michi);
@@ -53,6 +56,7 @@ bool	unforked_execve(char **cmd, t_minishell *michi)
 		michi->status = unset(&michi->envars, cmd);
 	else
 		executed = false;
+	dup2(stdout_copy, STDOUT_FILENO);
 	return (executed);
 }
 
@@ -76,23 +80,30 @@ static void	start_heredoc(t_cmd *ptr)
 		ptr->infile = hfd[READ_END];
 	}
 }
+void	exec_rest(t_cmd *ptr, t_minishell *michi)
+{
+	char **env;
+
+	if (is_builtin(ptr) == true)
+	builtin_execve(ptr->cmd, michi);
+	env = env_list_to_arr(michi->envars);
+	if (!env)
+		handle_err(michi, "couldn't allocate env");
+	execve(ptr->path, ptr->cmd, env);
+	handle_err(michi, NULL);
+}
 
 void	start_children(t_minishell *michi)
 {
 	t_cmd	*ptr;
-	char **env;
 	int		i;
 	bool	executed_unforked;
-	int stdout_copy;
 
 	ptr = michi->cmds;
 	i = 0;
-	stdout_copy = dup(STDOUT_FILENO);
 	while (ptr)
 	{
-		dup2(ptr->outfile, STDOUT_FILENO);
-		executed_unforked = unforked_execve(ptr->cmd, michi);
-		dup2(stdout_copy, STDOUT_FILENO);
+		executed_unforked = exec_unforked(ptr, ptr->cmd, michi);
 		michi->pids[i] = fork();
 		if (michi->pids[i] == 0)
 		{
@@ -103,17 +114,7 @@ void	start_children(t_minishell *michi)
 				start_heredoc(ptr);
 			dup2(ptr->infile, STDIN_FILENO);
 			close_pipe_ends(i, michi->pfds, cmd_list_size(michi->cmds));
-            if (is_builtin(ptr) == true)
-                builtin_execve(ptr->cmd, michi);
-			env = env_list_to_arr(michi->envars);
-			if (!env)
-			{
-				write(2, "failed to create char **env\n", 29);
-				exit(1);
-			}
-			execve(ptr->path, ptr->cmd, env);
-			printf("%s: command not found\n", ptr->cmd[0]);
-			exit(1);
+			exec_rest(ptr, michi);
 		}
 		i++;
 		ptr = ptr->next;

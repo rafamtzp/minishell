@@ -6,7 +6,7 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 13:18:48 by ramarti2          #+#    #+#             */
-/*   Updated: 2025/11/19 12:03:35 by ramarti2         ###   ########.fr       */
+/*   Updated: 2025/11/19 15:44:02 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,29 +29,35 @@ So, it doesn't affect the current shell.
 */
 
 // maybe implement 'cd -'?
-int	cd(char **cmd, t_minishell *michi) // unforked
+int	cd(char **cmd, t_minishell *michi)
 {
 	t_envar *oldpwd;
+	char *old_oldpwd;
+	char *old_pwd;
 	t_envar *pwd;
 	
 	oldpwd = find_envar("OLDPWD", michi->envars);
 	pwd = find_envar("PWD", michi->envars);
 	if (!oldpwd || !pwd)
-		return (1); // handle error
-	free(oldpwd->value);
-	free(pwd->value);
+		return (1);
+	old_oldpwd = oldpwd->value;
+	old_pwd = pwd->value;
 	oldpwd->value = ft_calloc(1, PATH_MAX);
+	if (!oldpwd->value)
+		return (oldpwd->value = old_oldpwd, 1);
 	pwd->value = ft_calloc(1, PATH_MAX);
-	if (!oldpwd->value || !pwd->value)
-		handle_err(errno, 2, ""); // fix
+	if (!pwd->value)
+		return (pwd->value = old_pwd, 1);
+	free(old_oldpwd);
+	free(old_pwd);
 	getcwd(oldpwd->value, PATH_MAX);
 	if (!oldpwd->value)
-		return (1); // handle error
+		return (1);
 	if (chdir(cmd[1]) != 0)
-		handle_err(errno, 1, "filename"); // fix
+		handle_err(michi, NULL);
 	getcwd(pwd->value, PATH_MAX);
 	if (!pwd->value)
-		return (1); // handle
+		return (1);
 	return (0);
 }
 
@@ -61,10 +67,7 @@ void	pwd(t_minishell *michi)
 
 	pwd = find_envar("PWD", michi->envars);
 	if (!pwd)
-	{
-		perror("Couldn't find PWD\n");
-		exit(1); // handle
-	}
+		handle_err(michi, "pwd");
 	printf("%s\n", pwd->value);
 }
 
@@ -83,6 +86,6 @@ void	michi_exit(t_minishell *michi, bool print_msg)
 	clean_env_list(michi);
 	if (print_msg == true)
 		printf("exit\n");
-	free(michi->input);
+	//free(michi->input);
 	exit(michi->status);
 }
