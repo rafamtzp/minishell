@@ -6,7 +6,7 @@
 /*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 16:02:11 by gregueir          #+#    #+#             */
-/*   Updated: 2025/11/19 12:56:54 by gregueir         ###   ########.fr       */
+/*   Updated: 2025/11/19 14:43:49 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	pipe_finder(char *s)
 		{
 			if (s[i] == '\'')
 				in_quotes--;
-			if (s[i] == '\"' && s[i - 1] != '\\')
+			if (s[i] == '\"')
 				in_quotes++;
 		}
 	}
