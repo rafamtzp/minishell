@@ -6,11 +6,11 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 13:18:48 by ramarti2          #+#    #+#             */
-/*   Updated: 2025/11/18 17:08:17 by ramarti2         ###   ########.fr       */
+/*   Updated: 2025/11/19 12:03:35 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 // Note: guille se encarga de expandir '$?'
 void	echo(char **cmd)

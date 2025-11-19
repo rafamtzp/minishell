@@ -6,11 +6,11 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 11:43:31 by rafamtz           #+#    #+#             */
-/*   Updated: 2025/11/12 14:38:19 by ramarti2         ###   ########.fr       */
+/*   Updated: 2025/11/19 12:04:21 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 t_cmd	*cmd_list_new(char *cmd, char *delim)
 {

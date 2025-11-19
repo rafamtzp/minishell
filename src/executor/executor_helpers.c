@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../minishell.h"
 
 char 		**env_list_to_arr(t_envar *env)
 {
@@ -76,10 +76,6 @@ static void	start_heredoc(t_cmd *ptr)
 		ptr->infile = hfd[READ_END];
 	}
 }
-
-
-// while cmd node:
-// 
 
 void	start_children(t_minishell *michi)
 {

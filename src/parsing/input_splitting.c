@@ -6,11 +6,11 @@
 /*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 16:02:11 by gregueir          #+#    #+#             */
-/*   Updated: 2025/11/18 17:33:14 by gregueir         ###   ########.fr       */
+/*   Updated: 2025/11/19 12:56:54 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 int	is_builtin(t_cmd *node)
 {

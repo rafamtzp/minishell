@@ -6,11 +6,11 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 13:19:56 by ramarti2          #+#    #+#             */
-/*   Updated: 2025/11/18 15:07:12 by ramarti2         ###   ########.fr       */
+/*   Updated: 2025/11/19 12:04:32 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 t_envar	*find_envar(char *varname, t_envar *ptr)
 {

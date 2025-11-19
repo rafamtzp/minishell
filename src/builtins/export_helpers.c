@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtins_export_helpers.c                          :+:      :+:    :+:   */
+/*   export_helpers.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 13:19:33 by ramarti2          #+#    #+#             */
-/*   Updated: 2025/11/13 13:46:25 by ramarti2         ###   ########.fr       */
+/*   Updated: 2025/11/19 12:03:41 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 static void	set_empty_indices(t_envar **s)
 {
