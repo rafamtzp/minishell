@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 13:17:07 by ramarti2          #+#    #+#             */
-/*   Updated: 2025/11/19 12:57:10 by gregueir         ###   ########.fr       */
+/*   Updated: 2025/11/19 14:46:51 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,12 +76,11 @@ int	count_args(char **cmd)
 	int	argcount;
 
 	argcount = 0;
-	// assuming cmd ends in NULL
 	while (cmd[argcount] != NULL)
 		argcount++;
 	return (argcount);
 }
-// hacer export hola="a""
+
 int	export(t_minishell *michi, char **cmd) // unforked
 {
 	int status;

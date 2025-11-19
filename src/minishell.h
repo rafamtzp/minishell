@@ -6,7 +6,7 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:39:22 by gregueir          #+#    #+#             */
-/*   Updated: 2025/11/18 14:19:22 by ramarti2         ###   ########.fr       */
+/*   Updated: 2025/11/19 15:03:33 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ int					unset(t_envar **envars, char **cmd);
 int					count_args(char **cmd);
 
 // error handling
-void				handle_err(int errnum, int err, char *msg);
+void	handle_err(t_minishell *michi, char *msg);
 
 // Input splitting
 int					parse_pipes(t_minishell *michi, char *input);
