@@ -6,15 +6,11 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 16:02:11 by gregueir          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2025/11/18 17:24:23 by gregueir         ###   ########.fr       */
-=======
-/*   Updated: 2025/11/18 17:01:44 by ramarti2         ###   ########.fr       */
->>>>>>> 7162710d4ee245419d5ee46019eac9a5ee7f87da
+/*   Updated: 2025/11/19 12:04:59 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 int	is_builtin(t_cmd *node)
 {

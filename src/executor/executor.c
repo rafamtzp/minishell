@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../minishell.h"
 
 void	prep_for_next_cmd(t_minishell *michi)
 {
