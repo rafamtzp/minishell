@@ -6,7 +6,7 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:38:57 by gregueir          #+#    #+#             */
-/*   Updated: 2025/11/19 14:54:09 by ramarti2         ###   ########.fr       */
+/*   Updated: 2025/11/20 15:34:26 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ int	main(int argc, char **argv, char **env)
 		char **args = test_input_splitting(michi->input);
 		parsing_storing_checking(wc + 1, args, &michi->cmds);
 		//----------------------------
-		
+
 		//Split the input
 		
 		// expand any variables in the input

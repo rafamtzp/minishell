@@ -31,8 +31,7 @@ void	t_handle_err(t_cmd **cmds, int **pfds)
 	exit(1);
 }
 // ------------------------------------------------------------------------------------------------
-
-int	free_str_arr(char **arr, int ret)
+void	free_str_arr(char **arr)
 {
 	int	i;
 
@@ -40,7 +39,6 @@ int	free_str_arr(char **arr, int ret)
 	while (arr[i])
 		free(arr[i++]);
 	free(arr);
-	return (ret);
 }
 
 char	**get_env_paths(void)
@@ -52,7 +50,7 @@ char	**get_env_paths(void)
 	paths = ft_split(getenv("PATH"), ':');
 	if (!paths)
 	{
-		free_str_arr(paths, -1);
+		free_str_arr(paths);
 		return (NULL);
 	}
 	i = 0;
@@ -63,7 +61,7 @@ char	**get_env_paths(void)
 		free(tmp);
 		if (!paths[i])
 		{
-			free_str_arr(paths, -1);
+			free_str_arr(paths);
 			return (NULL);
 		}
 		i++;
@@ -71,7 +69,7 @@ char	**get_env_paths(void)
 	return (paths);
 }
 
-int	find_paths(t_cmd *ptr)
+void	find_paths(t_cmd *ptr)
 {
 	int		i;
 	char	**paths;
@@ -84,17 +82,16 @@ int	find_paths(t_cmd *ptr)
 		{
 			ptr->path = ft_strjoin(paths[i], ptr->cmd[0]);
 			if (!ptr->path)
-				return (free_str_arr(paths, -1));
+				break ;
 			if (access(ptr->path, X_OK) == 0)
 				break ;
 			free(ptr->path);
+			ptr->path = NULL;
 			i++;
 		}
-		if (!ptr->path && is_builtin(ptr) == false)
-			return (free_str_arr(paths, -1));
 		ptr = ptr->next;
 	}
-	return (free_str_arr(paths, 0));
+	free_str_arr(paths);
 }
 
 static void	check_and_store_cmds(int argc, char **argv, t_cmd **cmds)

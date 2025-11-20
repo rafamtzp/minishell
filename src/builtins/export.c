@@ -6,7 +6,7 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 13:17:07 by ramarti2          #+#    #+#             */
-/*   Updated: 2025/11/19 14:46:51 by ramarti2         ###   ########.fr       */
+/*   Updated: 2025/11/20 16:28:08 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,7 @@ int	add_envars(t_minishell *michi, char **cmd, bool is_not_parsing)
 	{
 		new = env_list_new(cmd[i]);
 		if (!new)
-		{
-			//handle_err(errno, 0, ""); // TO IMPROVE
-			return (1);
-		}
+			return (1); // env list should be freed later (I think....)
 		env_list_add_back(&michi->envars, new);
 		i++;
 	}

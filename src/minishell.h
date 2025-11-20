@@ -6,7 +6,7 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:39:22 by gregueir          #+#    #+#             */
-/*   Updated: 2025/11/19 15:03:33 by ramarti2         ###   ########.fr       */
+/*   Updated: 2025/11/20 16:30:56 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void				echo(char **cmd);
 int					cd(char **cmd, t_minishell *michi);
 void				pwd(t_minishell *michi);
 void				env(t_envar *envars);
-void				michi_exit(t_minishell *michi, bool print_msg);
+void				michi_exit(t_minishell *michi, bool print_msg, char *err_msg);
 
 // builtins: export
 int					export(t_minishell *michi, char **cmd);

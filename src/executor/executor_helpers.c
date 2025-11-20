@@ -8,7 +8,7 @@ char 		**env_list_to_arr(t_envar *env)
 
 	env_arr = malloc((env_list_size(env) + 1) * sizeof(char *));
 	if (!env_arr)
-		exit(1); // TODO
+		return (NULL);
 	env_arr[env_list_size(env)] = NULL;
 	i = 0;
 	while (env)
@@ -36,8 +36,8 @@ void	builtin_execve(char **cmd, t_minishell *michi)
 	else if (max_strncmp(cmd[0], "env") == 0)
 		env(michi->envars);
 	else if (max_strncmp(cmd[0], "exit") == 0 && cmd_list_size(michi->cmds) == 1)
-		michi_exit(michi, true);
-	michi_exit(michi, false);
+		michi_exit(michi, true, NULL);
+	michi_exit(michi, false, NULL);
 }
 
 bool	exec_unforked(t_cmd *ptr, char **cmd, t_minishell *michi)
@@ -85,12 +85,13 @@ void	exec_rest(t_cmd *ptr, t_minishell *michi)
 	char **env;
 
 	if (is_builtin(ptr) == true)
-	builtin_execve(ptr->cmd, michi);
+		builtin_execve(ptr->cmd, michi);
 	env = env_list_to_arr(michi->envars);
 	if (!env)
-		handle_err(michi, "couldn't allocate env");
+		michi_exit(michi, false,"exec_rest error: env");
 	execve(ptr->path, ptr->cmd, env);
-	handle_err(michi, NULL);
+	write(2, "Error: command not found\n", 26);
+	michi_exit(michi, false, NULL);
 }
 
 void	start_children(t_minishell *michi)
@@ -108,7 +109,7 @@ void	start_children(t_minishell *michi)
 		if (michi->pids[i] == 0)
 		{
 			if (executed_unforked == true)
-				michi_exit(michi, false);
+				michi_exit(michi, false, NULL);
 			dup2(ptr->outfile, STDOUT_FILENO);
 			if (ptr->delim)
 				start_heredoc(ptr);

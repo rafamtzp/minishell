@@ -11,6 +11,7 @@ void	prep_for_next_cmd(t_minishell *michi)
 	michi->cmds = NULL;
 	free(michi->input);
 	michi->input = NULL;
+	michi->status = 0;
 }
 
 // receives cmd list, and env vars list
@@ -21,24 +22,21 @@ void executor(t_minishell *michi)
 {
 	int		i;
 
-	// I dont think doing a single-command executor is necessary........
 	if (max_strncmp(michi->cmds->cmd[0], "exit") == 0 && cmd_list_size(michi->cmds) == 1)
-		michi_exit(michi, true);
+		michi_exit(michi, true, NULL);
 	michi->pfds = setup_pipes(&michi->cmds);
 	michi->pids = malloc(cmd_list_size(michi->cmds) * sizeof(pid_t));
 	if (!michi->pids)
-		exit(1); //handle_err(&cmds, pfds);
+		michi_exit(michi, false, "executor error: pids");
 	start_children(michi);
 	close_pipe_ends(-1, michi->pfds, cmd_list_size(michi->cmds));
 	i = 0;
-	while (i < cmd_list_size(michi->cmds) && michi->status == 0)
+	while (i < cmd_list_size(michi->cmds))
 	{
-		michi->status = 0;
 		waitpid(michi->pids[i++], &michi->status, 0);
-		printf(">> status: %i\n", michi->status);
+		if (michi->status != 0)
+			write(2, "Error: failed to execute command\n", 34);
 	}
-	if (michi->status != 0)
-		printf("child exit unsuccessful\n");
 	prep_for_next_cmd(michi);
 }
 
