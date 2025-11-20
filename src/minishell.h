@@ -6,7 +6,7 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:39:22 by gregueir          #+#    #+#             */
-/*   Updated: 2025/11/20 16:30:56 by ramarti2         ###   ########.fr       */
+/*   Updated: 2025/11/20 16:53:42 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,8 +105,9 @@ int					count_args(char **cmd);
 void	handle_err(t_minishell *michi, char *msg);
 
 // Input splitting
-int					parse_pipes(t_minishell *michi, char *input);
 int					is_builtin(t_cmd *node);
+int					dquote_checker(char *s);
+int					squote_checker(char *s);
 
 // executor
 void				executor(t_minishell *michi);
