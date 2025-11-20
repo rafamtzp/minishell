@@ -6,13 +6,13 @@
 /*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 12:59:00 by gregueir          #+#    #+#             */
-/*   Updated: 2025/11/20 13:18:46 by gregueir         ###   ########.fr       */
+/*   Updated: 2025/11/20 15:47:52 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-//Returns 1 if dquotes aren't balanced and 0 if they are
+//Returns 0 if dquotes aren't balanced and distance to next quote if they are
 int	dquote_checker(char *s)
 {
 	int	i;
@@ -23,24 +23,22 @@ int	dquote_checker(char *s)
 	dquote = 0;
 	while (s && s[i])
 	{
-		j = 1;
+		j = 0;
 		if (s[i] == '"')
 		{
 			dquote = 1;
-			while (s[i + j] && dquote == 1)
+			while (s[i + j++] && dquote == 1)
 			{
 				if (s[i + j] == '"')
-					dquote = 0;
-				j++;
+					return (j);
 			}
-			i = i + j;
 		}
 		i++;
 	}
-	return (dquote);
+	return (0);
 }
 
-//Returns 1 if squotes aren't balanced and 0 if the are
+//Returns 0 if squotes aren't balanced and distance to next quote if they are
 int	squote_checker(char *s)
 {
 	int	i;
@@ -55,30 +53,47 @@ int	squote_checker(char *s)
 		if (s[i] == '\'')
 		{
 			squote = 1;
-			while (s[i + j] && squote == 1)
+			while (s[i + j++] && squote == 1)
 			{
 				if (s[i + j] == '\'')
-					squote = 0;
+					return(j);
 				j++;
 			}
-			i = i + j;
 		}
 		i++;
 	}
-	return (squote);
+	return (0);
 }
 
-int	syntax_check(char *s)
+int	syntax_check_quotes(char *s)
 {
 	int	i;
-	if (dquote_checker(s) || squote_checker(s))
-		return (perror("Sintax error"), 1);
-	printf("Success\n");
+	int	distance;
+
+	i = 0;
+	while (s && s[i])
+	{
+		if (s[i] == '"')
+		{
+			distance = dquote_checker(s + i);
+			if (!distance)
+				return(perror("Sintax Error"), 1);
+			i += distance;
+		}
+		else if (s[i] == '\'')
+		{
+			distance = squote_checker(s + i);
+			if (!distance)
+				return(perror("Sintax Error"), 2);
+			i += distance;
+		}
+		i++;
+	}
 	return (0);
 }
 
 // int	main(int argv, char **args)
 // {
-// 	syntax_check(args[1]);
+// 	syntax_check_quotes(args[1]);
 // 	return (0);
 // }
