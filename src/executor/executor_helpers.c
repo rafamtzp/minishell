@@ -32,39 +32,47 @@ char 		**env_list_to_arr(t_envar *env)
 	return (env_arr);
 }
 
-void	builtin_execve(char **cmd, t_minishell *michi)
+void	builtin_execve(t_cmd *ptr, t_minishell *michi)
 {
-	if (max_strncmp(cmd[0], "echo") == 0)
-		echo(cmd);
-	else if (max_strncmp(cmd[0], "pwd") == 0)
+	if (ptr->infile != STDIN_FILENO)
+		close(ptr->infile);
+	if (max_strncmp(ptr->cmd[0], "echo") == 0)
+		echo(ptr->cmd);
+	else if (max_strncmp(ptr->cmd[0], "pwd") == 0)
 		pwd(michi);
-	else if (max_strncmp(cmd[0], "env") == 0)
+	else if (max_strncmp(ptr->cmd[0], "env") == 0)
 		env(michi->envars);
-	else if (max_strncmp(cmd[0], "exit") == 0 && cmd_list_size(michi->cmds) == 1)
+	else if (max_strncmp(ptr->cmd[0], "cd") == 0) // sin fork // no escribe ni recibe
+		michi->status = cd(ptr->cmd, michi);
+	else if (max_strncmp(ptr->cmd[0], "export") == 0) // sin fork // escribe pero no recibe
+		michi->status = export(michi, ptr->cmd);
+	else if (max_strncmp(ptr->cmd[0], "unset") == 0) // sin fork // ni escribe ni recibe
+		michi->status = unset(&michi->envars, ptr->cmd);
+	else if (max_strncmp(ptr->cmd[0], "exit") == 0 && cmd_list_size(michi->cmds) == 1)
 		michi_exit(michi, true, NULL);
-	michi->status = 0;
-	michi_exit(michi, false, NULL);
+	if (cmd_list_size(michi->cmds) > 1)
+		michi_exit(michi, false, NULL);
 }
 
-bool	exec_unforked(t_cmd *ptr, char **cmd, t_minishell *michi)
-{
-	bool executed;
-	int stdout_copy;
+// bool	exec_unforked(t_cmd *ptr, char **cmd, t_minishell *michi)
+// {
+// 	bool executed;
+// 	int stdout_copy;
 	
-	stdout_copy = dup(STDOUT_FILENO);
-	dup2(ptr->outfile, STDOUT_FILENO);
-	executed = true;
-	if (max_strncmp(cmd[0], "cd") == 0) // sin fork // no escribe ni recibe
-		michi->status = cd(cmd, michi);
-	else if (max_strncmp(cmd[0], "export") == 0) // sin fork // escribe pero no recibe
-		michi->status = export(michi, cmd);
-	else if (max_strncmp(cmd[0], "unset") == 0) // sin fork // ni escribe ni recibe
-		michi->status = unset(&michi->envars, cmd);
-	else
-		executed = false;
-	dup2(stdout_copy, STDOUT_FILENO);
-	return (executed);
-}
+// 	stdout_copy = dup(STDOUT_FILENO);
+// 	dup2(ptr->outfile, STDOUT_FILENO);
+// 	executed = true;
+// 	if (max_strncmp(ptr->cmd[0], "cd") == 0) // sin fork // no escribe ni recibe
+// 		michi->status = cd(cmd, michi);
+// 	else if (max_strncmp(ptr->cmd[0], "export") == 0) // sin fork // escribe pero no recibe
+// 		michi->status = export(michi, cmd);
+// 	else if (max_strncmp(ptr->cmd[0], "unset") == 0) // sin fork // ni escribe ni recibe
+// 		michi->status = unset(&michi->envars, cmd);
+// 	else
+// 		executed = false;
+// 	dup2(stdout_copy, STDOUT_FILENO);
+// 	return (executed);
+// }
 
 static void	start_heredoc(t_cmd *ptr)
 {
@@ -91,10 +99,24 @@ void	exec_rest(t_cmd *ptr, t_minishell *michi)
 	char **env;
 
 	if (is_builtin(ptr) == true)
-		builtin_execve(ptr->cmd, michi);
+		builtin_execve(ptr, michi);
 	env = env_list_to_arr(michi->envars);
 	if (!env)
 		michi_exit(michi, false,"exec_rest error: env");
+	
+	// int k;
+	// dprintf(2, "execve debug: pid=%d path=%p '%s'\n", getpid(), (void*)ptr->path, ptr->path);
+    // if (ptr->cmd)
+    // {
+    //     for (k = 0; ptr->cmd[k]; k++)
+    //         dprintf(2, " argv[%d]=%p '%s'\n", k, (void*)ptr->cmd[k], ptr->cmd[k]);
+    //     dprintf(2, " argv[%d]=%p (NULL)\n", k, (void*)ptr->cmd[k]);
+    // }
+    // for (k = 0; env && env[k]; k++)
+    //     dprintf(2, " env[%d]=%p '%s'\n", k, (void*)env[k], env[k]);
+    // if (env)
+    //     dprintf(2, " env[%d]=%p (NULL)\n", k, (void*)env[k]);
+
 	execve(ptr->path, ptr->cmd, env);
 	write(2, "Error: command not found\n", 26);
 	michi->status = 1;
@@ -105,22 +127,23 @@ void	start_children(t_minishell *michi)
 {
 	t_cmd	*ptr;
 	int		i;
-	bool	executed_unforked;
+	//bool	executed_unforked;
 
 	ptr = michi->cmds;
 	i = 0;
 	while (ptr)
 	{
-		executed_unforked = exec_unforked(ptr, ptr->cmd, michi);
+		//executed_unforked = exec_unforked(ptr, ptr->cmd, michi);
 		michi->pids[i] = fork();
 		if (michi->pids[i] == 0)
 		{
-			if (executed_unforked == true)
-				michi_exit(michi, false, NULL);
+			// if (executed_unforked == true)
+			// 	michi_exit(michi, false, NULL);
 			dup2(ptr->outfile, STDOUT_FILENO);
 			if (ptr->delim)
 				start_heredoc(ptr);
-			dup2(ptr->infile, STDIN_FILENO);
+			if (is_builtin(ptr) == false)
+				dup2(ptr->infile, STDIN_FILENO);
 			close_pipe_ends(i, michi->pfds, cmd_list_size(michi->cmds));
 			exec_rest(ptr, michi);
 		}

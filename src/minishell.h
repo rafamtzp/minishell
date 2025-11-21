@@ -6,7 +6,7 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:39:22 by gregueir          #+#    #+#             */
-/*   Updated: 2025/11/20 16:53:42 by ramarti2         ###   ########.fr       */
+/*   Updated: 2025/11/21 17:50:25 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,8 @@ void				executor(t_minishell *michi);
 
 // executor helpers
 void				start_children(t_minishell *michi);
+void	builtin_execve(t_cmd *ptr, t_minishell *michi);
+void	prep_for_next_cmd(t_minishell *michi);
 
 // pipe handling
 int					**setup_pipes(t_cmd **cmds);

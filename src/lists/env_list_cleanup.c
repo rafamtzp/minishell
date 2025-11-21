@@ -6,7 +6,7 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 14:28:51 by gregueir          #+#    #+#             */
-/*   Updated: 2025/11/19 12:04:27 by ramarti2         ###   ########.fr       */
+/*   Updated: 2025/11/21 18:02:44 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void	clean_list(t_minishell *michi)
 		free(current);
 		current = buff;
 	}
-	free(michi);
+	//free(michi);
 }
 
 void	clean_env_list(t_minishell *michi)

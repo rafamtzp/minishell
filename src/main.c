@@ -6,7 +6,7 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:38:57 by gregueir          #+#    #+#             */
-/*   Updated: 2025/11/21 16:27:26 by ramarti2         ###   ########.fr       */
+/*   Updated: 2025/11/21 19:02:04 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ char **test_input_splitting(char *input)
 		perror("Malloc error");
 		exit(1);
 	}
-	args[0] = "firstarg";
+	args[0] = ft_strdup("firstarg");
 	args[wc + 1] = NULL;
 	int i = 0;
 	int j = 1;
@@ -99,7 +99,7 @@ int	main(int argc, char **argv, char **env)
 	while (1)
 	{
 		//michi->input = readline("/^•⩊•^\\ ❀ michishell ❀ $ ");
-		michi->input = readline("/^•⩊•^\\ michishell $ ");
+		michi->input = readline("/^•⩊•^\\ michishell_$ ");
 		add_history(michi->input);
 		//parse_pipes(michi, michi->input); //uncomment all for testing
 		
@@ -107,14 +107,10 @@ int	main(int argc, char **argv, char **env)
 		int wc = test_count_words(michi->input);
 		char **args = test_input_splitting(michi->input);
 		parsing_storing_checking(wc + 1, args, &michi->cmds);
+		free(args[0]);
+		free(args);
 		//----------------------------
 		//Split the input
-		for (t_cmd *ptr = michi->cmds; ptr; ptr = ptr->next)
-		{
-			printf("%s %s\n", ptr->cmd[0], ptr->path);
-			if (access(ptr->path, X_OK) == 0)
-				printf("%s exists\n", ptr->path);
-		}
 		
 		// expand any variables in the input
 		
@@ -122,6 +118,7 @@ int	main(int argc, char **argv, char **env)
 		
 		// execute nodes
 		executor(michi);
+		prep_for_next_cmd(michi);
 		
 	}
 	return (0);

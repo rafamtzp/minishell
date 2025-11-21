@@ -22,8 +22,8 @@ void executor(t_minishell *michi)
 {
 	int		i;
 
-	if (max_strncmp(michi->cmds->cmd[0], "exit") == 0 && cmd_list_size(michi->cmds) == 1)
-		michi_exit(michi, true, NULL);
+	if (is_builtin(michi->cmds) && cmd_list_size(michi->cmds) == 1)
+		return (builtin_execve(michi->cmds, michi));
 	michi->pfds = setup_pipes(&michi->cmds);
 	michi->pids = malloc(cmd_list_size(michi->cmds) * sizeof(pid_t));
 	if (!michi->pids)
@@ -32,24 +32,8 @@ void executor(t_minishell *michi)
 	close_pipe_ends(-1, michi->pfds, cmd_list_size(michi->cmds));
 	i = 0;
 	while (i < cmd_list_size(michi->cmds))
-    {
-        int wstatus;
-        waitpid(michi->pids[i++], &wstatus, 0);
-        if (WIFEXITED(wstatus))
-            michi->status = WEXITSTATUS(wstatus);
-        else if (WIFSIGNALED(wstatus))
-            michi->status = 128 + WTERMSIG(wstatus);
-        else
-            michi->status = 1;
-        printf("status: %i\n", michi->status);
-    }
-	// while (i < cmd_list_size(michi->cmds))
-	// {
-	// 	waitpid(michi->pids[i++], &michi->status, 0);
-	// 	printf("status: %i\n", michi->status);
-	// 	if (michi->status != 0)
-	// 		perror("");
-	// }
-	prep_for_next_cmd(michi);
+		waitpid(michi->pids[i++], &michi->status, 0);
+	if (michi->status != 0)
+		perror("");  // not 100% sure what to do here
 }
 
