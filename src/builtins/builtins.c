@@ -6,7 +6,7 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 13:18:48 by ramarti2          #+#    #+#             */
-/*   Updated: 2025/11/20 16:51:03 by ramarti2         ###   ########.fr       */
+/*   Updated: 2025/11/21 16:06:09 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,22 @@
 // Note: guille se encarga de expandir '$?'
 void	echo(char **cmd)
 {
-	if (cmd[1] && max_strncmp(cmd[1], "-n") == 0 && cmd[2])
-		printf("%s", cmd[2]);
-	else if (cmd[1])
+	if (!cmd[1])
+		printf("\n");
+	else if (!cmd[2] && max_strncmp(cmd[1], "-n") == 0)
+		printf("");
+	else if (!cmd[2])
 		printf("%s\n", cmd[1]);
+	else if (max_strncmp(cmd[1], "-n") == 0)
+		printf("%s", cmd[2]);
+	// if (cmd[1] && max_strncmp(cmd[1], "-n") == 0 && cmd[2])
+	// 	printf("%s", cmd[2]);
+	// else if (cmd[1] && max_strncmp(cmd[1], "-n") == 0)
+	// 	printf("");
+	// else if (cmd[1])
+	// 	printf("%s\n", cmd[1]);
+	// else
+	// 	printf("\n");
 }
 /*
 Note: cd should change the working directory of a process!!!
@@ -89,9 +101,10 @@ void	env(t_envar *envars)
 
 void	michi_exit(t_minishell *michi, bool print_msg, char *err_msg)
 {
-	int status;
+	int size;
 
-	close_pipe_ends(-1, michi->pfds, cmd_list_size(michi->cmds));
+	size = cmd_list_size(michi->cmds);
+	close_pipe_ends(-1, michi->pfds, size);
 	free_pipe_arr(michi->pfds);
 	if (michi->pids)
 		free(michi->pids);
@@ -104,7 +117,6 @@ void	michi_exit(t_minishell *michi, bool print_msg, char *err_msg)
 	if (print_msg == true)
 		printf("exit\n");
 	free(michi->input);
-	status = michi->status;
 	//free(michi);
-	exit(status);
+	exit(michi->status);
 }

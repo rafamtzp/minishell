@@ -13,14 +13,19 @@ char 		**env_list_to_arr(t_envar *env)
 	i = 0;
 	while (env)
 	{
-		if (env && !env->varname)
-			exit(1); // TODO
 		tmp = ft_strjoin(env->varname, "=");
 		if (env->value)
 			env_arr[i] = ft_strjoin(tmp, env->value);
 		else
-			env_arr[i] = env->varname;
+			env_arr[i] = ft_strdup(tmp);
 		free(tmp);
+		if (!env_arr[i])
+        {
+            while (i-- > 0)
+                free(env_arr[i]);
+            free(env_arr);
+            return (NULL);
+        }
 		i++;
 		env = env->next;
 	}
@@ -37,6 +42,7 @@ void	builtin_execve(char **cmd, t_minishell *michi)
 		env(michi->envars);
 	else if (max_strncmp(cmd[0], "exit") == 0 && cmd_list_size(michi->cmds) == 1)
 		michi_exit(michi, true, NULL);
+	michi->status = 0;
 	michi_exit(michi, false, NULL);
 }
 
@@ -91,6 +97,7 @@ void	exec_rest(t_cmd *ptr, t_minishell *michi)
 		michi_exit(michi, false,"exec_rest error: env");
 	execve(ptr->path, ptr->cmd, env);
 	write(2, "Error: command not found\n", 26);
+	michi->status = 1;
 	michi_exit(michi, false, NULL);
 }
 

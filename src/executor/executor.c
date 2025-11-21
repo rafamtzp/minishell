@@ -32,11 +32,24 @@ void executor(t_minishell *michi)
 	close_pipe_ends(-1, michi->pfds, cmd_list_size(michi->cmds));
 	i = 0;
 	while (i < cmd_list_size(michi->cmds))
-	{
-		waitpid(michi->pids[i++], &michi->status, 0);
-		if (michi->status != 0)
-			write(2, "Error: failed to execute command\n", 34);
-	}
+    {
+        int wstatus;
+        waitpid(michi->pids[i++], &wstatus, 0);
+        if (WIFEXITED(wstatus))
+            michi->status = WEXITSTATUS(wstatus);
+        else if (WIFSIGNALED(wstatus))
+            michi->status = 128 + WTERMSIG(wstatus);
+        else
+            michi->status = 1;
+        printf("status: %i\n", michi->status);
+    }
+	// while (i < cmd_list_size(michi->cmds))
+	// {
+	// 	waitpid(michi->pids[i++], &michi->status, 0);
+	// 	printf("status: %i\n", michi->status);
+	// 	if (michi->status != 0)
+	// 		perror("");
+	// }
 	prep_for_next_cmd(michi);
 }
 

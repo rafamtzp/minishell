@@ -6,7 +6,7 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 13:17:01 by ramarti2          #+#    #+#             */
-/*   Updated: 2025/11/19 15:03:16 by ramarti2         ###   ########.fr       */
+/*   Updated: 2025/11/21 13:44:43 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,5 +18,5 @@ void	handle_err(t_minishell *michi, char *msg)
 		printf("Error: %s\n", msg);
 	else
 		perror("Error");
-	michi_exit(michi, false);
+	michi_exit(michi, false, NULL);
 }
