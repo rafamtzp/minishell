@@ -6,7 +6,7 @@
 /*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 12:59:00 by gregueir          #+#    #+#             */
-/*   Updated: 2025/11/24 15:52:19 by gregueir         ###   ########.fr       */
+/*   Updated: 2025/11/25 13:04:34 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,14 +78,14 @@ int	syntax_check_quotes(char *s)
 		{
 			distance = dquote_checker(s + i);
 			if (!distance)
-				return(perror("Sintax Error"), 1);
+				return(perror("Syntax Error"), 1);
 			i += distance;
 		}
 		else if (s[i] == '\'')
 		{
 			distance = squote_checker(s + i);
 			if (!distance)
-				return(perror("Sintax Error"), 2);
+				return(perror("Syntax Error"), 2);
 			i += distance;
 		}
 		i++;
@@ -121,7 +121,7 @@ int	syntax_check(char *s)
 	i = 0;
 	syntax_check_quotes(s);
 	pipes = syntax_check_pipes(s);
-	printf("Pipes found: %d\n", pipes);
+	//printf("Pipes found: %d\n", pipes);
 	return (pipes);
 }
 

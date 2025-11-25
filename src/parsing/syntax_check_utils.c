@@ -6,15 +6,33 @@
 /*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/24 15:52:59 by gregueir          #+#    #+#             */
-/*   Updated: 2025/11/24 16:36:40 by gregueir         ###   ########.fr       */
+/*   Updated: 2025/11/25 13:23:05 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	check_filename(char *s)
+static int	syntax_check_redirection(char *s)
 {
-	
+	int	i;
+
+	i = 0;
+	if (s[i] == '>' && (s[i + 1] && s[i + 1] != '>'))
+	{
+		// Redirect output
+	}
+	else 
+	{
+		//Redirect output in append mode
+	}
+	if (s[i] == '<' && (s[i + 1] && s[i + 1] != '<'))
+	{
+		//redirect input
+	}
+	else
+	{
+		//next word is delimiter and you read from terminal into the heredoc
+	}
 }
 
 int	syntax_check_redirect(char *s)
@@ -28,9 +46,9 @@ int	syntax_check_redirect(char *s)
 			i += i + (dquote_checker(s + i));
 		else if (s[i] == '\'')
 			i += i + (squote_checker(s + i));
-		else if (s[i] == '>')
+		else if (s[i] == '>' || s[i] == '<')
 		{
-			
+			i += check_redirection(s);
 		}
 		i++;
 	}
