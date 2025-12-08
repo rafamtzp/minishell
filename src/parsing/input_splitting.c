@@ -6,7 +6,7 @@
 /*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 16:02:11 by gregueir          #+#    #+#             */
-/*   Updated: 2025/11/19 14:43:49 by gregueir         ###   ########.fr       */
+/*   Updated: 2025/12/08 13:53:13 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,32 +43,6 @@ int	is_builtin(t_cmd *node)
 		}
 	}
 }*/
-
-int	pipe_finder(char *s)
-{
-	int	i;
-	int	in_quotes;
-
-	i = 0;
-	in_quotes = 0;
-	while (*s && s[i])
-	{
-		if (in_quotes != 0 && (s[i] == '\'' || s[i] == '\"'))
-		{
-			if (in_quotes < 0 && s[i] == '\'')
-				in_quotes++;
-			if (in_quotes > 0 && s[i] == '\"')
-				in_quotes--;
-		}
-		else if (in_quotes == 0 && (s[i] == '\'' || s[i] == '\"'))
-		{
-			if (s[i] == '\'')
-				in_quotes--;
-			if (s[i] == '\"')
-				in_quotes++;
-		}
-	}
-}
 
 int	input_parsing(t_minishell michi)
 {

@@ -6,7 +6,7 @@
 /*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 12:59:00 by gregueir          #+#    #+#             */
-/*   Updated: 2025/12/08 12:49:35 by gregueir         ###   ########.fr       */
+/*   Updated: 2025/12/08 13:53:39 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,15 +113,20 @@ static int	syntax_check_pipes(char *s)
 	return (pipes);
 }
 
+//Checks the syntax of s, if there's any error, prints it and returns -1. If there's no error, returns the number of usable pipes found
 int	syntax_check(char *s)
 {
 	int	i;
 	int	pipes;
+	int	error;
 
 	i = 0;
-	syntax_check_quotes(s);
+	error = 0;
+	error += syntax_check_quotes(s);
+	error += syntax_check_redirect(s);
 	pipes = syntax_check_pipes(s);
-	//printf("Pipes found: %d\n", pipes);
+	if (error)
+		return (-1);
 	return (pipes);
 }
 

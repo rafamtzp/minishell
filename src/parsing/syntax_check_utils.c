@@ -6,7 +6,7 @@
 /*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/24 15:52:59 by gregueir          #+#    #+#             */
-/*   Updated: 2025/12/08 13:38:46 by gregueir         ###   ########.fr       */
+/*   Updated: 2025/12/08 13:50:13 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,31 +45,33 @@ static int	syntax_check_redirection(char *s)
 	if (s[i] == '>' && (s[i + 1] && s[i + 1] != '>'))
 	{
 		if (!find_newline(s + i))
-			return (syntax_error(3), 1);
+			return (syntax_error(3), -1);
 	}
 	else if (s[i] == '>' && (s[i + 1] && s[i + 1] == '>'))
 	{
 		if (!find_newline(s + i))
-			return (syntax_error(3), 1);
+			return (syntax_error(3), -1);
 	}
 	if (s[i] == '<' && (s[i + 1] && s[i + 1] != '<'))
 	{
 		if (!find_newline(s + i))
-			return (syntax_error(3), 1);
+			return (syntax_error(3), -1);
 	}
 	else if (s[i] == '<' && (s[i + 1] && s[i + 1] == '<'))
 	{
 		if (!find_newline(s + i))
-			return (syntax_error(3), 1);
+			return (syntax_error(3), -1);
 	}
-	return (1);
+	return (i);
 }
 
 int	syntax_check_redirect(char *s)
 {
 	int	i;
+	int	checker;
 
 	i = 0;
+	checker = 0;
 	while(s && s[i])
 	{
 		if (s[i] == '"')
@@ -77,7 +79,12 @@ int	syntax_check_redirect(char *s)
 		else if (s[i] == '\'')
 			i += squote_checker(s + i);
 		else if (s[i] == '>' || s[i] == '<')
-			i += check_redirection(s);
+		{
+			checker == check_redirection(s);
+			if (checker == -1)
+				return (1);
+			i += checker;
+		}
 		i++;
 	}
 	return (0);
