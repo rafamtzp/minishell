@@ -6,7 +6,7 @@
 /*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 12:59:00 by gregueir          #+#    #+#             */
-/*   Updated: 2025/11/25 13:04:34 by gregueir         ###   ########.fr       */
+/*   Updated: 2025/12/08 12:49:35 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	squote_checker(char *s)
 }
 
 //Reads a line and checks if there are unclosed quotes or dquotes
-int	syntax_check_quotes(char *s)
+static int	syntax_check_quotes(char *s)
 {
 	int	i;
 	int	distance;
@@ -78,14 +78,14 @@ int	syntax_check_quotes(char *s)
 		{
 			distance = dquote_checker(s + i);
 			if (!distance)
-				return(perror("Syntax Error"), 1);
+				return(syntax_error(1), 1);
 			i += distance;
 		}
 		else if (s[i] == '\'')
 		{
 			distance = squote_checker(s + i);
 			if (!distance)
-				return(perror("Syntax Error"), 2);
+				return(syntax_error(2), 2);
 			i += distance;
 		}
 		i++;
@@ -93,7 +93,7 @@ int	syntax_check_quotes(char *s)
 	return (0);
 }
 
-int	syntax_check_pipes(char *s)
+static int	syntax_check_pipes(char *s)
 {
 	int	i;
 	int	pipes;

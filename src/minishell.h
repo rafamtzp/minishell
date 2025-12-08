@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:39:22 by gregueir          #+#    #+#             */
-/*   Updated: 2025/11/21 17:50:25 by ramarti2         ###   ########.fr       */
+/*   Updated: 2025/12/08 12:49:08 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,12 +102,18 @@ int					unset(t_envar **envars, char **cmd);
 int					count_args(char **cmd);
 
 // error handling
-void	handle_err(t_minishell *michi, char *msg);
+void				handle_err(t_minishell *michi, char *msg);
 
 // Input splitting
 int					is_builtin(t_cmd *node);
+
+
+// Syntax Check
 int					dquote_checker(char *s);
 int					squote_checker(char *s);
+void					syntax_error(int errnum);
+int					syntax_check_redirect(char *s);
+int					syntax_check(char *s);
 
 // executor
 void				executor(t_minishell *michi);
