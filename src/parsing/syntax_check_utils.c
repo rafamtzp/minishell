@@ -6,7 +6,7 @@
 /*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/24 15:52:59 by gregueir          #+#    #+#             */
-/*   Updated: 2025/12/08 13:50:13 by gregueir         ###   ########.fr       */
+/*   Updated: 2025/12/08 17:03:49 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ static int	syntax_check_redirection(char *s)
 	return (i);
 }
 
+// Checks redirections on the given phrase, if they are fine it returns 0, if not, 1
 int	syntax_check_redirect(char *s)
 {
 	int	i;

@@ -6,7 +6,7 @@
 /*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:38:57 by gregueir          #+#    #+#             */
-/*   Updated: 2025/11/25 12:59:07 by gregueir         ###   ########.fr       */
+/*   Updated: 2025/12/08 17:33:46 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,16 +92,19 @@ int	main(int argc, char **argv, char **env)
 	(void)argc;
 	(void)argv;
 	t_minishell	*michi;
+	int			pipes;
 
 	print_cat();
 	michi = init_michishell(env);
 	//clean_env_list(michi);
 	while (1)
 	{
-		//michi->input = readline("/^•⩊•^\\ ❀ michishell ❀ $ ");
 		michi->input = readline("/^•⩊•^\\ michishell_$ ");
 		add_history(michi->input);
-		//parse_pipes(michi, michi->input); //uncomment all for testing
+		pipes = syntax_check(michi->input);
+		if (pipes == -1)
+			return(-1); //Syntax error, how do we handle this?
+		
 		
 		//------ TEST ----------------
 		int wc = test_count_words(michi->input);
@@ -119,7 +122,6 @@ int	main(int argc, char **argv, char **env)
 		// execute nodes
 		executor(michi);
 		prep_for_next_cmd(michi);
-		
 	}
 	return (0);
 }

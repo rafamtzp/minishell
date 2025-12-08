@@ -6,7 +6,7 @@
 /*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 12:59:00 by gregueir          #+#    #+#             */
-/*   Updated: 2025/12/08 13:53:39 by gregueir         ###   ########.fr       */
+/*   Updated: 2025/12/08 16:44:21 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,11 +116,9 @@ static int	syntax_check_pipes(char *s)
 //Checks the syntax of s, if there's any error, prints it and returns -1. If there's no error, returns the number of usable pipes found
 int	syntax_check(char *s)
 {
-	int	i;
 	int	pipes;
 	int	error;
 
-	i = 0;
 	error = 0;
 	error += syntax_check_quotes(s);
 	error += syntax_check_redirect(s);

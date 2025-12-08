@@ -6,7 +6,7 @@
 /*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:39:22 by gregueir          #+#    #+#             */
-/*   Updated: 2025/12/08 12:49:08 by gregueir         ###   ########.fr       */
+/*   Updated: 2025/12/08 16:42:31 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ int					is_builtin(t_cmd *node);
 // Syntax Check
 int					dquote_checker(char *s);
 int					squote_checker(char *s);
-void					syntax_error(int errnum);
+void				syntax_error(int errnum);
 int					syntax_check_redirect(char *s);
 int					syntax_check(char *s);
 
