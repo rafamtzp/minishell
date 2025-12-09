@@ -6,7 +6,7 @@
 /*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:38:57 by gregueir          #+#    #+#             */
-/*   Updated: 2025/12/08 17:33:46 by gregueir         ###   ########.fr       */
+/*   Updated: 2025/12/09 12:54:31 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ int	main(int argc, char **argv, char **env)
 		pipes = syntax_check(michi->input);
 		if (pipes == -1)
 			return(-1); //Syntax error, how do we handle this?
-		
+		tokenize(michi, pipes);
 		
 		//------ TEST ----------------
 		int wc = test_count_words(michi->input);

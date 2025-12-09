@@ -6,7 +6,7 @@
 /*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 12:59:00 by gregueir          #+#    #+#             */
-/*   Updated: 2025/12/08 16:44:21 by gregueir         ###   ########.fr       */
+/*   Updated: 2025/12/09 13:50:26 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	squote_checker(char *s)
 			while (s[i + j++] && squote == 1)
 			{
 				if (s[i + j] == '\'')
-					return(j);
+					return (j);
 				j++;
 			}
 		}
@@ -78,14 +78,14 @@ static int	syntax_check_quotes(char *s)
 		{
 			distance = dquote_checker(s + i);
 			if (!distance)
-				return(syntax_error(1), 1);
+				return (syntax_error(1), 1);
 			i += distance;
 		}
 		else if (s[i] == '\'')
 		{
 			distance = squote_checker(s + i);
 			if (!distance)
-				return(syntax_error(2), 2);
+				return (syntax_error(2), 2);
 			i += distance;
 		}
 		i++;
@@ -100,7 +100,7 @@ static int	syntax_check_pipes(char *s)
 
 	i = 0;
 	pipes = 0;
-	while(s && s[i])
+	while (s && s[i])
 	{
 		if (s[i] == '"')
 			i += i + (dquote_checker(s + i));

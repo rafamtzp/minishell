@@ -6,7 +6,7 @@
 /*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:39:22 by gregueir          #+#    #+#             */
-/*   Updated: 2025/12/08 16:42:31 by gregueir         ###   ########.fr       */
+/*   Updated: 2025/12/09 12:54:54 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,9 +104,8 @@ int					count_args(char **cmd);
 // error handling
 void				handle_err(t_minishell *michi, char *msg);
 
-// Input splitting
+// Is Builtin
 int					is_builtin(t_cmd *node);
-
 
 // Syntax Check
 int					dquote_checker(char *s);
@@ -114,6 +113,9 @@ int					squote_checker(char *s);
 void				syntax_error(int errnum);
 int					syntax_check_redirect(char *s);
 int					syntax_check(char *s);
+
+// Tokenize
+int					tokenize(t_minishell *michi, int pipes);
 
 // executor
 void				executor(t_minishell *michi);

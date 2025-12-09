@@ -6,7 +6,7 @@
 /*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/24 15:52:59 by gregueir          #+#    #+#             */
-/*   Updated: 2025/12/08 17:03:49 by gregueir         ###   ########.fr       */
+/*   Updated: 2025/12/09 13:51:22 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,24 +19,25 @@ void	syntax_error(int errnum)
 	else if (errnum == 2)
 		write(stderr, "Syntax error: Unclosed simple quotes", 37);
 	else if (errnum == 3)
-		write(stderr, "Syntax error: Unexpected token 'newline'", 41);
+		write(stderr, "Syntax error: Unexpected token 'newline' or '|'", 48);
 }
 
-//Helper function, returns 1 if s has a \n after n spaces
+//Helper function, returns 1 if s has a \n or pipe after n spaces
 static int	find_newline(char *s)
 {
 	int	i;
-	
+
 	i = 0;
 	while (s && s[i] == ' ')
 		i++;
-	if (s && s[i] == '\n')
-		return(0);
+	if (s && (s[i] == '\n' || s[i] == '|'))
+		return (0);
 	else
-		return(1);
+		return (1);
 }
 
 //There's no way this works correctly, but testing it before everything is built is a pain, so test it when everything is built
+//This function should check if there's a valid redirection, and if so, give it the green light
 static int	syntax_check_redirection(char *s)
 {
 	int	i;
@@ -73,7 +74,7 @@ int	syntax_check_redirect(char *s)
 
 	i = 0;
 	checker = 0;
-	while(s && s[i])
+	while (s && s[i])
 	{
 		if (s[i] == '"')
 			i += dquote_checker(s + i);
