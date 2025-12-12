@@ -6,7 +6,7 @@
 /*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:39:22 by gregueir          #+#    #+#             */
-/*   Updated: 2025/12/09 12:54:54 by gregueir         ###   ########.fr       */
+/*   Updated: 2025/12/12 14:55:39 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,8 +123,8 @@ void				executor(t_minishell *michi);
 
 // executor helpers
 void				start_children(t_minishell *michi);
-void	builtin_execve(t_cmd *ptr, t_minishell *michi);
-void	prep_for_next_cmd(t_minishell *michi);
+void				builtin_execve(t_cmd *ptr, t_minishell *michi);
+void				prep_for_next_cmd(t_minishell *michi);
 
 // pipe handling
 int					**setup_pipes(t_cmd **cmds);

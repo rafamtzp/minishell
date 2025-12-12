@@ -6,7 +6,7 @@
 /*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/24 15:52:59 by gregueir          #+#    #+#             */
-/*   Updated: 2025/12/09 13:51:22 by gregueir         ###   ########.fr       */
+/*   Updated: 2025/12/12 16:25:57 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	syntax_check_redirect(char *s)
 			i += squote_checker(s + i);
 		else if (s[i] == '>' || s[i] == '<')
 		{
-			checker == check_redirection(s);
+			checker == syntax_check_redirection(s);
 			if (checker == -1)
 				return (1);
 			i += checker;

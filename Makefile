@@ -7,7 +7,8 @@ SRC 	= src/builtins/builtins.c		src/executor/executor.c\
 		  src/builtins/export.c			src/executor/executor_helpers.c\
 		  src/builtins/export_helpers.c	src/gui.c\
 		  src/builtins/unset.c			src/parsing/is_builtin.c\
-		  src/parsing/syntax_check.c	src/tokenizer/tokenize.c\
+		  src/parsing/syntax_check.c	src/parsing/syntax_check_utils.c\
+		  src/tokenizer/tokenize.c\
 		  src/lists/cmd_list_helpers.c	src/main.c\
 		  src/lists/env_list_cleanup.c	src/lists/env_list_helpers.c\
 		  src/executor/pipe_handling.c	src/error_handling.c\
