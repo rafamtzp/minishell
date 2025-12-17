@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:39:22 by gregueir          #+#    #+#             */
-/*   Updated: 2025/12/12 14:55:39 by gregueir         ###   ########.fr       */
+/*   Updated: 2025/12/17 13:55:49 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ typedef struct s_cmd
 {
 	char			**cmd;
 	char			*path;
-	char			*delim;
+	char			*delim; // change to char ** in case of multiple delims?????
 	int				infile;
 	int				outfile;
 	struct s_cmd	*next;

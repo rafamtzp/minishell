@@ -74,25 +74,31 @@ void	builtin_execve(t_cmd *ptr, t_minishell *michi)
 // 	return (executed);
 // }
 
+
+
 static void	start_heredoc(t_cmd *ptr)
 {
 	int		hfd[2];
 	char	*line;
 
 	pipe(hfd);
+	//TODO: multiple delims?????
 	while (1)
 	{
 		line = get_next_line(STDIN_FILENO);
 		if (!line)
+		{
+			write(2, "gnl error in heredoc\n", 24);
 			break ;
-		if (max_strncmp(line, ptr->delim) == 0)
+		}
+		if (max_strncmp(line, ptr->delim) == 0 /* and it*/)
 		{
 			close(hfd[WRITE_END]);
 			break ;
 		}
 		write(hfd[WRITE_END], line, ft_strlen(line));
-		ptr->infile = hfd[READ_END];
 	}
+	ptr->infile = hfd[READ_END];
 }
 void	exec_rest(t_cmd *ptr, t_minishell *michi)
 {
