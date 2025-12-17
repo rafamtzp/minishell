@@ -6,7 +6,7 @@
 /*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:38:57 by gregueir          #+#    #+#             */
-/*   Updated: 2025/12/09 12:54:31 by gregueir         ###   ########.fr       */
+/*   Updated: 2025/12/17 12:46:29 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,11 +107,11 @@ int	main(int argc, char **argv, char **env)
 		tokenize(michi, pipes);
 		
 		//------ TEST ----------------
-		int wc = test_count_words(michi->input);
-		char **args = test_input_splitting(michi->input);
-		parsing_storing_checking(wc + 1, args, &michi->cmds);
-		free(args[0]);
-		free(args);
+		// int wc = test_count_words(michi->input);
+		// char **args = test_input_splitting(michi->input);
+		// parsing_storing_checking(wc + 1, args, &michi->cmds);
+		// free(args[0]);
+		// free(args);
 		//----------------------------
 		//Split the input
 		
@@ -120,8 +120,8 @@ int	main(int argc, char **argv, char **env)
 		// create command nodes
 		
 		// execute nodes
-		executor(michi);
-		prep_for_next_cmd(michi);
+		//executor(michi);
+		//prep_for_next_cmd(michi);
 	}
 	return (0);
 }

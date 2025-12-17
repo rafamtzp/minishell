@@ -1,7 +1,7 @@
 NAME = minishell
 
 CC		= cc
-CFLAGS 	= -Wall -Werror -Wextra -g
+CFLAGS 	= -Wall -Werror -Wextra
 
 SRC 	= src/builtins/builtins.c		src/executor/executor.c\
 		  src/builtins/export.c			src/executor/executor_helpers.c\
