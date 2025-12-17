@@ -6,11 +6,26 @@
 /*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 11:39:57 by gregueir          #+#    #+#             */
-/*   Updated: 2025/12/12 16:14:11 by gregueir         ###   ########.fr       */
+/*   Updated: 2025/12/17 18:36:00 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+static bool	is_breakpoint(char c)
+{
+	if (c == '|' || c == '\0' || c == '\n')
+		return (true);
+	return (false);
+}
+
+//Returns true if c is one of the designated word separators and false if not
+static bool	is_separator(char c)
+{
+	if (c == ' ' || c == '\n')
+		return (true);
+	return (false);
+}
 
 //Counts disctinct words (tokens) in the current Cmd, stops when finding a pipe
 static int	word_count(char	*line)
@@ -20,23 +35,21 @@ static int	word_count(char	*line)
 
 	i = 0;
 	wcount = 0;
-	while (line && line[i] && line[i] != '|')
+	while (line && !is_breakpoint(line[i]))
 	{
+		while (line[i] && is_separator(line[i]))
+			i++;
+		if (!is_breakpoint(line[i]) && !is_separator(line[i]))
+			wcount++;
+		if (line[i] == '>' || line[i] == '<')
+			wcount -= 2;
 		if (line[i] == '"')
 			i += dquote_checker(line + i);
 		else if (line[i] == '\'')
 			i+= squote_checker(line + i);
-		if (line[i] == ' ' || line[i] == '<'
-			|| line[i] == '>' || line[i] == '|')
-		{
-			if (i != 0 && (line[i - 1] != ' ' || line[i - 1] != '<'
-				|| line[i - 1] != '>'))
-					wcount++;
-		}
-		i++;
+		while (!is_breakpoint(line[i]) && !is_separator(line[i]))
+			i++;
 	}
-	if (line[i - 1] != ' ' || line[i - 1] != '<' || line[i - 1] != '>')
-		wcount++;
 	return (wcount);
 }
 

@@ -6,7 +6,7 @@
 /*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:38:57 by gregueir          #+#    #+#             */
-/*   Updated: 2025/12/17 12:46:29 by gregueir         ###   ########.fr       */
+/*   Updated: 2025/12/17 18:00:17 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int	main(int argc, char **argv, char **env)
 	t_minishell	*michi;
 	int			pipes;
 
-	print_cat();
+	//print_cat();
 	michi = init_michishell(env);
 	//clean_env_list(michi);
 	while (1)
