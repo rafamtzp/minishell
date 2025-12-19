@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_check_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/24 15:52:59 by gregueir          #+#    #+#             */
-/*   Updated: 2025/12/12 16:25:57 by gregueir         ###   ########.fr       */
+/*   Updated: 2025/12/19 16:11:04 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 void	syntax_error(int errnum)
 {
 	if (errnum == 1)
-		write(stderr, "Syntax error: Unclosed double quotes", 37);
+		write(2, "Syntax error: Unclosed double quotes", 37);
 	else if (errnum == 2)
-		write(stderr, "Syntax error: Unclosed simple quotes", 37);
+		write(2, "Syntax error: Unclosed simple quotes", 37);
 	else if (errnum == 3)
-		write(stderr, "Syntax error: Unexpected token 'newline' or '|'", 48);
+		write(2, "Syntax error: Unexpected token 'newline' or '|'", 48);
 }
 
 //Helper function, returns 1 if s has a \n or pipe after n spaces
@@ -82,7 +82,7 @@ int	syntax_check_redirect(char *s)
 			i += squote_checker(s + i);
 		else if (s[i] == '>' || s[i] == '<')
 		{
-			checker == syntax_check_redirection(s);
+			checker = syntax_check_redirection(s);
 			if (checker == -1)
 				return (1);
 			i += checker;

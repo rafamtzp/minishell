@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:38:57 by gregueir          #+#    #+#             */
-/*   Updated: 2025/12/17 18:00:17 by gregueir         ###   ########.fr       */
+/*   Updated: 2025/12/19 17:07:50 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,8 +120,8 @@ int	main(int argc, char **argv, char **env)
 		// create command nodes
 		
 		// execute nodes
-		//executor(michi);
-		//prep_for_next_cmd(michi);
+		// executor(michi);
+		// prep_for_next_cmd(michi);
 	}
 	return (0);
 }
