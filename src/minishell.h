@@ -6,7 +6,7 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:39:22 by gregueir          #+#    #+#             */
-/*   Updated: 2025/12/17 13:55:49 by ramarti2         ###   ########.fr       */
+/*   Updated: 2026/01/12 15:14:30 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,12 @@ void				handle_err(t_minishell *michi, char *msg);
 
 // Is Builtin
 int					is_builtin(t_cmd *node);
+
+// What am I
+bool	is_redirection(char c);
+bool	is_separator(char c);
+bool	is_breakpoint(char c);
+bool	is_quotes(char c);
 
 // Syntax Check
 int					dquote_checker(char *s);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_check.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 12:59:00 by gregueir          #+#    #+#             */
-/*   Updated: 2025/12/09 13:50:26 by gregueir         ###   ########.fr       */
+/*   Updated: 2026/01/12 14:03:49 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	squote_checker(char *s)
 	squote = 0;
 	while (s && s[i])
 	{
-		j = 1;
+		j = 0;
 		if (s[i] == '\'')
 		{
 			squote = 1;

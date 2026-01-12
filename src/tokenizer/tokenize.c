@@ -6,43 +6,29 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 11:39:57 by gregueir          #+#    #+#             */
-/*   Updated: 2025/12/19 18:27:05 by ramarti2         ###   ########.fr       */
+/*   Updated: 2026/01/12 16:15:57 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-static bool	is_breakpoint(char c)
-{
-	if (c == '|' || c == '\0' || c == '\n')
-		return (true);
-	return (false);
-}
-
-//Returns true if c is one of the designated word separators and false if not
-static bool	is_separator(char c)
-{
-	if (c == ' ' || c == '\n')
-		return (true);
-	return (false);
-}
 
 int skip_redir(char *line)
 {
 	int i;
 
 	i = 0;
-	while (line[i] == '>' || line[i] == '<') // skip redirection chars
+	while (is_redirection(line[i])) // skip redirection chars
 		i++;
 	while (is_separator(line[i])) // skip separators (if any)
 		i++;
-	while (!is_breakpoint(line[i]) && !is_separator(line[i])) //after, skip word (non-separators)
+	while (!is_breakpoint(line[i]) && !is_separator(line[i]) &&
+		!is_redirection(line[i])) //after, skip word (non-separators)
 		i++;
 	return (i);
 }
 
 //Counts disctinct words (tokens) in the current Cmd, stops when finding a pipe
-static int	word_count(char	*line)
+static	int	word_count(char	*line)
 {
 	int	i;
 	int	wcount;
@@ -57,7 +43,8 @@ static int	word_count(char	*line)
 			i += skip_redir(&line[i]);
 		else if (!is_breakpoint(line[i]))
 			wcount++;
-		while (!is_breakpoint(line[i]) && !is_separator(line[i]))
+		while (!is_breakpoint(line[i]) && !is_separator(line[i]) &&
+			!is_redirection(line[i]))
 		{
 			if (line[i] == '"')
 				i += dquote_checker(line + i);
@@ -67,13 +54,6 @@ static int	word_count(char	*line)
 		}
 	}
 	return (wcount);
-}
-
-bool is_quotes(char c)
-{
-	if (c == '"' || c == '\'')
-		return (true);
-	return (false);
 }
 
 int skip_var(char *word)
@@ -137,34 +117,25 @@ static int dquote_len(char *word, t_minishell *michi)
 	return (len);
 }
 
-static int	get_wlen(char  *word, bool is_literal, t_minishell *michi)
+static int	get_wlen(char  *word, t_minishell *michi, char init)
 {
 	int wlen;
 	int i;
 
 	wlen = 0;
 	i = -1;
-	while (is_literal == true && !is_breakpoint(word[++i]) && !is_separator(word[i]))
+	if (init == '"')
+		wlen = 1 + dquote_checker(word);
+	else if (init == '\'')
+		wlen = 1 + squote_checker(word);
+	while (init != '"' && init != '\'' &&
+		!is_breakpoint(word[++i]) && !is_separator(word[i]) &&
+		!is_redirection(word[i]))
 		wlen++;
-	while (is_literal == false && !is_breakpoint(word[++i]) && !is_separator(word[i]))
-	{
-		if (word[i] == '"')
-		{
-			wlen += dquote_len(&word[i], michi);
-			i += dquote_checker(&word[i]);
-		}
-		else if (word[i] == '\'')
-		{
-			wlen += squote_checker(&word[i]) - 2;
-			i += squote_checker(&word[i]);
-		}
-		else
-			wlen++;
-	}
 	return (wlen);
 }
-//TODO:
-char *extract_word(char *line, int wlen, t_minishell *michi, bool expand)
+
+char *extract_word(char *line, int wlen, t_minishell *michi)
 {
 	char *word;
 	int i;
@@ -172,15 +143,9 @@ char *extract_word(char *line, int wlen, t_minishell *michi, bool expand)
 	word = ft_calloc(1, wlen + 1);
 	if (!word)
 		return (NULL);
-	i = 0;
-	if (expand == true)
-	{
-		while (line[i] != '$' && i < wlen) // keep moving until you find a $
-			word[i] = line[i++];
-		// Note: you may find quotes before the $.  Make sure to not copy some of these!
-		// Once you find the $ just look for the var, and copy its value into word (good luck).
-		
-	}
+	i = -1;
+	while (++i < wlen)
+		word[i] = line[i];
 	ft_memcpy(word, line, wlen);
 	return (word);
 }
@@ -197,13 +162,13 @@ static char *get_next_word(char *line, bool reset, t_minishell *michi)
 			i++;
 		if (line[i] == '>' || line[i] == '<')
 			i += skip_redir(&line[i]);
-		if (!is_breakpoint(line[i]) && !is_separator(line[i]))
+		if (!is_breakpoint(line[i]) && !is_separator(line[i]) &&
+			!is_redirection(line[i]))
 		{
-			wlen = get_wlen(&line[i], false, michi);
-			while (line[i] == '"' || line[i] == '\'')
-				i++;
-			word = extract_word(&line[i], wlen, /* TO DETERMINE */);
-			i += get_wlen(&line[i], true, michi);
+			wlen = get_wlen(&line[i], michi, line[i]);
+			//printf("Wlen = %d\n", wlen);
+			word = extract_word(&line[i], wlen, michi);
+			i += wlen;
 			break ;
 		}
 	}
@@ -215,13 +180,11 @@ static char *get_next_word(char *line, bool reset, t_minishell *michi)
 static char	**split_input(char *line, t_minishell *michi)
 {
 	int	wcount;
-	// int j;
-	// int line_pos;
 	char **cmd;
 	int i;
 
 	wcount = word_count(line);
-	printf("Words found: %d\n", wcount);
+	//printf("Words found: %d\n", wcount);
 	cmd = ft_calloc(wcount + 1, sizeof(char *));
 	if (!cmd)
 		return (NULL);
@@ -235,16 +198,8 @@ static char	**split_input(char *line, t_minishell *michi)
 		i++;
 	}
 	for (int i = 0; cmd[i]; i++)
-		printf("%s\n", cmd[i]);
-	exit(0);
-	//j = 0;
-	// line_pos = 0;
-	// while (cmd[j])
-	// {
-	// 	cmd[j] = get_next_cmd_word(cmd, j, line, &line_pos);
-	// 	j++;
-	// }
-	// copy_cmd_words(cmd, line);
+		printf("CMD %d = %s\n", i, cmd[i]);
+	return (cmd);
 }
 
 int	tokenize(t_minishell *michi, int pipes)
