@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:38:57 by gregueir          #+#    #+#             */
-/*   Updated: 2025/12/19 17:07:50 by ramarti2         ###   ########.fr       */
+/*   Updated: 2026/01/13 12:33:39 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ int	main(int argc, char **argv, char **env)
 		add_history(michi->input);
 		pipes = syntax_check(michi->input);
 		if (pipes == -1)
-			return(-1); //Syntax error, how do we handle this?
+			return (-1); //Syntax error, how do we handle this?
 		tokenize(michi, pipes);
 		
 		//------ TEST ----------------
