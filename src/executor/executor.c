@@ -2,10 +2,10 @@
 
 void	prep_for_next_cmd(t_minishell *michi)
 {
-	free(michi->pids);
-	michi->pids = NULL;
-	free_pipe_arr(michi->pfds);
-	michi->pfds = NULL;
+	// free(michi->pids);
+	// michi->pids = NULL;
+	//free_pipe_arr(michi->pfds);
+	//michi->pfds = NULL;
 	//close_first_and_last(&michi->cmds);
 	free_cmds(&michi->cmds);
 	michi->cmds = NULL;

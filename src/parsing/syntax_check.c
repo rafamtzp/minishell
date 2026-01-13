@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_check.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 12:59:00 by gregueir          #+#    #+#             */
-/*   Updated: 2026/01/12 14:03:49 by ramarti2         ###   ########.fr       */
+/*   Updated: 2026/01/13 16:22:52 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ int	squote_checker(char *s)
 			{
 				if (s[i + j] == '\'')
 					return (j);
-				j++;
 			}
 		}
 		i++;
@@ -103,9 +102,9 @@ static int	syntax_check_pipes(char *s)
 	while (s && s[i])
 	{
 		if (s[i] == '"')
-			i += i + (dquote_checker(s + i));
+			i += (dquote_checker(s + i));
 		else if (s[i] == '\'')
-			i += i + (squote_checker(s + i));
+			i += (squote_checker(s + i));
 		else if (s[i] == '|')
 			pipes++;
 		i++;
@@ -125,11 +124,6 @@ int	syntax_check(char *s)
 	pipes = syntax_check_pipes(s);
 	if (error)
 		return (-1);
+	printf("Pipes found: %d\n", pipes);
 	return (pipes);
 }
-
-// int	main(int argv, char **args)
-// {
-// 	syntax_check(args[1]);
-// 	return (0);
-// }

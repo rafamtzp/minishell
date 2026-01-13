@@ -6,7 +6,7 @@
 /*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:38:57 by gregueir          #+#    #+#             */
-/*   Updated: 2026/01/13 12:33:39 by gregueir         ###   ########.fr       */
+/*   Updated: 2026/01/13 16:08:48 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ int	main(int argc, char **argv, char **env)
 		
 		// execute nodes
 		// executor(michi);
-		// prep_for_next_cmd(michi);
+		prep_for_next_cmd(michi);
 	}
 	return (0);
 }

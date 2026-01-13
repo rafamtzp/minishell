@@ -6,7 +6,7 @@
 /*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 11:39:57 by gregueir          #+#    #+#             */
-/*   Updated: 2026/01/13 13:40:13 by gregueir         ###   ########.fr       */
+/*   Updated: 2026/01/13 16:01:31 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ static char	*get_next_word(char *line, bool reset, t_minishell *michi)
 			&& !is_redirection(line[i]))
 		{
 			wlen = get_wlen(&line[i], michi, line[i]);
-			//printf("Wlen = %d\n", wlen);
 			word = extract_word(&line[i], wlen, michi);
 			i += wlen;
 			break ;
@@ -85,7 +84,6 @@ static char	**split_input(char *line, t_minishell *michi, int node_no)
 		line++;
 	}
 	wcount = word_count(line);
-	//printf("Words found: %d\n", wcount);
 	cmd = ft_calloc(wcount + 1, sizeof(char *));
 	if (!cmd)
 		return (NULL);
@@ -95,9 +93,10 @@ static char	**split_input(char *line, t_minishell *michi, int node_no)
 		if (i == wcount - 1)
 			cmd[i] = get_next_word(line, true, michi);
 		else
-			cmd[i] = get_next_word(line, false, michi); //free prev in error case
+			cmd[i] = get_next_word(line, false, michi);
 		i++;
 	}
+	check_free_cmd(cmd, wcount);
 	return (cmd);
 }
 
@@ -111,13 +110,15 @@ int	tokenize(t_minishell *michi, int pipes)
 	{
 		node = cmd_list_new();
 		if (!node)
-			return (-1); // free previous nodes
-		node->cmd = split_input(michi->input, michi, i);
+			return (free_cmds(&michi->cmds),-1);
+				node->cmd = split_input(michi->input, michi, i);
 		cmd_list_add_back(&michi->cmds, node);
 		i++;
 	}
+	int	n = 0;
 	for (t_cmd *ptr = michi->cmds; ptr; ptr = ptr->next)
 	{
+		printf("Node %d\n", ++n);
 		for (int j = 0; ptr->cmd[j]; j++)
 			printf("CMD %i: %s\n", j, ptr->cmd[j]);
 	}

@@ -6,7 +6,7 @@
 /*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:39:22 by gregueir          #+#    #+#             */
-/*   Updated: 2026/01/13 13:17:19 by gregueir         ###   ########.fr       */
+/*   Updated: 2026/01/13 16:03:55 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,7 @@ int					dquote_len(char *word, t_minishell *michi);
 int					skip_var(char *word);
 int					word_count(char	*line);
 int					skip_redir(char *line);
+void				check_free_cmd(char	**cmd, int wcount);
 
 // executor
 void				executor(t_minishell *michi);
