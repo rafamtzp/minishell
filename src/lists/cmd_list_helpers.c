@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_list_helpers.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 11:43:31 by rafamtz           #+#    #+#             */
-/*   Updated: 2025/11/19 12:04:21 by ramarti2         ###   ########.fr       */
+/*   Updated: 2026/01/13 13:18:32 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-t_cmd	*cmd_list_new(char *cmd, char *delim)
+t_cmd	*prev_cmd_list_new(char *cmd, char *delim)
 {
 	t_cmd	*n;
 	char	*delim_nl;
@@ -34,6 +34,22 @@ t_cmd	*cmd_list_new(char *cmd, char *delim)
 	n->path = NULL;
 	n->delim = delim_nl; // remember to free this!
 	n->cmd = ft_split(cmd, ' ');
+	n->infile = STDIN_FILENO;
+	n->outfile = STDOUT_FILENO;
+	n->next = NULL;
+	return (n);
+}
+
+t_cmd *cmd_list_new(void)
+{
+	t_cmd	*n;
+
+	n = malloc(sizeof(t_cmd));
+	if (n == NULL)
+		return (NULL);
+	n->path = NULL;
+	n->delim = NULL;
+	n->cmd = NULL;
 	n->infile = STDIN_FILENO;
 	n->outfile = STDOUT_FILENO;
 	n->next = NULL;

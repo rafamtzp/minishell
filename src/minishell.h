@@ -6,7 +6,7 @@
 /*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:39:22 by gregueir          #+#    #+#             */
-/*   Updated: 2026/01/13 12:14:45 by gregueir         ###   ########.fr       */
+/*   Updated: 2026/01/13 13:17:19 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,8 @@ int					add_envars(t_minishell *michi, char **cmd, bool is_not_parsing);
 // command list helpers (pipex)
 int					cmd_list_size(t_cmd *cmd);
 void				free_cmds(t_cmd **cmds);
-t_cmd				*cmd_list_new(char *cmd, char *delim);
+t_cmd				*prev_cmd_list_new(char *cmd, char *delim); // DELETE
+t_cmd				*cmd_list_new(void);
 void				cmd_list_add_back(t_cmd **cmds, t_cmd *new);
 
 // builtins
@@ -91,7 +92,7 @@ void				michi_exit(t_minishell *michi, bool print_msg, char *err_msg);
 
 // builtins: export
 int					export(t_minishell *michi, char **cmd);
-void 				write_envars(t_envar *envar, bool order_alpha);
+void				write_envars(t_envar *envar, bool order_alpha);
 
 // builtins: export helpers
 void				set_ascii_indices(t_envar **s);

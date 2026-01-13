@@ -6,7 +6,7 @@
 /*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 11:39:57 by gregueir          #+#    #+#             */
-/*   Updated: 2026/01/13 12:43:54 by gregueir         ###   ########.fr       */
+/*   Updated: 2026/01/13 13:40:13 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,12 +72,18 @@ static char	*get_next_word(char *line, bool reset, t_minishell *michi)
 	return (word);
 }
 
-static char	**split_input(char *line, t_minishell *michi)
+static char	**split_input(char *line, t_minishell *michi, int node_no)
 {
 	int		wcount;
 	char	**cmd;
 	int		i;
 
+	while (node_no > 0)
+	{
+		if (line[0] == '|')
+			node_no--;
+		line++;
+	}
 	wcount = word_count(line);
 	//printf("Words found: %d\n", wcount);
 	cmd = ft_calloc(wcount + 1, sizeof(char *));
@@ -89,21 +95,31 @@ static char	**split_input(char *line, t_minishell *michi)
 		if (i == wcount - 1)
 			cmd[i] = get_next_word(line, true, michi);
 		else
-			cmd[i] = get_next_word(line, false, michi);
+			cmd[i] = get_next_word(line, false, michi); //free prev in error case
 		i++;
 	}
-	for (int i = 0; cmd[i]; i++)
-		printf("CMD %d = %s\n", i, cmd[i]);
 	return (cmd);
 }
 
 int	tokenize(t_minishell *michi, int pipes)
 {
-	t_cmd	*head;
+	int i;
+	t_cmd *node;
 
-	head = malloc(sizeof(t_cmd));
-	if (!head)
-		return (-1);
-	head->cmd = split_input(michi->input, michi);
+	i = 0;
+	while (i < pipes + 1)
+	{
+		node = cmd_list_new();
+		if (!node)
+			return (-1); // free previous nodes
+		node->cmd = split_input(michi->input, michi, i);
+		cmd_list_add_back(&michi->cmds, node);
+		i++;
+	}
+	for (t_cmd *ptr = michi->cmds; ptr; ptr = ptr->next)
+	{
+		for (int j = 0; ptr->cmd[j]; j++)
+			printf("CMD %i: %s\n", j, ptr->cmd[j]);
+	}
 	return (0);
 }
