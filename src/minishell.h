@@ -6,7 +6,7 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:39:22 by gregueir          #+#    #+#             */
-/*   Updated: 2026/01/14 13:45:58 by ramarti2         ###   ########.fr       */
+/*   Updated: 2026/01/14 16:29:46 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,9 @@ int					squote_checker(char *s);
 void				syntax_error(int errnum);
 int					syntax_check_redirect(char *s);
 int					syntax_check(char *s);
+
+// Expander
+char *clean_and_expand(char *word);
 
 // Redirections
 void redirect_fds(t_cmd *ptr, char *line);

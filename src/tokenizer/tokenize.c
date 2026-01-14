@@ -6,7 +6,7 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 11:39:57 by gregueir          #+#    #+#             */
-/*   Updated: 2026/01/14 13:44:14 by ramarti2         ###   ########.fr       */
+/*   Updated: 2026/01/14 16:10:55 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,6 @@ int	tokenize(t_minishell *michi, int pipes)
 		for (int j = 0; ptr->cmd[j]; j++)
 			printf("CMD %i: %s\n", j, ptr->cmd[j]);
 	}
-	redirect_fds(michi->cmds, michi->input, pipes);
+	redirect_fds(michi->cmds, michi->input);
 	return (0);
 }

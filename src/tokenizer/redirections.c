@@ -6,7 +6,7 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 11:48:48 by ramarti2          #+#    #+#             */
-/*   Updated: 2026/01/14 14:13:14 by ramarti2         ###   ########.fr       */
+/*   Updated: 2026/01/14 16:12:55 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,13 @@ static char *get_filename(char *line)
 		i++;
 	wlen = get_wlen(line + i);
 	word = extract_word(line + i, wlen);
+	word = clean_and_expand(word); //TODO
 	return (word);
 }
 
 int	set_redir(char *line, t_cmd *ptr)
 {
-	int DEBUGFD;
+	//int DEBUGFD;
 	char *filename;
 
 	filename = get_filename(line);
@@ -41,7 +42,7 @@ int	set_redir(char *line, t_cmd *ptr)
 			ptr->outfile = open(filename, O_CREAT | O_APPEND | O_RDWR, 0644);
 		else
 			ptr->outfile = open(filename, O_CREAT | O_WRONLY | O_TRUNC, 0644);
-		DEBUGFD = ptr->outfile;
+		//DEBUGFD = ptr->outfile;
 	}
 	else
 	{
@@ -49,15 +50,15 @@ int	set_redir(char *line, t_cmd *ptr)
 			ptr->delim = ft_strjoin(filename, "\n");
 		else
 			ptr->infile = open(filename, O_RDONLY);
-		DEBUGFD = ptr->infile;
+		//DEBUGFD = ptr->infile;
 	}
 	if (ptr->outfile == -1 || ptr->infile == -1)
 		return (free(filename), -1);
-	//DEBUG
-	printf("filename: %s, fd: %i\n", filename, DEBUGFD);
-	free(filename);
-	int test=skip_redir(line);
-	printf("skip redir distance: %i\n", test);
+	// //DEBUG
+	// printf("filename: %s, fd: %i\n", filename, DEBUGFD);
+	// free(filename);
+	// int test=skip_redir(line);
+	// printf("skip redir distance: %i\n", test);
 	return (skip_redir(line));
 }
 
@@ -77,7 +78,6 @@ void redirect_fds(t_cmd *ptr, char *line)
 	{
 		if (line[i] == '|')
 		{
-			printf("found pipe!\n");
 			ptr = ptr->next;
 			i++;
 		}
