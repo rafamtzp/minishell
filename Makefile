@@ -13,6 +13,7 @@ SRC 	= src/builtins/builtins.c		src/executor/executor.c\
 		  src/lists/env_list_cleanup.c	src/lists/env_list_helpers.c\
 		  src/executor/pipe_handling.c	src/error_handling.c\
 		  src/parsing/what_am_i.c		src/tokenizer/tokenize_utils.c\
+		  src/tokenizer/redirections.c
 
 OBJ 	= $(SRC:src/%.c=obj/%.o)
 OBJ_DBG	= $(SRC:src/%.c=dbg_obj/%.o)

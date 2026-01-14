@@ -6,7 +6,7 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 13:18:48 by ramarti2          #+#    #+#             */
-/*   Updated: 2025/12/19 16:53:15 by ramarti2         ###   ########.fr       */
+/*   Updated: 2026/01/14 12:41:04 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,11 @@ void	echo(char **cmd)
 		printf("\n");
 	else if (!cmd[2] && max_strncmp(cmd[1], "-n") == 0)
 		printf("");
-	else if (!cmd[2])
-		printf("%s\n", cmd[1]);
+	// else if (!cmd[2])
+	// 	printf("%s\n", cmd[1]); // mal
 	else if (max_strncmp(cmd[1], "-n") == 0)
-		printf("%s", cmd[2]);
+		printf("%s", cmd[2]); // bucle que imprime argumentos sin \n
+	//else bucle que imprime argumentos con salto de linea al final
 }
 /*
 Note: cd should change the working directory of a process!!!

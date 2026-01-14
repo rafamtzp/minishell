@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:39:22 by gregueir          #+#    #+#             */
-/*   Updated: 2026/01/13 16:03:55 by gregueir         ###   ########.fr       */
+/*   Updated: 2026/01/14 13:45:58 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,12 @@ void				syntax_error(int errnum);
 int					syntax_check_redirect(char *s);
 int					syntax_check(char *s);
 
+// Redirections
+void redirect_fds(t_cmd *ptr, char *line);
+
 // Tokenize
+char				*extract_word(char *line, int wlen);
+int					get_wlen(char *word);
 int					tokenize(t_minishell *michi, int pipes);
 int					dquote_len(char *word, t_minishell *michi);
 int					skip_var(char *word);
