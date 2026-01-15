@@ -6,7 +6,7 @@
 /*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 15:12:29 by ramarti2          #+#    #+#             */
-/*   Updated: 2026/01/13 12:14:06 by gregueir         ###   ########.fr       */
+/*   Updated: 2026/01/15 15:50:13 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,14 @@ bool	is_separator(char c)
 bool	is_redirection(char c)
 {
 	if (c == '<' || c == '>')
+		return (true);
+	return (false);
+}
+
+//Returns true if any of the above are true (= || <> || "' || \n || |)
+bool	is_nonalpha(char c)
+{
+	if (!ft_isalnum(c))
 		return (true);
 	return (false);
 }

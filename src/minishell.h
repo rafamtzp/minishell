@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:39:22 by gregueir          #+#    #+#             */
-/*   Updated: 2026/01/14 16:29:46 by ramarti2         ###   ########.fr       */
+/*   Updated: 2026/01/15 17:03:50 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,7 @@ bool				is_redirection(char c);
 bool				is_separator(char c);
 bool				is_breakpoint(char c);
 bool				is_quotes(char c);
+bool				is_nonalpha(char c);
 
 // Syntax Check
 int					dquote_checker(char *s);
@@ -123,12 +124,13 @@ int					syntax_check_redirect(char *s);
 int					syntax_check(char *s);
 
 // Expander
-char *clean_and_expand(char *word);
+char	*expander(char *word, int qstat, t_minishell *michi);
 
 // Redirections
-void redirect_fds(t_cmd *ptr, char *line);
+void redirect_fds(t_cmd *ptr, char *line, t_minishell *michi);
 
 // Tokenize
+int					expansion_len(char *word, t_minishell *michi);
 char				*extract_word(char *line, int wlen);
 int					get_wlen(char *word);
 int					tokenize(t_minishell *michi, int pipes);

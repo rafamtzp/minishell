@@ -3,37 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 11:48:48 by ramarti2          #+#    #+#             */
-/*   Updated: 2026/01/14 16:12:55 by ramarti2         ###   ########.fr       */
+/*   Updated: 2026/01/15 17:03:09 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static char *get_filename(char *line)
+static char *get_filename(char *line, t_minishell *michi)
 {
 	int i;
 	int wlen;
 	char *word;
 	
-
 	i = 0;
 	while (is_redirection(line[i]) || is_separator(line[i]))
 		i++;
 	wlen = get_wlen(line + i);
 	word = extract_word(line + i, wlen);
-	word = clean_and_expand(word); //TODO
+	word = expander(word, 0, michi); //TODO
 	return (word);
 }
 
-int	set_redir(char *line, t_cmd *ptr)
+static int	set_redir(char *line, t_cmd *ptr, t_minishell *michi)
 {
 	//int DEBUGFD;
 	char *filename;
 
-	filename = get_filename(line);
+	filename = get_filename(line, michi);
 	if (!filename)
 		return (-1);
 	if (line[0] == '>')
@@ -69,7 +68,7 @@ int	skip_quotes(char *line)
 	return (dquote_checker(line) + 1);
 }
 
-void redirect_fds(t_cmd *ptr, char *line)
+void redirect_fds(t_cmd *ptr, char *line, t_minishell *michi)
 {
 	int i;
 
@@ -84,7 +83,7 @@ void redirect_fds(t_cmd *ptr, char *line)
 		else if (is_quotes(line[i]))
 			i += skip_quotes(line + i);
 		else if (is_redirection(line[i]))
-			i += set_redir(line + i, ptr);
+			i += set_redir(line + i, ptr, michi);
 		else
 			i++;
 	}

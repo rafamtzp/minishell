@@ -6,7 +6,7 @@
 /*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 11:38:59 by gregueir          #+#    #+#             */
-/*   Updated: 2026/01/13 11:59:05 by gregueir         ###   ########.fr       */
+/*   Updated: 2026/01/15 17:11:33 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@ int	skip_redir(char *line)
 	int	i;
 
 	i = 0;
-	while (is_redirection(line[i])) // skip redirection chars
+	while (is_redirection(line[i]))
 		i++;
-	while (is_separator(line[i])) // skip separators (if any)
+	while (is_separator(line[i]))
 		i++;
 	while (!is_breakpoint(line[i]) && !is_separator(line[i])
-		&& !is_redirection(line[i])) //after, skip word (non-separators)
+		&& !is_redirection(line[i]))
 		i++;
 	return (i);
 }
@@ -67,7 +67,7 @@ int	skip_var(char *word)
 	return (i);
 }
 
-static int	expansion_len(char *word, t_minishell *michi)
+int	expansion_len(char *word, t_minishell *michi)
 {
 	int		wordlen;
 	int		i;
@@ -76,8 +76,7 @@ static int	expansion_len(char *word, t_minishell *michi)
 	t_envar	*ptr;
 
 	i = 1;
-	while (!is_breakpoint(word[i]) && !is_separator(word[i])
-		&& !is_quotes(word[i]))
+	while (ft_isalnum(word[i]))
 		i++;
 	oldchar = word[i];
 	word[i] = 0;
@@ -88,7 +87,8 @@ static int	expansion_len(char *word, t_minishell *michi)
 		if (ft_strncmp(word + 1, ptr->varname, wordlen) == 0)
 		{
 			word[i] = oldchar;
-			return (ft_strlen(ptr->value));
+			printf("%s | %d\n", ptr->value, (int)ft_strlen(ptr->value));
+			return ((int)ft_strlen(ptr->value));
 		}
 		ptr = ptr->next;
 	}
