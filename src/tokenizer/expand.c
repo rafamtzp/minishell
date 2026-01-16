@@ -6,7 +6,7 @@
 /*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 16:14:50 by ramarti2          #+#    #+#             */
-/*   Updated: 2026/01/15 17:30:27 by gregueir         ###   ########.fr       */
+/*   Updated: 2026/01/16 14:08:27 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,19 @@ char	*extract_envar(t_minishell *michi, char *word)
 	i = 0;
 	j = 0;
 	str = "";
+	envname = ft_calloc(ft_strlen(word), sizeof(char));
+	if (!envname)
+		return (NULL); //Cleanup memory here
 	while (word[++i] && ft_isalnum(word[i]))
-		envname[i - 1] = word[i];
+	{
+		envname[j] = word[i];
+		j++;
+	}
+	//printf("Envname is: %s\n", envname);
 	envar = find_envar(envname, michi->envars);
 	if (envar)
 		str = envar->value;
+	free(envname);
 	return (str);
 }
 
@@ -67,6 +75,23 @@ int		find_expanded_len(char *word, t_minishell *michi)
 	return (len);
 }
 
+void	fill_tmp(char *tmp, char *word, t_minishell *michi)
+{
+	int		wlen;
+	int		i;
+	char	*value;
+
+	value = extract_envar(michi, word);
+	wlen = ft_strlen(value);
+	//printf("Value is: %s\n", value);
+	i = 0;
+	while (i < wlen)
+	{
+		tmp[i] = value[i];
+		i++;
+	}
+}
+
 void	fill_expanded_word(char *tmp, char *word, t_minishell *michi)
 {
 	int qs;
@@ -79,7 +104,8 @@ void	fill_expanded_word(char *tmp, char *word, t_minishell *michi)
 		qs = get_quote_status(*word, qs);
 		if (*word == '$' && qs != -1)
 		{
-			fill_tmp(tmp, word, michi);
+			fill_tmp(tmp + i, word, michi);
+			//printf("Tmp has: %s\n", tmp);
 			i += expansion_len(word, michi);
 			word += skip_var(word) - 1;
 		}
@@ -93,7 +119,7 @@ void	fill_expanded_word(char *tmp, char *word, t_minishell *michi)
 	}
 }
 
-char	*expander(char *word, int qstat, t_minishell *michi)
+char	*expander(char *word, t_minishell *michi)
 {
 	char	*tmp;
 	int		explen;
@@ -103,6 +129,25 @@ char	*expander(char *word, int qstat, t_minishell *michi)
 	if (!tmp)
 		return (NULL); //Controlar errores
 	fill_expanded_word(tmp, word, michi);
-	printf("Tmp has: %s\n", tmp);
+	//printf("Tmp has: %s\n", tmp);
 	return (tmp);
+}
+
+void	expand_cmds(t_cmd *cmds, t_minishell *michi)
+{
+	int i;
+	char *unexpanded;
+
+	i = 0;
+	while (cmds)
+	{
+		while (cmds->cmd[i])
+		{
+			unexpanded = cmds->cmd[i];
+			cmds->cmd[i] = expander(cmds->cmd[i], michi);
+			free(unexpanded);
+			i++;
+		}
+		cmds = cmds->next;
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 11:48:48 by ramarti2          #+#    #+#             */
-/*   Updated: 2026/01/15 17:03:09 by gregueir         ###   ########.fr       */
+/*   Updated: 2026/01/16 13:55:18 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static char *get_filename(char *line, t_minishell *michi)
 		i++;
 	wlen = get_wlen(line + i);
 	word = extract_word(line + i, wlen);
-	word = expander(word, 0, michi); //TODO
+	word = expander(word, michi);
 	return (word);
 }
 

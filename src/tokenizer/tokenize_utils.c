@@ -6,7 +6,7 @@
 /*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 11:38:59 by gregueir          #+#    #+#             */
-/*   Updated: 2026/01/15 17:11:33 by gregueir         ###   ########.fr       */
+/*   Updated: 2026/01/16 14:01:26 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,17 @@ int	skip_redir(char *line)
 		i++;
 	while (!is_breakpoint(line[i]) && !is_separator(line[i])
 		&& !is_redirection(line[i]))
-		i++;
+	{
+		if (is_quotes(line[i]))
+		{
+			if (line[i] == '"')
+				i += dquote_checker(line + i) + 1;
+			else
+				i += squote_checker(line + i) + 1;
+		}
+		else
+			i++;
+	}
 	return (i);
 }
 
@@ -72,7 +82,6 @@ int	expansion_len(char *word, t_minishell *michi)
 	int		wordlen;
 	int		i;
 	char	oldchar;
-	char	*var;
 	t_envar	*ptr;
 
 	i = 1;
@@ -87,7 +96,7 @@ int	expansion_len(char *word, t_minishell *michi)
 		if (ft_strncmp(word + 1, ptr->varname, wordlen) == 0)
 		{
 			word[i] = oldchar;
-			printf("%s | %d\n", ptr->value, (int)ft_strlen(ptr->value));
+			//printf("%s | %d\n", ptr->value, (int)ft_strlen(ptr->value));
 			return ((int)ft_strlen(ptr->value));
 		}
 		ptr = ptr->next;

@@ -1,22 +1,14 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error_handling.c                                   :+:      :+:    :+:   */
+/*   expand_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/20 13:17:01 by ramarti2          #+#    #+#             */
-/*   Updated: 2026/01/16 14:01:07 by gregueir         ###   ########.fr       */
+/*   Created: 2026/01/16 13:21:06 by gregueir          #+#    #+#             */
+/*   Updated: 2026/01/16 13:22:31 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	handle_err(t_minishell *michi, char *msg)
-{
-	(void)michi;
-	if (msg)
-		printf("Error: %s\n", msg);
-	else
-		perror("Error");
-}

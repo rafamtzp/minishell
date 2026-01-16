@@ -6,7 +6,7 @@
 /*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 11:39:57 by gregueir          #+#    #+#             */
-/*   Updated: 2026/01/15 17:03:34 by gregueir         ###   ########.fr       */
+/*   Updated: 2026/01/16 14:36:31 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,25 +33,22 @@ int	get_wlen(char *word)
 char	*extract_word(char *line, int wlen)
 {
 	char	*word;
-	int		i;
 
 	word = ft_calloc(1, wlen + 1);
 	if (!word)
 		return (NULL);
-	// i = -1;
-	// while (++i < wlen)
-	// 	word[i] = line[i];
 	ft_memcpy(word, line, wlen);
 	return (word);
 }
 
-static char	*get_next_word(char *line, bool reset, t_minishell *michi)
+static char	*get_next_word(char *line, bool reset)
 {
 	static int	i = 0;
 	char		*word;
 	int			wlen;
 
-	while (line && !is_breakpoint(line[i]))
+	word = NULL;
+	while (!is_breakpoint(line[i]))
 	{
 		while (line[i] && is_separator(line[i]))
 			i++;
@@ -71,7 +68,7 @@ static char	*get_next_word(char *line, bool reset, t_minishell *michi)
 	return (word);
 }
 
-static char	**split_input(char *line, t_minishell *michi, int node_no)
+static char	**split_input(char *line, int node_no)
 {
 	int		wcount;
 	char	**cmd;
@@ -91,9 +88,9 @@ static char	**split_input(char *line, t_minishell *michi, int node_no)
 	while (i < wcount)
 	{
 		if (i == wcount - 1)
-			cmd[i] = get_next_word(line, true, michi);
+			cmd[i] = get_next_word(line, true);
 		else
-			cmd[i] = get_next_word(line, false, michi);
+			cmd[i] = get_next_word(line, false);
 		i++;
 	}
 	check_free_cmd(cmd, wcount);
@@ -111,17 +108,18 @@ int	tokenize(t_minishell *michi, int pipes)
 		node = cmd_list_new();
 		if (!node)
 			return (free_cmds(&michi->cmds),-1);
-		node->cmd = split_input(michi->input, michi, i);
+		node->cmd = split_input(michi->input, i);
 		cmd_list_add_back(&michi->cmds, node);
 		i++;
 	}
-	int	n = 0;
-	for (t_cmd *ptr = michi->cmds; ptr; ptr = ptr->next)
-	{
-		printf("Node %d\n", ++n);
-		for (int j = 0; ptr->cmd[j]; j++)
-			printf("CMD %i: %s\n", j, ptr->cmd[j]);
-	}
 	redirect_fds(michi->cmds, michi->input, michi);
+	expand_cmds(michi->cmds, michi);
+	// int	n = 0;
+	// for (t_cmd *ptr = michi->cmds; ptr; ptr = ptr->next)
+	// {
+	// 	printf("Node %d\n", ++n);
+	// 	for (int j = 0; ptr->cmd[j]; j++)
+	// 		printf("CMD %i: %s\n", j, ptr->cmd[j]);
+	// }
 	return (0);
 }

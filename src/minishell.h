@@ -6,7 +6,7 @@
 /*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:39:22 by gregueir          #+#    #+#             */
-/*   Updated: 2026/01/15 17:03:50 by gregueir         ###   ########.fr       */
+/*   Updated: 2026/01/16 14:26:07 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,8 @@ int					syntax_check_redirect(char *s);
 int					syntax_check(char *s);
 
 // Expander
-char	*expander(char *word, int qstat, t_minishell *michi);
+char	*expander(char *word, t_minishell *michi);
+void	expand_cmds(t_cmd *cmds, t_minishell *michi);
 
 // Redirections
 void redirect_fds(t_cmd *ptr, char *line, t_minishell *michi);
@@ -139,6 +140,9 @@ int					skip_var(char *word);
 int					word_count(char	*line);
 int					skip_redir(char *line);
 void				check_free_cmd(char	**cmd, int wcount);
+
+// Find paths
+void				find_paths(t_cmd *ptr, t_minishell *michi);
 
 // executor
 void				executor(t_minishell *michi);

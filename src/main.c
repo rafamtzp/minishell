@@ -6,7 +6,7 @@
 /*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:38:57 by gregueir          #+#    #+#             */
-/*   Updated: 2026/01/13 16:08:48 by gregueir         ###   ########.fr       */
+/*   Updated: 2026/01/16 14:36:01 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,11 @@ int	main(int argc, char **argv, char **env)
 		if (pipes == -1)
 			return (-1); //Syntax error, how do we handle this?
 		tokenize(michi, pipes);
-		
+		find_paths(michi->cmds, michi);
+		// for (t_cmd *ptr = michi->cmds; ptr; ptr = ptr->next)
+		// {
+		// 	printf("cmd: %s, path: %s\n", ptr->cmd[0], ptr->path);
+		// }
 		//------ TEST ----------------
 		// int wc = test_count_words(michi->input);
 		// char **args = test_input_splitting(michi->input);
@@ -113,14 +117,7 @@ int	main(int argc, char **argv, char **env)
 		// free(args[0]);
 		// free(args);
 		//----------------------------
-		//Split the input
-		
-		// expand any variables in the input
-		
-		// create command nodes
-		
-		// execute nodes
-		// executor(michi);
+		executor(michi);
 		prep_for_next_cmd(michi);
 	}
 	return (0);

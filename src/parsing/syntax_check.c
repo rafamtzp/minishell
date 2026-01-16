@@ -6,7 +6,7 @@
 /*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 12:59:00 by gregueir          #+#    #+#             */
-/*   Updated: 2026/01/13 16:22:52 by gregueir         ###   ########.fr       */
+/*   Updated: 2026/01/16 12:43:35 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,6 @@ int	syntax_check(char *s)
 	pipes = syntax_check_pipes(s);
 	if (error)
 		return (-1);
-	printf("Pipes found: %d\n", pipes);
+	//printf("Pipes found: %d\n", pipes);
 	return (pipes);
 }
