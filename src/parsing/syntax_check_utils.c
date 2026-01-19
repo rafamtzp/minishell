@@ -6,25 +6,13 @@
 /*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/24 15:52:59 by gregueir          #+#    #+#             */
-/*   Updated: 2026/01/13 12:43:22 by gregueir         ###   ########.fr       */
+/*   Updated: 2026/01/19 15:59:40 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	syntax_error(int errnum)
-{
-	if (errnum == 1)
-		write(2, "Syntax error: Unclosed double quotes\n", 38);
-	else if (errnum == 2)
-		write(2, "Syntax error: Unclosed simple quotes\n", 38);
-	else if (errnum == 3)
-		write(2, "Syntax error: Unexpected token\n", 32);
-	else if (errnum == 4)
-		write(2, "Syntax error: Too many redirections\n", 37);
-}
 
-//There's no way this works correctly, but testing it before everything is built is a pain, so test it when everything is built
 //This function should check if there's a valid redirection, and if so, give it the green light
 static int	syntax_check_redirection(char *s)
 {

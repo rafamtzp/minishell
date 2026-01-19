@@ -14,6 +14,7 @@ SRC 	= src/builtins/builtins.c		src/executor/executor.c\
 		  src/executor/pipe_handling.c	src/error_handling.c\
 		  src/parsing/what_am_i.c		src/tokenizer/tokenize_utils.c\
 		  src/tokenizer/redirections.c	src/tokenizer/expand.c\
+		  src/tokenizer/expand_utils.c	\
 		  src/paths/find_paths.c 		src/builtins/cd.c\
 
 OBJ 	= $(SRC:src/%.c=obj/%.o)

@@ -6,7 +6,7 @@
 /*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:39:22 by gregueir          #+#    #+#             */
-/*   Updated: 2026/01/16 14:26:07 by gregueir         ###   ########.fr       */
+/*   Updated: 2026/01/19 16:08:18 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,11 +67,11 @@ void				print_cat(void);
 
 // environment vars list helpers (CHANGED NAMES)
 int					env_list_size(t_envar *env);
+char				*getvarname(char *new_var);
+void				clean_env_list(t_minishell *michi);
 void				env_list_add_back(t_envar **envars, t_envar *new);
 t_envar				*env_list_new(char *new_var);
-char				*getvarname(char *new_var);
 t_envar				*find_envar(char *varname, t_envar *ptr);
-void				clean_env_list(t_minishell *michi);
 
 // Extract envars (in builtins_export.c)
 int					add_envars(t_minishell *michi, char **cmd, bool is_not_parsing);
@@ -79,15 +79,15 @@ int					add_envars(t_minishell *michi, char **cmd, bool is_not_parsing);
 // command list helpers (pipex)
 int					cmd_list_size(t_cmd *cmd);
 void				free_cmds(t_cmd **cmds);
-t_cmd				*prev_cmd_list_new(char *cmd, char *delim); // DELETE
-t_cmd				*cmd_list_new(void);
 void				cmd_list_add_back(t_cmd **cmds, t_cmd *new);
+t_cmd				*cmd_list_new(void);
+t_cmd				*prev_cmd_list_new(char *cmd, char *delim); // DELETE
 
 // builtins
-void				echo(char **cmd);
 int					cd(char **cmd, t_minishell *michi);
-void				pwd(t_minishell *michi);
+void				echo(char **cmd);
 void				env(t_envar *envars);
+void				pwd(t_minishell *michi);
 void				michi_exit(t_minishell *michi, bool print_msg, char *err_msg);
 
 // builtins: export
@@ -99,10 +99,11 @@ void				set_ascii_indices(t_envar **s);
 int					max_strncmp(char *s1, char *s2);
 
 // builtins: unset
-int					unset(t_envar **envars, char **cmd);
 int					count_args(char **cmd);
+int					unset(t_envar **envars, char **cmd);
 
 // error handling
+void				syntax_error(int errnum);
 void				handle_err(t_minishell *michi, char *msg);
 
 // Is Builtin
@@ -110,18 +111,17 @@ int					is_builtin(t_cmd *node);
 
 // What am I
 
-bool				is_redirection(char c);
-bool				is_separator(char c);
-bool				is_breakpoint(char c);
 bool				is_quotes(char c);
 bool				is_nonalpha(char c);
+bool				is_separator(char c);
+bool				is_breakpoint(char c);
+bool				is_redirection(char c);
 
 // Syntax Check
+int					syntax_check(char *s);
 int					dquote_checker(char *s);
 int					squote_checker(char *s);
-void				syntax_error(int errnum);
 int					syntax_check_redirect(char *s);
-int					syntax_check(char *s);
 
 // Expander
 char	*expander(char *word, t_minishell *michi);
@@ -131,14 +131,17 @@ void	expand_cmds(t_cmd *cmds, t_minishell *michi);
 void redirect_fds(t_cmd *ptr, char *line, t_minishell *michi);
 
 // Tokenize
-int					expansion_len(char *word, t_minishell *michi);
-char				*extract_word(char *line, int wlen);
-int					get_wlen(char *word);
-int					tokenize(t_minishell *michi, int pipes);
-int					dquote_len(char *word, t_minishell *michi);
 int					skip_var(char *word);
 int					word_count(char	*line);
 int					skip_redir(char *line);
+int					get_wlen(char *word);
+int					get_quote_status(char c, int stat);
+int					tokenize(t_minishell *michi, int pipes);
+int					dquote_len(char *word, t_minishell *michi);
+int					expansion_len(char *word, t_minishell *michi);
+int					find_expanded_len(char *word, t_minishell *michi);
+char				*extract_word(char *line, int wlen);
+char				*extract_envar(t_minishell *michi, char *word);
 void				check_free_cmd(char	**cmd, int wcount);
 
 // Find paths
