@@ -54,29 +54,7 @@ void	builtin_execve(t_cmd *ptr, t_minishell *michi)
 		michi_exit(michi, false, NULL);
 }
 
-// bool	exec_unforked(t_cmd *ptr, char **cmd, t_minishell *michi)
-// {
-// 	bool executed;
-// 	int stdout_copy;
-	
-// 	stdout_copy = dup(STDOUT_FILENO);
-// 	dup2(ptr->outfile, STDOUT_FILENO);
-// 	executed = true;
-// 	if (max_strncmp(ptr->cmd[0], "cd") == 0) // sin fork // no escribe ni recibe
-// 		michi->status = cd(cmd, michi);
-// 	else if (max_strncmp(ptr->cmd[0], "export") == 0) // sin fork // escribe pero no recibe
-// 		michi->status = export(michi, cmd);
-// 	else if (max_strncmp(ptr->cmd[0], "unset") == 0) // sin fork // ni escribe ni recibe
-// 		michi->status = unset(&michi->envars, cmd);
-// 	else
-// 		executed = false;
-// 	dup2(stdout_copy, STDOUT_FILENO);
-// 	return (executed);
-// }
-
-
-
-static void	start_heredoc(t_cmd *ptr)
+void	start_heredoc(t_cmd *ptr)
 {
 	int		hfd[2];
 	char	*line;
@@ -104,7 +82,10 @@ void	exec(t_cmd *ptr, t_minishell *michi)
 	char **env;
 
 	if (is_builtin(ptr) == true)
+	{
 		builtin_execve(ptr, michi);
+		michi_exit(michi, false, NULL);
+	}
 	env = env_list_to_arr(michi->envars);
 	if (!env)
 		michi_exit(michi, false,"exec_rest error: env");
@@ -119,24 +100,18 @@ void	start_children(t_minishell *michi)
 {
 	t_cmd	*ptr;
 	int		i;
-	//int *heredoc;
-	//bool	executed_unforked;
 
 	ptr = michi->cmds;
 	i = 0;
 	while (ptr)
 	{
-		//executed_unforked = exec_unforked(ptr, ptr->cmd, michi);
 		michi->pids[i] = fork();
 		if (michi->pids[i] == 0)
 		{
-			// if (executed_unforked == true)
-			// 	michi_exit(michi, false, NULL);
 			dup2(ptr->outfile, STDOUT_FILENO);
 			if (ptr->delim)
 				start_heredoc(ptr);
-			if (is_builtin(ptr) == false)
-				dup2(ptr->infile, STDIN_FILENO);
+			dup2(ptr->infile, STDIN_FILENO);
 			close_pipe_ends(i, michi->pfds, cmd_list_size(michi->cmds));
 			exec(ptr, michi);
 		}

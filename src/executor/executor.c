@@ -18,17 +18,38 @@ void	prep_for_next_cmd(t_minishell *michi)
 // sets up pipes
 // starts children (needs to be modified in case builtin is passed)
 // NOTE: only frees cmds, pipes, and pids but NOT env list so the user can keep using it!
-// void exec_single_cmd(t_minishell *michi)
-// {
+void exec_single_cmd(t_minishell *michi)
+{
+	t_cmd *ptr;
+	int pid;
+	int old_stdout;
 
-// }
+	old_stdout = dup(STDOUT_FILENO);
+	ptr = michi->cmds;
+	if (ptr->delim)
+		start_heredoc(ptr);
+	dup2(michi->cmds->outfile, STDOUT_FILENO);
+	if (is_builtin(ptr))
+	{
+		builtin_execve(ptr, michi);
+		dup2(old_stdout, STDOUT_FILENO);
+		return ;
+	}
+	pid = fork();
+	if (pid == 0)
+	{
+		dup2(ptr->infile, STDIN_FILENO);
+		exec(michi->cmds, michi);
+	}
+	waitpid(pid, &michi->status, 0);
+}
 
 void executor(t_minishell *michi)
 {
 	int		i;
 
-	if (is_builtin(michi->cmds) && cmd_list_size(michi->cmds) == 1 && !michi->cmds->delim)
-		return (builtin_execve(michi->cmds, michi));
+	if (cmd_list_size(michi->cmds) == 1)
+		return (exec_single_cmd(michi));
 	michi->pfds = setup_pipes(&michi->cmds);
 	michi->pids = malloc(cmd_list_size(michi->cmds) * sizeof(pid_t));
 	if (!michi->pids)

@@ -6,7 +6,7 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:38:57 by gregueir          #+#    #+#             */
-/*   Updated: 2026/01/20 14:59:58 by ramarti2         ###   ########.fr       */
+/*   Updated: 2026/01/20 17:31:53 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,66 +29,7 @@ static t_minishell *init_michishell(char **env)
 	add_envars(michi, env, false);
 	return (michi);
 }
-// static int		test_count_words(char *input)
-// {
-// 	int i; int wc; int dq;
-// 	i = dq = wc = 0;
-// 	while (input[i])
-// 	{
-// 		while (input[i] && input[i] == ' ')
-// 			i++;
-// 		if (!input[i])
-// 			break ;
-// 		wc++;
-// 		while (input[i] && ((input[i] != ' ' && dq % 2 == 0) || (dq % 2 == 1 && input[i] != '"')))
-// 		{
-// 			if (input[i] == '"')
-// 				dq++;
-// 			i++;
-// 		}
-// 		if (input[i] == '"')
-// 		{
-// 			dq++;
-// 			i++;
-// 		}
-// 	}
-// 	return wc;
-// }
-// char **test_input_splitting(char *input)
-// {
-// 	int wc = test_count_words(input);
-// 	char **args = ft_calloc(sizeof(char *), 1 + wc + 1);
-// 	if (!args)
-// 	{
-// 		perror("Malloc error");
-// 		exit(1);
-// 	}
-// 	args[0] = ft_strdup("firstarg");
-// 	args[wc + 1] = NULL;
-// 	int i = 0;
-// 	int j = 1;
-// 	int dq = 0;
-// 	while (input[i])
-// 	{
-// 		while (input[i] && input[i] == ' ')
-// 			i++;
-// 		if (input[i] == '"')
-// 		{
-// 			dq++;
-// 			i++;
-// 		}
-// 		args[j++] = &input[i];
-// 		while (input[i] && ((input[i] != ' ' && dq % 2 == 0) || (dq % 2 == 1 && input[i] != '"')))
-// 			i++;
-// 		if (input[i] == '"')
-// 			dq++;
-// 		if (input[i] == '"' || input[i] == ' ')
-// 			input[i++] = 0;
-// 	}
-// 	return (args);
-// }
 
-//Currently crashes on open ended pipes, what do?
 int	main(int argc, char **argv, char **env)
 {
 	(void)argc;
