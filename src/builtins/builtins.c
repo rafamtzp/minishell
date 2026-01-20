@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 13:18:48 by ramarti2          #+#    #+#             */
-/*   Updated: 2026/01/16 14:53:11 by gregueir         ###   ########.fr       */
+/*   Updated: 2026/01/20 13:05:08 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void	michi_exit(t_minishell *michi, bool print_msg, char *err_msg)
 	free(michi->input);
 	if (print_msg && is_number(michi->cmds->cmd[1], michi) && !michi->cmds->cmd[2])
 		michi->status = ft_atoi(michi->cmds->cmd[1]);
-	else if (michi->cmds->cmd[1] && michi->cmds->cmd[2])
+	else if (print_msg == true && michi->cmds->cmd[1] && michi->cmds->cmd[2])
 		michi->status += write(2, "Error: Too many arguments\n", 27);
 	free_cmds(&michi->cmds);
 	status = michi->status;

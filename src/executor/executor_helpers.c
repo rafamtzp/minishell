@@ -109,22 +109,9 @@ void	exec_rest(t_cmd *ptr, t_minishell *michi)
 	env = env_list_to_arr(michi->envars);
 	if (!env)
 		michi_exit(michi, false,"exec_rest error: env");
-	
-	// int k;
-	// dprintf(2, "execve debug: pid=%d path=%p '%s'\n", getpid(), (void*)ptr->path, ptr->path);
-    // if (ptr->cmd)
-    // {
-    //     for (k = 0; ptr->cmd[k]; k++)
-    //         dprintf(2, " argv[%d]=%p '%s'\n", k, (void*)ptr->cmd[k], ptr->cmd[k]);
-    //     dprintf(2, " argv[%d]=%p (NULL)\n", k, (void*)ptr->cmd[k]);
-    // }
-    // for (k = 0; env && env[k]; k++)
-    //     dprintf(2, " env[%d]=%p '%s'\n", k, (void*)env[k], env[k]);
-    // if (env)
-    //     dprintf(2, " env[%d]=%p (NULL)\n", k, (void*)env[k]);
-
 	execve(ptr->path, ptr->cmd, env);
-	write(2, "Error: command not found\n", 26);
+	if (ptr->cmd[0])
+		write(2, "Error: command not found\n", 26);
 	michi->status = 1;
 	michi_exit(michi, false, NULL);
 }

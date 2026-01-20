@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_handling.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 13:17:01 by ramarti2          #+#    #+#             */
-/*   Updated: 2026/01/19 15:59:49 by gregueir         ###   ########.fr       */
+/*   Updated: 2026/01/20 13:56:30 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,4 +31,6 @@ void	syntax_error(int errnum)
 		write(2, "Syntax error: Unexpected token\n", 32);
 	else if (errnum == 4)
 		write(2, "Syntax error: Too many redirections\n", 37);
+	else if (errnum == 5)
+		write(2, "Syntax error: Empty pipe\n", 26);
 }

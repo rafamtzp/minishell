@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_check.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 12:59:00 by gregueir          #+#    #+#             */
-/*   Updated: 2026/01/19 15:25:43 by gregueir         ###   ########.fr       */
+/*   Updated: 2026/01/20 13:56:51 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,11 @@ static int	syntax_check_pipes(char *s)
 		else if (s[i] == '\'')
 			i += (squote_checker(s + i));
 		else if (s[i] == '|')
+		{
+			if (pipe_check_empty(s + i))
+				return (syntax_error(5), -1);
 			pipes++;
+		}
 		i++;
 	}
 	return (pipes);

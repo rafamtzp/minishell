@@ -33,7 +33,5 @@ void executor(t_minishell *michi)
 	i = 0;
 	while (i < cmd_list_size(michi->cmds))
 		waitpid(michi->pids[i++], &michi->status, 0);
-	if (michi->status != 0)
-		perror("");  // not 100% sure what to do here
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   what_am_i.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 15:12:29 by ramarti2          #+#    #+#             */
-/*   Updated: 2026/01/15 15:50:13 by gregueir         ###   ########.fr       */
+/*   Updated: 2026/01/20 13:42:00 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ bool	is_quotes(char c)
 //Returns true if c is | or \0 or Newline
 bool	is_breakpoint(char c)
 {
-	if (c == '|' || c == '\0' || c == '\n')
+	if (c == '|' || c == '\0' || c == '\n' || c == 0)
 		return (true);
 	return (false);
 }

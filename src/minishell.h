@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:39:22 by gregueir          #+#    #+#             */
-/*   Updated: 2026/01/19 16:08:18 by gregueir         ###   ########.fr       */
+/*   Updated: 2026/01/20 13:33:12 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,7 @@ int					syntax_check(char *s);
 int					dquote_checker(char *s);
 int					squote_checker(char *s);
 int					syntax_check_redirect(char *s);
+bool				pipe_check_empty(char *s);
 
 // Expander
 char	*expander(char *word, t_minishell *michi);
@@ -153,13 +154,13 @@ void				executor(t_minishell *michi);
 
 // executor helpers
 void				start_children(t_minishell *michi);
-void				builtin_execve(t_cmd *ptr, t_minishell *michi);
 void				prep_for_next_cmd(t_minishell *michi);
+void				builtin_execve(t_cmd *ptr, t_minishell *michi);
 
 // pipe handling
 int					**setup_pipes(t_cmd **cmds);
 int					**create_pipes(t_cmd *cmds, int **pfds);
-void				close_pipe_ends(int i, int **pfds, int size);
 void				free_pipe_arr(int **pfds);
+void				close_pipe_ends(int i, int **pfds, int size);
 
 #endif

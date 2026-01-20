@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_paths.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/16 14:17:59 by gregueir          #+#    #+#             */
-/*   Updated: 2026/01/16 14:36:13 by gregueir         ###   ########.fr       */
+/*   Updated: 2026/01/20 12:04:21 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,8 @@ void	find_paths(t_cmd *ptr, t_minishell *michi)
 		i = 0;
 		while (paths[i] && is_builtin(ptr) == false)
 		{
-			ptr->path = ft_strjoin(paths[i], ptr->cmd[0]);
+			if (ptr->cmd[0])
+				ptr->path = ft_strjoin(paths[i], ptr->cmd[0]);
 			if (!ptr->path)
 				break ;
 			if (access(ptr->path, X_OK) == 0)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_check_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/24 15:52:59 by gregueir          #+#    #+#             */
-/*   Updated: 2026/01/19 15:59:40 by gregueir         ###   ########.fr       */
+/*   Updated: 2026/01/20 13:50:06 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,17 @@ int	syntax_check_redirect(char *s)
 			i++;
 	}
 	return (0);
+}
+
+bool	pipe_check_empty(char *s)
+{
+	int	i;
+
+	i = 1;
+	while (s && is_separator(s[i]))
+		i++;
+	if (!s[i] || s[i] == '|' || s[i] == '\n')
+		return (true);
+	else
+		return (false);
 }

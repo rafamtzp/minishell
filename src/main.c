@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:38:57 by gregueir          #+#    #+#             */
-/*   Updated: 2026/01/19 16:09:47 by gregueir         ###   ########.fr       */
+/*   Updated: 2026/01/20 13:06:23 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ static t_minishell *init_michishell(char **env)
 {
 	t_minishell	*michi;
 
+	//print_cat();
 	michi = malloc(sizeof(t_minishell));
 	if (!michi)
 		exit(1);
@@ -95,19 +96,29 @@ int	main(int argc, char **argv, char **env)
 	t_minishell	*michi;
 	int			pipes;
 
-	//print_cat();
 	michi = init_michishell(env);
 	while (1)
 	{
 		michi->input = readline("/^•⩊•^\\ michishell_$ ");
+		if (!michi->input)
+		{
+			prep_for_next_cmd(michi);
+			printf("exit\n");
+			return (0);
+		}
 		add_history(michi->input);
 		pipes = syntax_check(michi->input);
 		if (pipes == -1)
 		{
 			prep_for_next_cmd(michi);
-			continue;
+			continue ;
 		}
 		tokenize(michi, pipes);
+		// if (!empty_cmd_found(michi->cmds))
+		// {
+		// 	prep_for_next_cmd(michi);
+		// 	continue ;
+		// }
 		find_paths(michi->cmds, michi);
 		executor(michi);
 		prep_for_next_cmd(michi);
