@@ -1,12 +1,18 @@
 #include "../minishell.h"
 
+//TODO: Una función que cierre todos los FDs
 void	prep_for_next_cmd(t_minishell *michi)
 {
-	// free(michi->pids);
-	// michi->pids = NULL;
-	//free_pipe_arr(michi->pfds);
-	//michi->pfds = NULL;
-	//close_first_and_last(&michi->cmds);
+	if (michi->pids)
+	{
+		free(michi->pids);
+		michi->pids = NULL;
+	}
+	if (michi->pfds)
+	{
+		free_pipe_arr(michi->pfds);
+		michi->pfds = NULL;
+	}
 	free_cmds(&michi->cmds);
 	michi->cmds = NULL;
 	free(michi->input);

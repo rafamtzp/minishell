@@ -6,7 +6,7 @@
 /*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/16 13:21:06 by gregueir          #+#    #+#             */
-/*   Updated: 2026/01/19 16:07:57 by gregueir         ###   ########.fr       */
+/*   Updated: 2026/01/20 17:14:13 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 int	get_quote_status(char c, int stat)
 {
 	if (c == '"' && stat == 0)
-			stat = 1;
+		stat = 1;
 	else if (c == '"' && stat == 1)
-			stat = 0;
+		stat = 0;
 	if (c == '\'' && stat == 0)
-			stat = -1;
+		stat = -1;
 	else if (c == '\'' && stat == -1)
-			stat = 0;
+		stat = 0;
 	return (stat);
 }
 
@@ -51,10 +51,10 @@ char	*extract_envar(t_minishell *michi, char *word)
 	return (str);
 }
 
-int		find_expanded_len(char *word, t_minishell *michi)
+int	find_expanded_len(char *word, t_minishell *michi)
 {
-	int qs;
-	int len;
+	int	qs;
+	int	len;
 
 	qs = 0;
 	len = 0;
