@@ -6,7 +6,7 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:38:57 by gregueir          #+#    #+#             */
-/*   Updated: 2026/01/20 13:06:23 by ramarti2         ###   ########.fr       */
+/*   Updated: 2026/01/20 14:59:58 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,11 +114,6 @@ int	main(int argc, char **argv, char **env)
 			continue ;
 		}
 		tokenize(michi, pipes);
-		// if (!empty_cmd_found(michi->cmds))
-		// {
-		// 	prep_for_next_cmd(michi);
-		// 	continue ;
-		// }
 		find_paths(michi->cmds, michi);
 		executor(michi);
 		prep_for_next_cmd(michi);

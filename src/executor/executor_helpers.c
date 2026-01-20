@@ -82,7 +82,6 @@ static void	start_heredoc(t_cmd *ptr)
 	char	*line;
 
 	pipe(hfd);
-	//TODO: multiple delims?????
 	while (1)
 	{
 		line = get_next_line(STDIN_FILENO);
@@ -100,7 +99,7 @@ static void	start_heredoc(t_cmd *ptr)
 	}
 	ptr->infile = hfd[READ_END];
 }
-void	exec_rest(t_cmd *ptr, t_minishell *michi)
+void	exec(t_cmd *ptr, t_minishell *michi)
 {
 	char **env;
 
@@ -120,6 +119,7 @@ void	start_children(t_minishell *michi)
 {
 	t_cmd	*ptr;
 	int		i;
+	//int *heredoc;
 	//bool	executed_unforked;
 
 	ptr = michi->cmds;
@@ -138,7 +138,7 @@ void	start_children(t_minishell *michi)
 			if (is_builtin(ptr) == false)
 				dup2(ptr->infile, STDIN_FILENO);
 			close_pipe_ends(i, michi->pfds, cmd_list_size(michi->cmds));
-			exec_rest(ptr, michi);
+			exec(ptr, michi);
 		}
 		i++;
 		ptr = ptr->next;
