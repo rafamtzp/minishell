@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 11:39:57 by gregueir          #+#    #+#             */
-/*   Updated: 2026/01/20 12:27:29 by ramarti2         ###   ########.fr       */
+/*   Updated: 2026/01/20 17:15:01 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,15 +99,15 @@ static char	**split_input(char *line, int node_no)
 
 int	tokenize(t_minishell *michi, int pipes)
 {
-	int i;
-	t_cmd *node;
+	int		i;
+	t_cmd	*node;
 
 	i = 0;
 	while (i < pipes + 1)
 	{
 		node = cmd_list_new();
 		if (!node)
-			return (free_cmds(&michi->cmds),-1);
+			return (free_cmds(&michi->cmds), -1);
 		node->cmd = split_input(michi->input, i);
 		cmd_list_add_back(&michi->cmds, node);
 		i++;

@@ -6,7 +6,7 @@
 /*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 16:14:50 by ramarti2          #+#    #+#             */
-/*   Updated: 2026/01/19 16:07:30 by gregueir         ###   ########.fr       */
+/*   Updated: 2026/01/20 17:11:52 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ void	fill_tmp(char *tmp, char *word, t_minishell *michi)
 
 void	fill_expanded_word(char *tmp, char *word, t_minishell *michi)
 {
-	int qs;
-	int i;
-	
+	int	qs;
+	int	i;
+
 	qs = 0;
 	i = 0;
 	while (*word)
@@ -69,8 +69,8 @@ char	*expander(char *word, t_minishell *michi)
 
 void	expand_cmds(t_cmd *cmds, t_minishell *michi)
 {
-	int i;
-	char *unexpanded;
+	int		i;
+	char	*unexpanded;
 
 	i = 0;
 	while (cmds)

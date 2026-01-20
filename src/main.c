@@ -6,16 +6,18 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:38:57 by gregueir          #+#    #+#             */
-/*   Updated: 2026/01/20 17:31:53 by ramarti2         ###   ########.fr       */
+/*   Updated: 2026/01/20 17:41:02 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static t_minishell *init_michishell(char **env)
+static t_minishell	*init_michishell(char **env, int argc, char **argv)
 {
 	t_minishell	*michi;
 
+	(void)argc;
+	(void)argv;
 	//print_cat();
 	michi = malloc(sizeof(t_minishell));
 	if (!michi)
@@ -26,18 +28,27 @@ static t_minishell *init_michishell(char **env)
 	michi->pids = NULL;
 	michi->input = NULL;
 	michi->status = 0;
-	add_envars(michi, env, false);
+	if (add_envars(michi, env, false))
+	{
+		free(michi);
+		exit(1);
+	}
 	return (michi);
+}
+
+static void	setup_and_execute(t_minishell *michi, int pipes)
+{
+	tokenize(michi, pipes);
+	find_paths(michi->cmds, michi);
+	executor(michi);
 }
 
 int	main(int argc, char **argv, char **env)
 {
-	(void)argc;
-	(void)argv;
-	t_minishell	*michi;
-	int			pipes;
+	t_minishell		*michi;
+	int				pipes;
 
-	michi = init_michishell(env);
+	michi = init_michishell(env, argc, argv);
 	while (1)
 	{
 		michi->input = readline("/^•⩊•^\\ michishell_$ ");
@@ -54,9 +65,7 @@ int	main(int argc, char **argv, char **env)
 			prep_for_next_cmd(michi);
 			continue ;
 		}
-		tokenize(michi, pipes);
-		find_paths(michi->cmds, michi);
-		executor(michi);
+		setup_and_execute(michi, pipes);
 		prep_for_next_cmd(michi);
 	}
 	clean_env_list(michi);
