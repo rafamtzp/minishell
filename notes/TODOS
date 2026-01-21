@@ -1,5 +1,4 @@
 Rafa:
-1. Expansion dentro de heredoc
 2. Ejecutar binarios dentro de la carpeta en la que estoy e.g. ./minishell en minishell
 3. Limpiar ejecutor y manejo de errores
 
