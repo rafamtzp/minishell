@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 16:14:50 by ramarti2          #+#    #+#             */
-/*   Updated: 2026/01/20 17:11:52 by gregueir         ###   ########.fr       */
+/*   Updated: 2026/01/21 12:56:27 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ char	*expander(char *word, t_minishell *michi)
 	char	*tmp;
 	int		explen;
 
+	if (!word)
+		return (NULL);
 	explen = find_expanded_len(word, michi);
 	tmp = ft_calloc(explen + 1, sizeof(char));
 	if (!tmp)

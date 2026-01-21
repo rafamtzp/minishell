@@ -6,7 +6,7 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:39:22 by gregueir          #+#    #+#             */
-/*   Updated: 2026/01/20 17:42:00 by ramarti2         ###   ########.fr       */
+/*   Updated: 2026/01/21 12:54:25 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,7 @@ void	check_free_cmd(char	**cmd, int wcount);
 void	find_paths(t_cmd *ptr, t_minishell *michi);
 
 // executor
-void				start_heredoc(t_cmd *ptr);
+void				start_heredoc(t_cmd *ptr, t_minishell *michi);
 void				exec(t_cmd *ptr, t_minishell *michi);
 void				executor(t_minishell *michi);
 

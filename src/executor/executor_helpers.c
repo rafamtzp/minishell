@@ -53,28 +53,44 @@ void	builtin_execve(t_cmd *ptr, t_minishell *michi)
 	if (cmd_list_size(michi->cmds) > 1)
 		michi_exit(michi, false, NULL);
 }
+static char *get_next_exp_line(int fd, t_minishell *michi)
+{
+	char *line;
+	char *exp_line;
 
-void	start_heredoc(t_cmd *ptr)
+	line = get_next_line(fd);
+	if (!line)
+		return (NULL);
+	exp_line = expander(line, michi);
+	free(line);
+	if (!exp_line)
+	{
+		write(2, "Error: Heredoc expansion\n", 26);
+		return (NULL);
+	}
+	return (exp_line);
+}
+
+void	start_heredoc(t_cmd *ptr, t_minishell *michi)
 {
 	int		hfd[2];
-	char	*line;
+	char	*exp_line;
 
 	pipe(hfd);
 	while (1)
 	{
-		line = get_next_line(STDIN_FILENO);
-		if (!line)
+		exp_line = get_next_exp_line(STDIN_FILENO, michi);
+		if (!exp_line)
+			break ;
+		if (max_strncmp(exp_line, ptr->delim) == 0)
 		{
-			write(2, "gnl error in heredoc\n", 24);
+			free(exp_line);
 			break ;
 		}
-		if (max_strncmp(line, ptr->delim) == 0 /* and it*/)
-		{
-			close(hfd[WRITE_END]);
-			break ;
-		}
-		write(hfd[WRITE_END], line, ft_strlen(line));
+		write(hfd[WRITE_END], exp_line, ft_strlen(exp_line));
+		free(exp_line);
 	}
+	close(hfd[WRITE_END]);
 	ptr->infile = hfd[READ_END];
 }
 void	exec(t_cmd *ptr, t_minishell *michi)
@@ -110,7 +126,7 @@ void	start_children(t_minishell *michi)
 		{
 			dup2(ptr->outfile, STDOUT_FILENO);
 			if (ptr->delim)
-				start_heredoc(ptr);
+				start_heredoc(ptr, michi);
 			dup2(ptr->infile, STDIN_FILENO);
 			close_pipe_ends(i, michi->pfds, cmd_list_size(michi->cmds));
 			exec(ptr, michi);

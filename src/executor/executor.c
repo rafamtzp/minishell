@@ -33,7 +33,7 @@ void exec_single_cmd(t_minishell *michi)
 	old_stdout = dup(STDOUT_FILENO);
 	ptr = michi->cmds;
 	if (ptr->delim)
-		start_heredoc(ptr);
+		start_heredoc(ptr, michi);
 	dup2(michi->cmds->outfile, STDOUT_FILENO);
 	if (is_builtin(ptr))
 	{
@@ -47,6 +47,7 @@ void exec_single_cmd(t_minishell *michi)
 		dup2(ptr->infile, STDIN_FILENO);
 		exec(michi->cmds, michi);
 	}
+	dup2(old_stdout, STDOUT_FILENO);
 	waitpid(pid, &michi->status, 0);
 }
 
