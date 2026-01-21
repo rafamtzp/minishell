@@ -1,11 +1,7 @@
 Rafa:
 2. Ejecutar binarios dentro de la carpeta en la que estoy e.g. ./minishell en minishell
 3. Limpiar ejecutor y manejo de errores
-
-Guille:
-1. Señales
-
-1. Funcion que cierra archivos
+4. Funcion que cierra archivos
 
 
 
@@ -18,3 +14,4 @@ En este caso, no era un error.  Mensaje eliminado.
 Guille
 1. Limpiar parseo y manejo de errores
 2. posible crash con argumentos a la minishell
+3. Senales
