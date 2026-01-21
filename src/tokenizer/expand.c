@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 16:14:50 by ramarti2          #+#    #+#             */
-/*   Updated: 2026/01/21 12:56:27 by ramarti2         ###   ########.fr       */
+/*   Updated: 2026/01/21 16:28:58 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,12 @@ char	*expander(char *word, t_minishell *michi)
 	explen = find_expanded_len(word, michi);
 	tmp = ft_calloc(explen + 1, sizeof(char));
 	if (!tmp)
-		return (NULL); //Controlar errores
+		return (NULL);
 	fill_expanded_word(tmp, word, michi);
 	return (tmp);
 }
 
-void	expand_cmds(t_cmd *cmds, t_minishell *michi)
+int	expand_cmds(t_cmd *cmds, t_minishell *michi)
 {
 	int		i;
 	char	*unexpanded;
@@ -81,9 +81,15 @@ void	expand_cmds(t_cmd *cmds, t_minishell *michi)
 		{
 			unexpanded = cmds->cmd[i];
 			cmds->cmd[i] = expander(cmds->cmd[i], michi);
+			if (!cmds->cmd[i])
+			{
+				free(unexpanded);
+				return (i);
+			}
 			free(unexpanded);
 			i++;
 		}
 		cmds = cmds->next;
 	}
+	return (0);
 }

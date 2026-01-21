@@ -4,8 +4,7 @@ Rafa:
 3. Limpiar ejecutor y manejo de errores
 
 Guille:
-1. Limpiar parseo y manejo de errores
-2. Señales
+1. Señales
 
 1. Funcion que cierra archivos
 
@@ -16,3 +15,7 @@ Rafa: Cosas arregladas:
 2. Cuando le pasabas un EOF a un heredoc, ponia "gnl error" porq line = NULL.
 En este caso, no era un error.  Mensaje eliminado.
 3. Expansion dentro de heredoc
+
+Guille
+1. Limpiar parseo y manejo de errores
+2. posible crash con argumentos a la minishell

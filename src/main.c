@@ -3,21 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:38:57 by gregueir          #+#    #+#             */
-/*   Updated: 2026/01/20 17:41:02 by ramarti2         ###   ########.fr       */
+/*   Updated: 2026/01/21 16:06:53 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static t_minishell	*init_michishell(char **env, int argc, char **argv)
+static t_minishell	*init_michishell(char **env)
 {
 	t_minishell	*michi;
 
-	(void)argc;
-	(void)argv;
 	//print_cat();
 	michi = malloc(sizeof(t_minishell));
 	if (!michi)
@@ -38,17 +36,20 @@ static t_minishell	*init_michishell(char **env, int argc, char **argv)
 
 static void	setup_and_execute(t_minishell *michi, int pipes)
 {
-	tokenize(michi, pipes);
+	int	err;
+
+	err = 0;
+	err = tokenize(michi, pipes);
+	if (err)
+		return ;
 	find_paths(michi->cmds, michi);
 	executor(michi);
 }
 
-int	main(int argc, char **argv, char **env)
+static void	main_loop(t_minishell *michi)
 {
-	t_minishell		*michi;
-	int				pipes;
+	int	pipes;
 
-	michi = init_michishell(env, argc, argv);
 	while (1)
 	{
 		michi->input = readline("/^•⩊•^\\ michishell_$ ");
@@ -56,7 +57,7 @@ int	main(int argc, char **argv, char **env)
 		{
 			prep_for_next_cmd(michi);
 			printf("exit\n");
-			return (0);
+			return ;
 		}
 		add_history(michi->input);
 		pipes = syntax_check(michi->input);
@@ -68,6 +69,19 @@ int	main(int argc, char **argv, char **env)
 		setup_and_execute(michi, pipes);
 		prep_for_next_cmd(michi);
 	}
+}
+
+int	main(int argc, char **argv, char **env)
+{
+	t_minishell		*michi;
+
+	if (argc != 1 || argv[1])
+	{
+		write(2, "Too many arguments\n", 20);
+		return (1);
+	}
+	michi = init_michishell(env);
+	main_loop(michi);
 	clean_env_list(michi);
 	return (0);
 }
