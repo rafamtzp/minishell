@@ -65,6 +65,9 @@ void executor(t_minishell *michi)
 	close_pipe_ends(-1, michi->pfds, cmd_list_size(michi->cmds));
 	i = 0;
 	while (i < cmd_list_size(michi->cmds))
+	{
+		printf("waitpid 2 done\n");
 		waitpid(michi->pids[i++], &michi->status, 0);
+	}
 }
 

@@ -105,6 +105,7 @@ void	exec(t_cmd *ptr, t_minishell *michi)
 	env = env_list_to_arr(michi->envars);
 	if (!env)
 		michi_exit(michi, false,"exec_rest error: env");
+	fprintf(stderr, "going into execve\n");
 	execve(ptr->path, ptr->cmd, env);
 	if (ptr->cmd[0])
 		write(2, "Error: command not found\n", 26);
@@ -121,6 +122,7 @@ void	start_children(t_minishell *michi)
 	i = 0;
 	while (ptr)
 	{
+		printf("child %i born\n", i);
 		michi->pids[i] = fork();
 		if (michi->pids[i] == 0)
 		{
@@ -129,8 +131,14 @@ void	start_children(t_minishell *michi)
 				start_heredoc(ptr, michi);
 			dup2(ptr->infile, STDIN_FILENO);
 			close_pipe_ends(i, michi->pfds, cmd_list_size(michi->cmds));
+			fprintf(stderr, "pipe ends closed. pid: %i\n", michi->pids[i]);
 			exec(ptr, michi);
 		}
+		// if (i == 0)
+		// 	close_pipe_ends(-1, michi->pfds, cmd_list_size(michi->cmds));
+		//printf("a\n");
+		//waitpid(michi->pids[i], &michi->status, 0);
+		//printf("waitpid1 done\n");
 		i++;
 		ptr = ptr->next;
 	}
