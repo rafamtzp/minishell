@@ -6,7 +6,7 @@
 /*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 11:39:57 by gregueir          #+#    #+#             */
-/*   Updated: 2026/01/20 17:15:01 by gregueir         ###   ########.fr       */
+/*   Updated: 2026/01/21 16:47:17 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ static char	**split_input(char *line, int node_no)
 int	tokenize(t_minishell *michi, int pipes)
 {
 	int		i;
+	int		err;
 	t_cmd	*node;
 
 	i = 0;
@@ -109,10 +110,14 @@ int	tokenize(t_minishell *michi, int pipes)
 		if (!node)
 			return (free_cmds(&michi->cmds), -1);
 		node->cmd = split_input(michi->input, i);
+		if (!node->cmd)
+			return (free_cmds(&michi->cmds), -1);
 		cmd_list_add_back(&michi->cmds, node);
 		i++;
 	}
 	redirect_fds(michi->cmds, michi->input, michi);
-	expand_cmds(michi->cmds, michi);
+	err = expand_cmds(michi->cmds, michi);
+	if (err)
+		return (free_cmds(&michi->cmds), -1);
 	return (0);
 }
