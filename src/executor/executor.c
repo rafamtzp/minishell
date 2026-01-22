@@ -32,8 +32,8 @@ void exec_single_cmd(t_minishell *michi)
 
 	old_stdout = dup(STDOUT_FILENO);
 	ptr = michi->cmds;
-	if (ptr->delim)
-		start_heredoc(ptr, michi);
+	if (ptr->delim) // close other files?????
+		get_heredoc(ptr, michi);
 	dup2(michi->cmds->outfile, STDOUT_FILENO);
 	if (is_builtin(ptr))
 	{
@@ -65,9 +65,6 @@ void executor(t_minishell *michi)
 	close_pipe_ends(-1, michi->pfds, cmd_list_size(michi->cmds));
 	i = 0;
 	while (i < cmd_list_size(michi->cmds))
-	{
-		printf("waitpid 2 done\n");
 		waitpid(michi->pids[i++], &michi->status, 0);
-	}
 }
 

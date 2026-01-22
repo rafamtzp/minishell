@@ -1,15 +1,8 @@
 Rafa:
+1. Que el heredoc imprima un prompt
 2. Ejecutar binarios dentro de la carpeta en la que estoy e.g. ./minishell en minishell
 3. Limpiar ejecutor y manejo de errores
 4. Funcion que cierra archivos
-
-
-
-Rafa: Cosas arregladas:
-1. Stdout no se restauraba cuando ejecutabas un non-builtin a un archivo
-2. Cuando le pasabas un EOF a un heredoc, ponia "gnl error" porq line = NULL.
-En este caso, no era un error.  Mensaje eliminado.
-3. Expansion dentro de heredoc
 
 Guille
 1. Limpiar parseo y manejo de errores

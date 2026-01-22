@@ -71,25 +71,42 @@ static char *get_next_exp_line(int fd, t_minishell *michi)
 	return (exp_line);
 }
 
-void	start_heredoc(t_cmd *ptr, t_minishell *michi)
+void fill_heredoc(int write_end, t_cmd *ptr, t_minishell *michi)
 {
-	int		hfd[2];
-	char	*exp_line;
+	char *exp_line;
 
-	pipe(hfd);
 	while (1)
 	{
+		write(1, "> ", 2);
 		exp_line = get_next_exp_line(STDIN_FILENO, michi);
 		if (!exp_line)
-			break ;
+			return ;
 		if (max_strncmp(exp_line, ptr->delim) == 0)
 		{
 			free(exp_line);
-			break ;
+			return ;
 		}
-		write(hfd[WRITE_END], exp_line, ft_strlen(exp_line));
+		write(write_end, exp_line, ft_strlen(exp_line));
 		free(exp_line);
 	}
+}
+
+void	get_heredoc(t_cmd *ptr, t_minishell *michi)
+{
+	int		hfd[2];
+	int pid;
+
+	pipe(hfd);
+	pid = fork();
+	if (pid == 0)
+	{
+		close(hfd[READ_END]);
+		fill_heredoc(hfd[WRITE_END], ptr, michi);
+		close(hfd[WRITE_END]);
+		close_pipe_ends(-1, michi->pfds, cmd_list_size(michi->cmds));
+		michi_exit(michi, false, NULL);
+	}
+	waitpid(pid, &michi->status, 0);
 	close(hfd[WRITE_END]);
 	ptr->infile = hfd[READ_END];
 }
@@ -105,7 +122,6 @@ void	exec(t_cmd *ptr, t_minishell *michi)
 	env = env_list_to_arr(michi->envars);
 	if (!env)
 		michi_exit(michi, false,"exec_rest error: env");
-	fprintf(stderr, "going into execve\n");
 	execve(ptr->path, ptr->cmd, env);
 	if (ptr->cmd[0])
 		write(2, "Error: command not found\n", 26);
@@ -113,32 +129,41 @@ void	exec(t_cmd *ptr, t_minishell *michi)
 	michi_exit(michi, false, NULL);
 }
 
+void	write_heredocs(t_minishell *michi)
+{
+	t_cmd *ptr;
+
+	ptr = michi->cmds;
+	while (ptr)
+	{
+		if (ptr->delim)
+		{
+			if (ptr->infile != STDIN_FILENO)
+				close(ptr->infile);
+			get_heredoc(ptr, michi);
+		}
+		ptr = ptr->next;
+	}
+}
+
 void	start_children(t_minishell *michi)
 {
 	t_cmd	*ptr;
 	int		i;
 
+	write_heredocs(michi);
 	ptr = michi->cmds;
 	i = 0;
 	while (ptr)
 	{
-		printf("child %i born\n", i);
 		michi->pids[i] = fork();
 		if (michi->pids[i] == 0)
 		{
 			dup2(ptr->outfile, STDOUT_FILENO);
-			if (ptr->delim)
-				start_heredoc(ptr, michi);
 			dup2(ptr->infile, STDIN_FILENO);
 			close_pipe_ends(i, michi->pfds, cmd_list_size(michi->cmds));
-			fprintf(stderr, "pipe ends closed. pid: %i\n", michi->pids[i]);
 			exec(ptr, michi);
 		}
-		// if (i == 0)
-		// 	close_pipe_ends(-1, michi->pfds, cmd_list_size(michi->cmds));
-		//printf("a\n");
-		//waitpid(michi->pids[i], &michi->status, 0);
-		//printf("waitpid1 done\n");
 		i++;
 		ptr = ptr->next;
 	}
