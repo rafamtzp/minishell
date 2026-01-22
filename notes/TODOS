@@ -1,10 +1,11 @@
 Rafa:
-1. Que el heredoc imprima un prompt
-2. Ejecutar binarios dentro de la carpeta en la que estoy e.g. ./minishell en minishell
-3. Limpiar ejecutor y manejo de errores
-4. Funcion que cierra archivos
+- Que el heredoc imprima un prompt
+- Organizar archivos.  Separar funciones de heredoc
+- Ejecutar binarios dentro de la carpeta en la que estoy e.g. ./minishell en minishell
+- Limpiar ejecutor y manejo de errores
+- Funcion que cierra archivos
 
 Guille
-1. Limpiar parseo y manejo de errores
-2. posible crash con argumentos a la minishell
-3. Senales
+- Limpiar parseo y manejo de errores
+- posible crash con argumentos a la minishell
+- Senales
