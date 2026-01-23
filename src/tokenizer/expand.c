@@ -6,7 +6,7 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 16:14:50 by ramarti2          #+#    #+#             */
-/*   Updated: 2026/01/23 13:07:29 by ramarti2         ###   ########.fr       */
+/*   Updated: 2026/01/23 15:37:51 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,14 @@ void	fill_tmp(char *tmp, char *word, t_minishell *michi)
 	int		i;
 	char	*value;
 
-	value = extract_envar(michi, word);
+	if (word[1] == '?')
+	{
+		value = ft_strdup(ft_itoa(michi->status));
+		if (!value)
+			return ; // err
+	}
+	else
+		value = extract_envar(michi, word);
 	wlen = ft_strlen(value);
 	i = 0;
 	while (i < wlen)

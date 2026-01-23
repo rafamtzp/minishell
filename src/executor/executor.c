@@ -6,7 +6,7 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/23 13:16:28 by ramarti2          #+#    #+#             */
-/*   Updated: 2026/01/23 13:24:00 by ramarti2         ###   ########.fr       */
+/*   Updated: 2026/01/23 16:16:51 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ void	prep_for_next_cmd(t_minishell *michi)
 	michi->cmds = NULL;
 	free(michi->input);
 	michi->input = NULL;
-	michi->status = 0;
 }
 
 void	exec(t_cmd *ptr, t_minishell *michi)
@@ -45,6 +44,7 @@ void	exec(t_cmd *ptr, t_minishell *michi)
 	if (!env)
 		michi_exit(michi, false,"exec_rest error: env");
 	execve(ptr->path, ptr->cmd, env);
+	fprintf(stderr, "Under execve\n");
 	if (ptr->cmd[0])
 		write(2, "Error: command not found\n", 26);
 	michi->status = 1;
@@ -69,6 +69,7 @@ void exec_single_cmd(t_minishell *michi)
 	if (is_builtin(ptr))
 	{
 		builtin_execve(ptr, michi);
+		michi->status = 0;
 		dup2(old_stdout, STDOUT_FILENO);
 		return ;
 	}
@@ -86,6 +87,7 @@ void executor(t_minishell *michi)
 {
 	int		i;
 
+	printf("cmdlist size: %i\n", cmd_list_size(michi->cmds));
 	if (cmd_list_size(michi->cmds) == 1)
 		return (exec_single_cmd(michi));
 	michi->pfds = setup_pipes(&michi->cmds);

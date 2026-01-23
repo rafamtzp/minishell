@@ -1,8 +1,7 @@
 Rafa:
+- expansion de $?
 - Manejo de errores
 - Funcion que cierra archivos
 
 Guille
-- Limpiar parseo y manejo de errores
-- posible crash con argumentos a la minishell
 - Senales
