@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   executor.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/23 13:16:28 by ramarti2          #+#    #+#             */
+/*   Updated: 2026/01/23 13:24:00 by ramarti2         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 //TODO: Una función que cierre todos los FDs
@@ -18,6 +30,25 @@ void	prep_for_next_cmd(t_minishell *michi)
 	free(michi->input);
 	michi->input = NULL;
 	michi->status = 0;
+}
+
+void	exec(t_cmd *ptr, t_minishell *michi)
+{
+	char **env;
+
+	if (is_builtin(ptr) == true)
+	{
+		builtin_execve(ptr, michi);
+		michi_exit(michi, false, NULL);
+	}
+	env = env_list_to_arr(michi->envars);
+	if (!env)
+		michi_exit(michi, false,"exec_rest error: env");
+	execve(ptr->path, ptr->cmd, env);
+	if (ptr->cmd[0])
+		write(2, "Error: command not found\n", 26);
+	michi->status = 1;
+	michi_exit(michi, false, NULL);
 }
 
 // receives cmd list, and env vars list

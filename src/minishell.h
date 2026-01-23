@@ -6,7 +6,7 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:39:22 by gregueir          #+#    #+#             */
-/*   Updated: 2026/01/22 18:05:04 by ramarti2         ###   ########.fr       */
+/*   Updated: 2026/01/23 13:36:19 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,6 @@ typedef struct s_minishell
 	char			*input;
 }					t_minishell;
 
-// TEMPORARY TEST
-void	parsing_storing_checking(int argc, char **argv, t_cmd **cmds);
 
 // GUI
 void	print_cat(void);
@@ -147,8 +145,12 @@ void	check_free_cmd(char	**cmd, int wcount);
 // Find paths
 void	find_paths(t_cmd *ptr, t_minishell *michi);
 
-// executor
+// Heredoc
+void	write_heredocs(t_minishell *michi);
 void	get_heredoc(t_cmd *ptr, t_minishell *michi);
+
+// executor
+char 		**env_list_to_arr(t_envar *env);
 void	exec(t_cmd *ptr, t_minishell *michi);
 void	executor(t_minishell *michi);
 

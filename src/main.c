@@ -3,14 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:38:57 by gregueir          #+#    #+#             */
-/*   Updated: 2026/01/21 16:06:53 by gregueir         ###   ########.fr       */
+/*   Updated: 2026/01/23 13:42:58 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void increment_shlvl(t_envar *ptr)
+{
+	t_envar *shlvl;
+	int value;
+	
+	shlvl = find_envar("SHLVL", ptr);
+	if (shlvl->value)
+	{
+		value = ft_atoi(shlvl->value);
+		value++;
+		free(shlvl->value);
+		shlvl->value = ft_strdup(ft_itoa(value));
+	}
+}
 
 static t_minishell	*init_michishell(char **env)
 {
@@ -31,6 +46,7 @@ static t_minishell	*init_michishell(char **env)
 		free(michi);
 		exit(1);
 	}
+	increment_shlvl(michi->envars);
 	return (michi);
 }
 
