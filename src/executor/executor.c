@@ -6,7 +6,7 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/23 13:16:28 by ramarti2          #+#    #+#             */
-/*   Updated: 2026/01/23 16:16:51 by ramarti2         ###   ########.fr       */
+/*   Updated: 2026/01/23 17:41:20 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	exec(t_cmd *ptr, t_minishell *michi)
 	fprintf(stderr, "Under execve\n");
 	if (ptr->cmd[0])
 		write(2, "Error: command not found\n", 26);
+	fprintf(stderr, "status before modification: %i\n", michi->status);
 	michi->status = 1;
 	michi_exit(michi, false, NULL);
 }
@@ -55,6 +56,15 @@ void	exec(t_cmd *ptr, t_minishell *michi)
 // sets up pipes
 // starts children (needs to be modified in case builtin is passed)
 // NOTE: only frees cmds, pipes, and pids but NOT env list so the user can keep using it!
+void	wait_and_update(pid_t pid, t_minishell *michi)
+{
+	waitpid(pid, &michi->status, 0);
+	if (WIFEXITED(michi->status))
+		michi->status = WEXITSTATUS(michi->status);
+	else if (WIFSIGNALED(michi->status))
+		michi->status = WTERMSIG(michi->status) + 128;
+}
+
 void exec_single_cmd(t_minishell *michi)
 {
 	t_cmd *ptr;
@@ -80,14 +90,13 @@ void exec_single_cmd(t_minishell *michi)
 		exec(michi->cmds, michi);
 	}
 	dup2(old_stdout, STDOUT_FILENO);
-	waitpid(pid, &michi->status, 0);
+	wait_and_update(pid, michi);
 }
 
 void executor(t_minishell *michi)
 {
 	int		i;
 
-	printf("cmdlist size: %i\n", cmd_list_size(michi->cmds));
 	if (cmd_list_size(michi->cmds) == 1)
 		return (exec_single_cmd(michi));
 	michi->pfds = setup_pipes(&michi->cmds);
@@ -98,6 +107,6 @@ void executor(t_minishell *michi)
 	close_pipe_ends(-1, michi->pfds, cmd_list_size(michi->cmds));
 	i = 0;
 	while (i < cmd_list_size(michi->cmds))
-		waitpid(michi->pids[i++], &michi->status, 0);
+		wait_and_update(michi->pids[i++], michi);
 }
 
