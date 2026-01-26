@@ -6,13 +6,14 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/16 14:41:25 by gregueir          #+#    #+#             */
-/*   Updated: 2026/01/26 16:50:58 by ramarti2         ###   ########.fr       */
+/*   Updated: 2026/01/26 16:54:31 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static int cd_calloc_new_values(t_envar *oldpwd, t_envar *pwd, char *prev_oldpwd, char *prev_pwd)
+static int	cd_calloc_new_values(t_envar *oldpwd, t_envar *pwd,
+		char *prev_oldpwd, char *prev_pwd)
 {
 	oldpwd->value = ft_calloc(1, PATH_MAX);
 	if (!oldpwd->value)
@@ -31,14 +32,13 @@ static int cd_calloc_new_values(t_envar *oldpwd, t_envar *pwd, char *prev_oldpwd
 	return (0);
 }
 
-// maybe implement 'cd -'?
 int	cd(char **cmd, t_minishell *michi)
 {
-	t_envar *oldpwd;
-	char *prev_oldpwd;
-	char *prev_pwd;
-	t_envar *pwd;
-	
+	t_envar	*oldpwd;
+	char	*prev_oldpwd;
+	char	*prev_pwd;
+	t_envar	*pwd;
+
 	oldpwd = find_envar("OLDPWD", michi->envars);
 	pwd = find_envar("PWD", michi->envars);
 	if (!oldpwd || !pwd)

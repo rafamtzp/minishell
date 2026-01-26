@@ -6,7 +6,7 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 13:18:48 by ramarti2          #+#    #+#             */
-/*   Updated: 2026/01/23 16:50:56 by ramarti2         ###   ########.fr       */
+/*   Updated: 2026/01/26 17:00:44 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ void	echo(char **cmd)
 		while (max_strncmp(cmd[i], "-n") == 0)
 			i++;
 		while (cmd[i])
-			printf("%s ", cmd[i++]); // bucle que imprime argumentos sin \n
+			printf("%s ", cmd[i++]);
 	}
-	else //bucle que imprime argumentos con salto de linea al final
+	else
 	{
 		while(cmd[i])
 			printf("%s ", cmd[i++]);
