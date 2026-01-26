@@ -1,3 +1,4 @@
+.SILENT:
 NAME = minishell
 
 CC		= cc
@@ -28,6 +29,7 @@ LIBFT		= $(LIBFT_DIR)/libft.a
 INLCUDES = -Iinclude -I$(LIBFT_DIR)
 
 all: $(NAME)
+	echo "✅ $(NAME) compiled ✅"
 
 debug: $(OBJ_DBG) $(LIBFT)
 	$(CC) -g $(INLCUDES) $(OBJ_DBG) $(LIBFT) -lreadline -o $(NAME)
@@ -41,11 +43,10 @@ obj/%.o: src/%.c
 
 dbg_obj/%.o: src/%.c
 	@mkdir -p $(dir $@)
-	$(CC) -g $(INLCUDES) -c $< -o $@
+	@$(CC) -g $(INLCUDES) -c $< -o $@
 
 $(LIBFT):
-
-	@$(MAKE) bonus -C $(LIBFT_DIR)
+	$(MAKE) bonus -C $(LIBFT_DIR)
 
 clean:
 	rm -rf $(OBJ_DIR)

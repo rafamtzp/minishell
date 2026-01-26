@@ -1,4 +1,5 @@
 # MAKEFILE #
+.SILENT:
 
 # Global Config
 NAME        = libft.a
@@ -28,13 +29,12 @@ all: $(NAME)
 
 $(NAME): $(OBJS)
 	@ar r $(NAME) $(OBJS)
-	@echo "$(NAME) compiled"
+	echo "✅ libft compiled ✅ "
 
 $(OBJS): $(SRC)
 
 bonus: all $(BOBJS)
 	@ar r $(NAME) $(OBJS) $(BOBJS)
-	@echo "$(NAME) bonus compiled"
 
 $(BOBJS): $(BSRC)
 
