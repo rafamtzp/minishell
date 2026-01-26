@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:38:57 by gregueir          #+#    #+#             */
-/*   Updated: 2026/01/23 13:42:58 by ramarti2         ###   ########.fr       */
+/*   Updated: 2026/01/26 12:43:04 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ int	main(int argc, char **argv, char **env)
 		return (1);
 	}
 	michi = init_michishell(env);
+	signal(SIGINT, sigint_handler);
 	main_loop(michi);
 	clean_env_list(michi);
 	return (0);
