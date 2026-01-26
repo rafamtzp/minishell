@@ -6,7 +6,7 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/16 14:17:59 by gregueir          #+#    #+#             */
-/*   Updated: 2026/01/26 12:46:26 by ramarti2         ###   ########.fr       */
+/*   Updated: 2026/01/26 13:01:58 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static void	search_paths(t_cmd *ptr, char **paths)
 		if (ptr->cmd[0])
 			ptr->path = ft_strjoin(paths[i], ptr->cmd[0]);
 		if (!ptr->path)
-			break ; // err: michi exit?
+			break ;
 		if (access(ptr->path, X_OK) == 0)
 			break ;
 		free(ptr->path);
@@ -76,7 +76,7 @@ void	find_paths(t_cmd *ptr, t_minishell *michi)
 	paths = get_env_paths(michi);
 	while (ptr)
 	{
-		if (ptr->cmd[0][0] == '.' && ptr->cmd[0][1] == '/')
+		if (ptr->cmd[0] && ptr->cmd[0][0] == '.' && ptr->cmd[0][1] == '/')
 			ptr->path = ft_strdup(ptr->cmd[0]);
 		else
 			search_paths(ptr, paths);

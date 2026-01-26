@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:39:22 by gregueir          #+#    #+#             */
-/*   Updated: 2026/01/23 13:36:19 by ramarti2         ###   ########.fr       */
+/*   Updated: 2026/01/26 12:43:10 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <readline/readline.h>
 # include <stdbool.h>
 # include <stdlib.h>
+# include <signal.h>
 # include <unistd.h>
 # include <sys/wait.h>
 
@@ -165,5 +166,8 @@ int		**setup_pipes(t_cmd **cmds);
 int		**create_pipes(t_cmd *cmds, int **pfds);
 void	free_pipe_arr(int **pfds);
 void	close_pipe_ends(int i, int **pfds, int size);
+
+// signals
+void	sigint_handler(int sigsent);
 
 #endif
