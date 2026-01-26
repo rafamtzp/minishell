@@ -6,7 +6,7 @@
 /*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:38:57 by gregueir          #+#    #+#             */
-/*   Updated: 2026/01/26 12:43:04 by gregueir         ###   ########.fr       */
+/*   Updated: 2026/01/26 16:10:52 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ static void	main_loop(t_minishell *michi)
 	while (1)
 	{
 		michi->input = readline("/^•⩊•^\\ michishell_$ ");
+		set_sigstatus(1);
 		if (!michi->input)
 		{
 			prep_for_next_cmd(michi);
@@ -83,6 +84,9 @@ static void	main_loop(t_minishell *michi)
 			continue ;
 		}
 		setup_and_execute(michi, pipes);
+		set_sigstatus(0);
+		if (michi->status == 131)
+			printf("Quit (core dumped)\n");
 		prep_for_next_cmd(michi);
 	}
 }
@@ -98,6 +102,7 @@ int	main(int argc, char **argv, char **env)
 	}
 	michi = init_michishell(env);
 	signal(SIGINT, sigint_handler);
+	signal(SIGQUIT, SIG_IGN);
 	main_loop(michi);
 	clean_env_list(michi);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:39:22 by gregueir          #+#    #+#             */
-/*   Updated: 2026/01/26 12:43:10 by gregueir         ###   ########.fr       */
+/*   Updated: 2026/01/26 15:57:05 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ typedef struct s_minishell
 	int				status;
 	char			*input;
 }					t_minishell;
-
 
 // GUI
 void	print_cat(void);
@@ -151,10 +150,9 @@ void	write_heredocs(t_minishell *michi);
 void	get_heredoc(t_cmd *ptr, t_minishell *michi);
 
 // executor
-char 		**env_list_to_arr(t_envar *env);
+char	**env_list_to_arr(t_envar *env);
 void	exec(t_cmd *ptr, t_minishell *michi);
 void	executor(t_minishell *michi);
-
 
 // executor helpers
 void	start_children(t_minishell *michi);
@@ -168,6 +166,7 @@ void	free_pipe_arr(int **pfds);
 void	close_pipe_ends(int i, int **pfds, int size);
 
 // signals
+void	set_sigstatus(int	stat);
 void	sigint_handler(int sigsent);
 
 #endif

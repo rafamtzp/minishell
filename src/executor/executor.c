@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/23 13:16:28 by ramarti2          #+#    #+#             */
-/*   Updated: 2026/01/23 17:41:20 by ramarti2         ###   ########.fr       */
+/*   Updated: 2026/01/26 16:00:32 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ void exec_single_cmd(t_minishell *michi)
 	pid = fork();
 	if (pid == 0)
 	{
+		signal(SIGQUIT, SIG_DFL);
 		dup2(ptr->infile, STDIN_FILENO);
 		exec(michi->cmds, michi);
 	}

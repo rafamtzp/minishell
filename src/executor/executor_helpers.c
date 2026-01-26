@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor_helpers.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/23 13:16:22 by ramarti2          #+#    #+#             */
-/*   Updated: 2026/01/23 13:16:57 by ramarti2         ###   ########.fr       */
+/*   Updated: 2026/01/26 16:00:49 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ void	start_children(t_minishell *michi)
 		michi->pids[i] = fork();
 		if (michi->pids[i] == 0)
 		{
+			signal(SIGQUIT, SIG_DFL);
 			dup2(ptr->outfile, STDOUT_FILENO);
 			dup2(ptr->infile, STDIN_FILENO);
 			close_pipe_ends(i, michi->pfds, cmd_list_size(michi->cmds));
