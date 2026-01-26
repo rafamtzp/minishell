@@ -3,14 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   export_helpers.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 13:19:33 by ramarti2          #+#    #+#             */
-/*   Updated: 2026/01/20 15:40:32 by gregueir         ###   ########.fr       */
+/*   Updated: 2026/01/26 14:17:01 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+int	count_args(char **cmd)
+{
+	int	argcount;
+
+	argcount = 0;
+	while (cmd[argcount] != NULL)
+		argcount++;
+	return (argcount);
+}
 
 static void	set_empty_indices(t_envar **s)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:39:22 by gregueir          #+#    #+#             */
-/*   Updated: 2026/01/26 12:43:10 by gregueir         ###   ########.fr       */
+/*   Updated: 2026/01/26 13:26:46 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ t_envar	*env_list_new(char *new_var);
 t_envar	*find_envar(char *varname, t_envar *ptr);
 
 // Extract envars (in builtins_export.c)
-int		add_envars(t_minishell *michi, char **cmd, bool is_not_parsing);
+int		init_envars(t_minishell *michi, char **cmd, bool is_not_parsing);
 
 // command list helpers (pipex)
 int		cmd_list_size(t_cmd *cmd);

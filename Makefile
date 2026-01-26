@@ -17,7 +17,7 @@ SRC 	= src/builtins/builtins.c		src/executor/executor.c\
 		  src/tokenizer/redirections.c	src/tokenizer/expand.c\
 		  src/tokenizer/expand_utils.c	src/executor/heredoc.c\
 		  src/paths/find_paths.c		src/builtins/cd.c\
-		  src/signals/signals.c			\
+		  src/signals/signals.c			src/lists/env_list_finders.c\
 
 OBJ 	= $(SRC:src/%.c=obj/%.o)
 OBJ_DBG	= $(SRC:src/%.c=dbg_obj/%.o)

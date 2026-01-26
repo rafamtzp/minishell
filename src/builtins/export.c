@@ -6,7 +6,7 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 13:17:07 by ramarti2          #+#    #+#             */
-/*   Updated: 2025/12/19 17:04:57 by ramarti2         ###   ########.fr       */
+/*   Updated: 2026/01/26 16:44:48 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,43 +49,60 @@ void	write_envars(t_envar *envar, bool order_alpha)
 	}
 }
 
-int	add_envars(t_minishell *michi, char **cmd, bool is_not_parsing)
+int mod_envar(t_minishell *michi, char *arg)
 {
-	t_envar	*new;
-	int		i;
+	t_envar *var;
+	char *varname;
 
-	// assume params have format name=value
-	i = is_not_parsing;
-	while (cmd[i])
+	printf("Modifying envar\n");
+	varname = getvarname(arg);
+	var = find_envar(varname, michi->envars);
+	if (var->value)
+		free(var->value);
+	if (ft_strchr(arg, '='))
 	{
-		new = env_list_new(cmd[i]);
-		if (!new)
-			return (1); // env list should be freed later (I think....)
-		env_list_add_back(&michi->envars, new);
-		i++;
+		var->value = ft_strdup(ft_strchr(arg, '=') + 1);
+		if (!var->value)
+			return (free(varname), write(2, "malloc err: export\n", 20));
 	}
-	set_ascii_indices(&michi->envars);
+	else
+		var->value = NULL;
 	return (0);
 }
 
-int	count_args(char **cmd)
+int add_envar(t_minishell *michi, char *arg)
 {
-	int	argcount;
-
-	argcount = 0;
-	while (cmd[argcount] != NULL)
-		argcount++;
-	return (argcount);
+	t_envar *new;
+	
+	printf("Adding envar\n");
+	new = env_list_new(arg);
+	if (!new)
+		return (write(2, "malloc err: export\n", 20));
+	env_list_add_back(&michi->envars, new);
+	return (0);
 }
 
-int	export(t_minishell *michi, char **cmd) // unforked
+int	export(t_minishell *michi, char **cmd)
 {
+	char *varname;
 	int status;
+	int i;
 
 	status = 0;
 	if (count_args(cmd) == 1)
 		write_envars(michi->envars, true);
-	else
-		status = add_envars(michi, cmd, true);
+	i = 1;
+	while (count_args(cmd) > 1 && cmd[i])
+	{
+		varname = getvarname(cmd[i]);
+		if (!find_envar(varname, michi->envars))
+			status = add_envar(michi, cmd[i]);
+		else if (ft_strchr(cmd[i], '='))
+			status = mod_envar(michi, cmd[i]);
+		free(varname);
+		i++;
+	}
+	set_ascii_indices(&michi->envars);
 	return (status);
 }
+

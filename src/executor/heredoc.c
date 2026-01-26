@@ -6,7 +6,7 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/23 13:15:10 by ramarti2          #+#    #+#             */
-/*   Updated: 2026/01/23 14:14:01 by ramarti2         ###   ########.fr       */
+/*   Updated: 2026/01/26 13:09:44 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void fill_heredoc(int write_end, t_cmd *ptr, t_minishell *michi)
 
 	while (1)
 	{
-		write(1, "🐾 - ", 8);
+		write(1, "🐾 ", 6);
 		exp_line = get_next_exp_line(STDIN_FILENO, michi);
 		if (!exp_line)
 			return ;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 11:38:59 by gregueir          #+#    #+#             */
-/*   Updated: 2026/01/20 17:11:16 by gregueir         ###   ########.fr       */
+/*   Updated: 2026/01/26 16:39:40 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,9 @@ int	expansion_len(char *word, t_minishell *michi)
 		if (ft_strncmp(word + 1, ptr->varname, wordlen) == 0)
 		{
 			word[i] = oldchar;
-			return ((int)ft_strlen(ptr->value));
+			if (ptr->value)
+				return ((int)ft_strlen(ptr->value));
+			return (0);
 		}
 		ptr = ptr->next;
 	}
