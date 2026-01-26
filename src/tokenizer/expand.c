@@ -6,7 +6,7 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 16:14:50 by ramarti2          #+#    #+#             */
-/*   Updated: 2026/01/23 15:37:51 by ramarti2         ###   ########.fr       */
+/*   Updated: 2026/01/26 16:35:32 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ void	fill_tmp(char *tmp, char *word, t_minishell *michi)
 	}
 	else
 		value = extract_envar(michi, word);
+	if (!value)
+		value = "";
 	wlen = ft_strlen(value);
 	i = 0;
 	while (i < wlen)

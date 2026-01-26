@@ -6,7 +6,7 @@
 /*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:38:57 by gregueir          #+#    #+#             */
-/*   Updated: 2026/01/26 16:10:52 by gregueir         ###   ########.fr       */
+/*   Updated: 2026/01/26 16:49:31 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static t_minishell	*init_michishell(char **env)
 	michi->pids = NULL;
 	michi->input = NULL;
 	michi->status = 0;
-	if (add_envars(michi, env, false))
+	if (init_envars(michi, env, false))
 	{
 		free(michi);
 		exit(1);

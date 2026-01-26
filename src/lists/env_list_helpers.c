@@ -6,32 +6,28 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 13:19:56 by ramarti2          #+#    #+#             */
-/*   Updated: 2025/11/19 12:04:32 by ramarti2         ###   ########.fr       */
+/*   Updated: 2026/01/26 14:19:51 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-t_envar	*find_envar(char *varname, t_envar *ptr)
+int	init_envars(t_minishell *michi, char **cmd, bool is_not_parsing)
 {
-	while (ptr && max_strncmp(ptr->varname, varname) != 0)
-		ptr = ptr->next;
-	return (ptr);
-}
+	t_envar	*new;
+	int		i;
 
-char	*getvarname(char *new_var)
-{
-	char	*varname;
-	char	*ptr;
-
-	varname = ft_strdup(new_var);
-	if (!varname)
-		return (NULL);
-	ptr = varname;
-	while (*ptr && *ptr != '=')
-		ptr++;
-	*ptr = '\0';
-	return (varname);
+	i = is_not_parsing;
+	while (cmd[i])
+	{
+		new = env_list_new(cmd[i]);
+		if (!new)
+			return (1);
+		env_list_add_back(&michi->envars, new);
+		i++;
+	}
+	set_ascii_indices(&michi->envars);
+	return (0);
 }
 
 t_envar	*env_list_new(char *new_var)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_paths.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/16 14:17:59 by gregueir          #+#    #+#             */
-/*   Updated: 2026/01/26 12:59:39 by gregueir         ###   ########.fr       */
+/*   Updated: 2026/01/26 13:01:58 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,9 @@ char	**get_env_paths(t_minishell *michi)
 	return (paths);
 }
 
-static void search_paths(t_cmd *ptr, char **paths)
+static void	search_paths(t_cmd *ptr, char **paths)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (paths[i] && is_builtin(ptr) == false)

@@ -1,3 +1,4 @@
+.SILENT:
 NAME = minishell
 
 CC		= cc
@@ -16,7 +17,7 @@ SRC 	= src/builtins/builtins.c		src/executor/executor.c\
 		  src/tokenizer/redirections.c	src/tokenizer/expand.c\
 		  src/tokenizer/expand_utils.c	src/executor/heredoc.c\
 		  src/paths/find_paths.c		src/builtins/cd.c\
-		  src/signals/signals.c			\
+		  src/signals/signals.c			src/lists/env_list_finders.c\
 
 OBJ 	= $(SRC:src/%.c=obj/%.o)
 OBJ_DBG	= $(SRC:src/%.c=dbg_obj/%.o)
@@ -29,6 +30,7 @@ LIBFT		= $(LIBFT_DIR)/libft.a
 INLCUDES = -Iinclude -I$(LIBFT_DIR)
 
 all: $(NAME)
+	echo "✅ $(NAME) compiled ✅"
 
 debug: $(OBJ_DBG) $(LIBFT)
 	$(CC) -g $(INLCUDES) $(OBJ_DBG) $(LIBFT) -lreadline -o $(NAME)
@@ -42,11 +44,10 @@ obj/%.o: src/%.c
 
 dbg_obj/%.o: src/%.c
 	@mkdir -p $(dir $@)
-	$(CC) -g $(INLCUDES) -c $< -o $@
+	@$(CC) -g $(INLCUDES) -c $< -o $@
 
 $(LIBFT):
-
-	@$(MAKE) bonus -C $(LIBFT_DIR)
+	$(MAKE) bonus -C $(LIBFT_DIR)
 
 clean:
 	rm -rf $(OBJ_DIR)
