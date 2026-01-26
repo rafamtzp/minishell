@@ -3,22 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/16 14:41:25 by gregueir          #+#    #+#             */
-/*   Updated: 2026/01/16 14:42:28 by gregueir         ###   ########.fr       */
+/*   Updated: 2026/01/26 16:50:58 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-/*
-Note: cd should change the working directory of a process!!!
-But, it doesn't change the working directory of the current shell.
-Because when the program is executed in the shell,
-the shell follows fork on exec mechanism.
-So, it doesn't affect the current shell.
-*/
 static int cd_calloc_new_values(t_envar *oldpwd, t_envar *pwd, char *prev_oldpwd, char *prev_pwd)
 {
 	oldpwd->value = ft_calloc(1, PATH_MAX);
