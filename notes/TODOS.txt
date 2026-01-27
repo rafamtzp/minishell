@@ -1,9 +1,5 @@
 Rafa:
-- Manejo de errores
-- Funcion que cierra archivos
-- Checar que al reasignar fd, cerremos el anterior en caso de ">test >test2"
-- Checar que se cierre adecuadamente el infile del primero y outfile del ultimo
-- Checar que al hacer <infile comando <<lim, se cierre infile
+- Arreglar cd: cuando haces cd de una carpeta que ya no existe, se queda congelado
 
 Los dos:
 - leaks de memoria

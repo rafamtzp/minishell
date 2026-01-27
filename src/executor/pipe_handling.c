@@ -6,7 +6,7 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/23 13:16:36 by ramarti2          #+#    #+#             */
-/*   Updated: 2026/01/27 13:09:13 by ramarti2         ###   ########.fr       */
+/*   Updated: 2026/01/27 16:10:13 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int	**setup_pipes(t_cmd **cmds, t_minishell *michi)
 		ptr = ptr->next;
 		i++;
 	}
-	if (ptr->next == NULL)
+	if (ptr->next == NULL && ptr->infile == STDIN_FILENO)
 		ptr->infile = pfds[i - 1][READ_END];
 	return (pfds);
 }

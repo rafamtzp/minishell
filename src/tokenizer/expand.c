@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 16:14:50 by ramarti2          #+#    #+#             */
-/*   Updated: 2026/01/27 11:54:26 by gregueir         ###   ########.fr       */
+/*   Updated: 2026/01/27 16:23:13 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	fill_tmp(char *tmp, char *word, t_minishell *michi)
 
 	if (word[1] == '?')
 	{
-		value = ft_strdup(ft_itoa(michi->status));
+		value = ft_itoa(michi->status);
 		if (!value)
 			return ;
 	}

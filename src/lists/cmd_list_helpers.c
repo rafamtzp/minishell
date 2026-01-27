@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_list_helpers.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 11:43:31 by rafamtz           #+#    #+#             */
-/*   Updated: 2026/01/27 12:08:41 by gregueir         ###   ########.fr       */
+/*   Updated: 2026/01/27 16:03:27 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,30 @@ int	cmd_list_size(t_cmd *cmd)
 	return (size);
 }
 
+static void	free_cmd_content(t_cmd *current)
+{
+	int			i;
+	struct stat	buf;
+
+	i = 0;
+	if (current->delim)
+		free(current->delim);
+	if (current->path)
+		free(current->path);
+	while (current->cmd && current->cmd[i])
+		free(current->cmd[i++]);
+	if (current->cmd)
+		free(current->cmd);
+	if (current->infile != STDIN_FILENO && fstat(current->infile, &buf) == 0)
+		close(current->infile);
+	if (current->outfile != STDOUT_FILENO && fstat(current->outfile, &buf) == 0)
+		close(current->outfile);
+}
+
 void	free_cmds(t_cmd **cmds)
 {
 	t_cmd	*current;
 	t_cmd	*next;
-	int		i;
 
 	if (!cmds || !(*cmds))
 		return ;
@@ -72,15 +91,7 @@ void	free_cmds(t_cmd **cmds)
 	while (current)
 	{
 		next = current->next;
-		i = 0;
-		if (current->delim)
-			free(current->delim);
-		if (current->path)
-			free(current->path);
-		while (current->cmd && current->cmd[i])
-			free(current->cmd[i++]);
-		if (current->cmd)
-			free(current->cmd);
+		free_cmd_content(current);
 		free(current);
 		current = next;
 	}

@@ -6,7 +6,7 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:38:57 by gregueir          #+#    #+#             */
-/*   Updated: 2026/01/27 15:05:51 by ramarti2         ###   ########.fr       */
+/*   Updated: 2026/01/27 16:11:27 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,4 +118,4 @@ int	main(int argc, char **argv, char **env)
 	return (0);
 }
 
-// 210,317k still reachables in readline
+// 208,213k still reachables in readline

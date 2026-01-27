@@ -6,7 +6,7 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/23 13:16:28 by ramarti2          #+#    #+#             */
-/*   Updated: 2026/01/27 13:01:31 by ramarti2         ###   ########.fr       */
+/*   Updated: 2026/01/27 16:30:06 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ void	exec(t_cmd *ptr, t_minishell *michi)
 	env = env_list_to_arr(michi->envars);
 	if (!env)
 		michi_exit(michi, false, "exec_rest error: env");
-	execve(ptr->path, ptr->cmd, env);
+	if (ptr->path)
+		execve(ptr->path, ptr->cmd, env);
 	if (ptr->cmd[0])
 		write(2, "Error: command not found\n", 26);
 	michi->status = 1;

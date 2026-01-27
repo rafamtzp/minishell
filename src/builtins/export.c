@@ -6,7 +6,7 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 13:17:07 by ramarti2          #+#    #+#             */
-/*   Updated: 2026/01/27 13:04:51 by ramarti2         ###   ########.fr       */
+/*   Updated: 2026/01/27 16:59:06 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ int	mod_envar(t_minishell *michi, char *arg)
 	t_envar	*var;
 	char	*varname;
 
-	printf("Modifying envar\n");
 	varname = getvarname(arg);
 	var = find_envar(varname, michi->envars);
 	if (var->value)
@@ -67,6 +66,8 @@ int	mod_envar(t_minishell *michi, char *arg)
 	}
 	else
 		var->value = NULL;
+	if (varname)
+		free(varname);
 	return (0);
 }
 
@@ -74,7 +75,6 @@ int	add_envar(t_minishell *michi, char *arg)
 {
 	t_envar	*new;
 
-	printf("Adding envar\n");
 	new = env_list_new(arg);
 	if (!new)
 		return (write(2, "malloc err: export\n", 20));
