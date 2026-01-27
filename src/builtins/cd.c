@@ -6,7 +6,7 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/16 14:41:25 by gregueir          #+#    #+#             */
-/*   Updated: 2026/01/27 18:32:29 by ramarti2         ###   ########.fr       */
+/*   Updated: 2026/01/27 18:43:19 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ static int	chdir_wrapper(t_minishell *michi, char **cmd, char *prev_oldpwd,
 	{
 		fprintf(stderr, "Error: couldn't getcwd\n");
 		appendage = ft_strjoin("/", cmd[1]);
+		if (pwd->value)
+			free(pwd->value);
 		pwd->value = ft_strjoin(prev_pwd, appendage);
 		free(appendage);
 	}
