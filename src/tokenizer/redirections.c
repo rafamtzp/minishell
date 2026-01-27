@@ -6,7 +6,7 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 11:48:48 by ramarti2          #+#    #+#             */
-/*   Updated: 2026/01/27 15:22:23 by ramarti2         ###   ########.fr       */
+/*   Updated: 2026/01/27 18:37:00 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,10 @@ static char	*get_filename(char *line, t_minishell *michi)
 		free(tmp);
 	return (word);
 }
+
 static void	assign_fd(t_cmd *ptr, char *filename, char *line)
 {
-	struct stat buf;
+	struct stat	buf;
 
 	if (line[0] == '>')
 	{
@@ -77,7 +78,7 @@ int	skip_quotes(char *line)
 
 void	redirect_fds(t_cmd *ptr, char *line, t_minishell *michi)
 {
-	int increment;
+	int	increment;
 	int	i;
 
 	i = 0;

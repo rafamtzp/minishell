@@ -6,7 +6,7 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/16 14:41:25 by gregueir          #+#    #+#             */
-/*   Updated: 2026/01/27 16:47:05 by ramarti2         ###   ########.fr       */
+/*   Updated: 2026/01/27 18:32:29 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,32 @@ static int	cd_calloc_new_values(t_envar *oldpwd, t_envar *pwd,
 	{
 		pwd->value = prev_pwd;
 		return (1);
+	}
+	return (0);
+}
+
+static int	chdir_wrapper(t_minishell *michi, char **cmd, char *prev_oldpwd,
+		char *prev_pwd)
+{
+	t_envar	*pwd;
+	t_envar	*oldpwd;
+	char	*appendage;
+
+	oldpwd = find_envar("OLDPWD", michi->envars);
+	pwd = find_envar("PWD", michi->envars);
+	if (!getcwd(oldpwd->value, PATH_MAX))
+		ft_strlcpy(oldpwd->value, prev_pwd, ft_strlen(prev_pwd) + 1);
+	if (chdir(cmd[1]) != 0)
+	{
+		fprintf(stderr, "couldn't chdir\n");
+		return (1);
+	}
+	if (!getcwd(pwd->value, PATH_MAX))
+	{
+		fprintf(stderr, "Error: couldn't getcwd\n");
+		appendage = ft_strjoin("/", cmd[1]);
+		pwd->value = ft_strjoin(prev_pwd, appendage);
+		free(appendage);
 	}
 	free(prev_oldpwd);
 	free(prev_pwd);
@@ -47,12 +73,6 @@ int	cd(char **cmd, t_minishell *michi)
 	prev_pwd = pwd->value;
 	if (cd_calloc_new_values(oldpwd, pwd, prev_oldpwd, prev_pwd) == 1)
 		return (1);
-	if (!getcwd(oldpwd->value, PATH_MAX))
-		return (1);
-	if (chdir(cmd[1]) != 0)
-		return (1);
-	getcwd(pwd->value, PATH_MAX);
-	if (!pwd->value)
-		return (1);
+	chdir_wrapper(michi, cmd, prev_oldpwd, prev_pwd);
 	return (0);
 }

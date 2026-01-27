@@ -1,5 +1,0 @@
-Rafa:
-- Arreglar cd: cuando haces cd de una carpeta que ya no existe, se queda congelado
-
-Los dos:
-- leaks de memoria
