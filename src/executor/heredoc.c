@@ -6,16 +6,16 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/23 13:15:10 by ramarti2          #+#    #+#             */
-/*   Updated: 2026/01/26 13:09:44 by ramarti2         ###   ########.fr       */
+/*   Updated: 2026/01/27 13:03:25 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static char *get_next_exp_line(int fd, t_minishell *michi)
+static char	*get_next_exp_line(int fd, t_minishell *michi)
 {
-	char *line;
-	char *exp_line;
+	char	*line;
+	char	*exp_line;
 
 	line = get_next_line(fd);
 	if (!line)
@@ -30,9 +30,9 @@ static char *get_next_exp_line(int fd, t_minishell *michi)
 	return (exp_line);
 }
 
-void fill_heredoc(int write_end, t_cmd *ptr, t_minishell *michi)
+void	fill_heredoc(int write_end, t_cmd *ptr, t_minishell *michi)
 {
-	char *exp_line;
+	char	*exp_line;
 
 	while (1)
 	{
@@ -52,8 +52,8 @@ void fill_heredoc(int write_end, t_cmd *ptr, t_minishell *michi)
 
 void	get_heredoc(t_cmd *ptr, t_minishell *michi)
 {
-	int		hfd[2];
-	int pid;
+	int	hfd[2];
+	int	pid;
 
 	pipe(hfd);
 	pid = fork();
@@ -70,10 +70,9 @@ void	get_heredoc(t_cmd *ptr, t_minishell *michi)
 	ptr->infile = hfd[READ_END];
 }
 
-
 void	write_heredocs(t_minishell *michi)
 {
-	t_cmd *ptr;
+	t_cmd	*ptr;
 
 	ptr = michi->cmds;
 	while (ptr)

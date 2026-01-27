@@ -3,25 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   executor_helpers.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/23 13:16:22 by ramarti2          #+#    #+#             */
-/*   Updated: 2026/01/26 16:00:49 by gregueir         ###   ########.fr       */
+/*   Updated: 2026/01/27 13:18:45 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char 		**env_list_to_arr(t_envar *env)
+char	**env_list_to_arr(t_envar *env)
 {
-	char **env_arr;
-	char *tmp;
-	int i;
+	char	**env_arr;
+	char	*tmp;
+	int		i;
 
-	env_arr = malloc((env_list_size(env) + 1) * sizeof(char *));
+	env_arr = ft_calloc(env_list_size(env) + 1, sizeof(char *));
 	if (!env_arr)
 		return (NULL);
-	env_arr[env_list_size(env)] = NULL;
 	i = 0;
 	while (env)
 	{
@@ -32,12 +31,10 @@ char 		**env_list_to_arr(t_envar *env)
 			env_arr[i] = ft_strdup(tmp);
 		free(tmp);
 		if (!env_arr[i])
-        {
-            while (i-- > 0)
-                free(env_arr[i]);
-            free(env_arr);
-            return (NULL);
-        }
+		{
+			free_str_arr(env_arr);
+			return (NULL);
+		}
 		i++;
 		env = env->next;
 	}
@@ -60,7 +57,8 @@ void	builtin_execve(t_cmd *ptr, t_minishell *michi)
 		michi->status = export(michi, ptr->cmd);
 	else if (max_strncmp(ptr->cmd[0], "unset") == 0)
 		michi->status = unset(&michi->envars, ptr->cmd);
-	else if (max_strncmp(ptr->cmd[0], "exit") == 0 && cmd_list_size(michi->cmds) == 1)
+	else if (max_strncmp(ptr->cmd[0], "exit") == 0
+		&& cmd_list_size(michi->cmds) == 1)
 		michi_exit(michi, true, NULL);
 	if (cmd_list_size(michi->cmds) > 1)
 		michi_exit(michi, false, NULL);

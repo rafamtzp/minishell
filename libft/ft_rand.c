@@ -6,7 +6,7 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 15:32:43 by gregueir          #+#    #+#             */
-/*   Updated: 2025/11/13 13:58:31 by ramarti2         ###   ########.fr       */
+/*   Updated: 2026/01/27 12:53:21 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static int	ft_gen_rand(int min, int max)
 {
 	int		a;
-	// int		m; // comentado para que se calle - Rafa
+	int		m;
 	int		seed;
 	int		fd;
 	char	c;
@@ -23,7 +23,7 @@ static int	ft_gen_rand(int min, int max)
 	fd = open("/dev/urandom", O_RDONLY);
 	read(fd, &c, 1);
 	a = 16807;
-	//m = __INT_MAX__; // comentado para que se calle - Rafa
+	m = __INT_MAX__;
 	seed = (a * (unsigned int) c) % (max + 1 - min) + min;
 	close(fd);
 	return (seed);

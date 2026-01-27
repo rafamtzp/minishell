@@ -6,7 +6,7 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 13:17:07 by ramarti2          #+#    #+#             */
-/*   Updated: 2026/01/26 16:44:48 by ramarti2         ###   ########.fr       */
+/*   Updated: 2026/01/27 13:04:51 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,10 @@ void	write_envars(t_envar *envar, bool order_alpha)
 	}
 }
 
-int mod_envar(t_minishell *michi, char *arg)
+int	mod_envar(t_minishell *michi, char *arg)
 {
-	t_envar *var;
-	char *varname;
+	t_envar	*var;
+	char	*varname;
 
 	printf("Modifying envar\n");
 	varname = getvarname(arg);
@@ -70,10 +70,10 @@ int mod_envar(t_minishell *michi, char *arg)
 	return (0);
 }
 
-int add_envar(t_minishell *michi, char *arg)
+int	add_envar(t_minishell *michi, char *arg)
 {
-	t_envar *new;
-	
+	t_envar	*new;
+
 	printf("Adding envar\n");
 	new = env_list_new(arg);
 	if (!new)
@@ -84,9 +84,9 @@ int add_envar(t_minishell *michi, char *arg)
 
 int	export(t_minishell *michi, char **cmd)
 {
-	char *varname;
-	int status;
-	int i;
+	char	*varname;
+	int		status;
+	int		i;
 
 	status = 0;
 	if (count_args(cmd) == 1)
@@ -105,4 +105,3 @@ int	export(t_minishell *michi, char **cmd)
 	set_ascii_indices(&michi->envars);
 	return (status);
 }
-

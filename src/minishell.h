@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:39:22 by gregueir          #+#    #+#             */
-/*   Updated: 2026/01/27 11:12:04 by gregueir         ###   ########.fr       */
+/*   Updated: 2026/01/27 14:51:19 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,18 +27,19 @@
 # include <signal.h>
 # include <unistd.h>
 # include <sys/wait.h>
+# include <sys/types.h>
+# include <sys/stat.h>
 
-// command node struct (CHANGED FROM t_cmdnode to t_cmd)
+// command node struct
 typedef struct s_cmd
 {
 	char			**cmd;
 	char			*path;
-	char			*delim; // change to char ** in case of multiple delims?????
+	char			*delim;
 	int				infile;
 	int				outfile;
 	struct s_cmd	*next;
 }					t_cmd;
-// Note: I think is_append might not be necessary.
 
 // environment variable struct
 typedef struct s_envar
@@ -54,7 +55,7 @@ typedef struct s_minishell
 {
 	t_envar			*envars;
 	t_cmd			*cmds;
-	int				**pfds; // stands for pipe file descriptors
+	int				**pfds;
 	int				*pids;
 	int				status;
 	char			*input;
@@ -107,7 +108,6 @@ void	handle_err(t_minishell *michi, char *msg);
 int		is_builtin(t_cmd *node);
 
 // What am I
-
 bool	is_quotes(char c);
 bool	is_nonalpha(char c);
 bool	is_separator(char c);
@@ -143,6 +143,7 @@ char	*extract_envar(t_minishell *michi, char *word);
 void	check_free_cmd(char	**cmd, int wcount);
 
 // Find paths
+void	free_str_arr(char **arr);
 void	find_paths(t_cmd *ptr, t_minishell *michi);
 
 // Heredoc
@@ -160,8 +161,8 @@ void	prep_for_next_cmd(t_minishell *michi);
 void	builtin_execve(t_cmd *ptr, t_minishell *michi);
 
 // pipe handling
-int		**setup_pipes(t_cmd **cmds);
-int		**create_pipes(t_cmd *cmds, int **pfds);
+int		**setup_pipes(t_cmd **cmds, t_minishell *michi);
+int		**create_pipes(t_minishell *michi, t_cmd *cmds, int **pfds);
 void	free_pipe_arr(int **pfds);
 void	close_pipe_ends(int i, int **pfds, int size);
 

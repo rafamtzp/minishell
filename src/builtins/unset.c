@@ -6,7 +6,7 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 13:19:23 by ramarti2          #+#    #+#             */
-/*   Updated: 2025/11/21 14:04:10 by ramarti2         ###   ########.fr       */
+/*   Updated: 2026/01/27 13:05:00 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 static void	del_env(t_envar **envars, t_envar **ptr1, t_envar **ptr2)
 {
-	t_envar *ptr3;
-	
+	t_envar	*ptr3;
+
 	free((*ptr1)->varname);
 	free((*ptr1)->value);
 	if (*ptr1 == *envars)
@@ -36,9 +36,9 @@ static void	del_env(t_envar **envars, t_envar **ptr1, t_envar **ptr2)
 
 int	unset(t_envar **envars, char **cmd)
 {
-	int i;
-	t_envar *ptr1;
-	t_envar *ptr2;
+	int		i;
+	t_envar	*ptr1;
+	t_envar	*ptr2;
 
 	i = 1;
 	ptr1 = *envars;

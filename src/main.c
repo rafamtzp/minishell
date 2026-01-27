@@ -3,27 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:38:57 by gregueir          #+#    #+#             */
-/*   Updated: 2026/01/27 12:11:42 by gregueir         ###   ########.fr       */
+/*   Updated: 2026/01/27 15:05:51 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	increment_shlvl(t_envar *ptr)
+static void	increment_shlvl(t_minishell *michi)
 {
 	t_envar	*shlvl;
+	char	*str_value;
 	int		value;
 
-	shlvl = find_envar("SHLVL", ptr);
+	shlvl = find_envar("SHLVL", michi->envars);
 	if (shlvl->value)
 	{
 		value = ft_atoi(shlvl->value);
 		value++;
 		free(shlvl->value);
-		shlvl->value = ft_strdup(ft_itoa(value));
+		str_value = ft_itoa(value);
+		if (!str_value)
+		{
+			printf("itoa error: increment_shlvl\n");
+			clean_env_list(michi);
+			free(michi);
+			exit(1);
+		}
+		shlvl->value = ft_strdup(str_value);
+		free(str_value);
 	}
 }
 
@@ -46,7 +56,7 @@ static t_minishell	*init_michishell(char **env)
 		free(michi);
 		exit(1);
 	}
-	increment_shlvl(michi->envars);
+	increment_shlvl(michi);
 	return (michi);
 }
 
@@ -104,7 +114,6 @@ int	main(int argc, char **argv, char **env)
 	signal(SIGINT, sigint_handler);
 	signal(SIGQUIT, SIG_IGN);
 	main_loop(michi);
-	clean_env_list(michi);
 	michi_exit(michi, false, NULL);
 	return (0);
 }

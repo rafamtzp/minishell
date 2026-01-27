@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 15:29:12 by gregueir          #+#    #+#             */
-/*   Updated: 2025/08/06 11:13:16 by gregueir         ###   ########.fr       */
+/*   Updated: 2026/01/27 13:08:14 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,4 +95,3 @@ int	ft_puthex(unsigned long n, const char lower, int is_pointer)
 		count += ft_putchar(n % 16 + '0');
 	return (count);
 }
-
