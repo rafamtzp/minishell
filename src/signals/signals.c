@@ -6,7 +6,7 @@
 /*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/23 17:26:07 by gregueir          #+#    #+#             */
-/*   Updated: 2026/01/26 15:56:45 by gregueir         ###   ########.fr       */
+/*   Updated: 2026/01/27 11:56:44 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 static int	g_sigstatus = 0;
 
-void	set_sigstatus(int	stat)
+void	set_sigstatus(int stat)
 {
 	g_sigstatus = stat;
 }
 
-void	sigint_handler(int	sigsent)
+void	sigint_handler(int sigsent)
 {
 	(void)sigsent;
 	if (g_sigstatus == 1)

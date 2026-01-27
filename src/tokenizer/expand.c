@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 16:14:50 by ramarti2          #+#    #+#             */
-/*   Updated: 2026/01/26 16:35:32 by ramarti2         ###   ########.fr       */
+/*   Updated: 2026/01/27 11:54:26 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	fill_tmp(char *tmp, char *word, t_minishell *michi)
 	{
 		value = ft_strdup(ft_itoa(michi->status));
 		if (!value)
-			return ; // err
+			return ;
 	}
 	else
 		value = extract_envar(michi, word);
@@ -82,7 +82,7 @@ int	expand_cmds(t_cmd *cmds, t_minishell *michi)
 {
 	int		i;
 	char	*unexpanded;
-	t_cmd *ptr;
+	t_cmd	*ptr;
 
 	ptr = cmds;
 	while (ptr)

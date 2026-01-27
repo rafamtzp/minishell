@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_check.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 12:59:00 by gregueir          #+#    #+#             */
-/*   Updated: 2026/01/20 13:56:51 by ramarti2         ###   ########.fr       */
+/*   Updated: 2026/01/27 11:57:24 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ static int	syntax_check_pipes(char *s)
 	return (pipes);
 }
 
-//Checks the syntax of s, if there's any error, prints it and returns -1. If there's no error, returns the number of usable pipes found
+//Checks the syntax of s, if there's any error, prints it and returns -1.
 int	syntax_check(char *s)
 {
 	int	pipes;

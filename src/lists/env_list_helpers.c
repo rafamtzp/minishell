@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_list_helpers.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 13:19:56 by ramarti2          #+#    #+#             */
-/*   Updated: 2026/01/26 14:19:51 by ramarti2         ###   ########.fr       */
+/*   Updated: 2026/01/27 12:12:48 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ t_envar	*env_list_new(char *new_var)
 
 void	env_list_add_back(t_envar **envars, t_envar *new)
 {
-	t_envar *ptr;
+	t_envar	*ptr;
 
 	if (new == 0)
 		return ;

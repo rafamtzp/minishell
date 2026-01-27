@@ -6,7 +6,7 @@
 /*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:39:22 by gregueir          #+#    #+#             */
-/*   Updated: 2026/01/26 16:50:04 by gregueir         ###   ########.fr       */
+/*   Updated: 2026/01/27 11:12:04 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,7 +166,7 @@ void	free_pipe_arr(int **pfds);
 void	close_pipe_ends(int i, int **pfds, int size);
 
 // signals
-void	set_sigstatus(int	stat);
+void	set_sigstatus(int stat);
 void	sigint_handler(int sigsent);
 
 #endif

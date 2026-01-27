@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_list_cleanup.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 14:28:51 by gregueir          #+#    #+#             */
-/*   Updated: 2025/11/21 18:02:44 by ramarti2         ###   ########.fr       */
+/*   Updated: 2026/01/27 12:12:32 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void	clean_list(t_minishell *michi)
 {
 	t_envar	*current;
-	t_envar *buff;
+	t_envar	*buff;
 
 	current = michi->envars;
 	while (current)
@@ -24,7 +24,6 @@ static void	clean_list(t_minishell *michi)
 		free(current);
 		current = buff;
 	}
-	//free(michi);
 }
 
 void	clean_env_list(t_minishell *michi)
@@ -34,7 +33,7 @@ void	clean_env_list(t_minishell *michi)
 	if (!michi->envars)
 		return ;
 	current = michi->envars;
-	while(current)
+	while (current)
 	{
 		if (current->varname)
 		{

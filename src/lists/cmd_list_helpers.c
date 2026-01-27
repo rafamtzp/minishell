@@ -6,41 +6,13 @@
 /*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 11:43:31 by rafamtz           #+#    #+#             */
-/*   Updated: 2026/01/13 13:18:32 by gregueir         ###   ########.fr       */
+/*   Updated: 2026/01/27 12:08:41 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-t_cmd	*prev_cmd_list_new(char *cmd, char *delim)
-{
-	t_cmd	*n;
-	char	*delim_nl;
-
-	n = malloc(sizeof(t_cmd));
-	if (n == NULL)
-	{
-		printf("Unable to create node.\n");
-		return (NULL);
-	}
-	delim_nl = NULL;
-	if (delim)
-		delim_nl = ft_strjoin(delim, "\n");
-	if (delim && !delim_nl)
-	{
-		printf("Unable to create node.\n");
-		return (NULL);
-	}
-	n->path = NULL;
-	n->delim = delim_nl; // remember to free this!
-	n->cmd = ft_split(cmd, ' ');
-	n->infile = STDIN_FILENO;
-	n->outfile = STDOUT_FILENO;
-	n->next = NULL;
-	return (n);
-}
-
-t_cmd *cmd_list_new(void)
+t_cmd	*cmd_list_new(void)
 {
 	t_cmd	*n;
 

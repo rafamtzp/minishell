@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_check_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/24 15:52:59 by gregueir          #+#    #+#             */
-/*   Updated: 2026/01/20 13:50:06 by ramarti2         ###   ########.fr       */
+/*   Updated: 2026/01/27 11:58:10 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-
-//This function should check if there's a valid redirection, and if so, give it the green light
+//This function should check if there's a valid redirection
 static int	syntax_check_redirection(char *s)
 {
 	int	i;
@@ -32,7 +31,7 @@ static int	syntax_check_redirection(char *s)
 	return (i);
 }
 
-// Checks redirections on the given phrase, if they are fine it returns 0, if not, 1
+// Checks redirections on the given phrase, if they are fine it returns 0
 int	syntax_check_redirect(char *s)
 {
 	int	i;

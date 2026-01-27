@@ -6,17 +6,17 @@
 /*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:38:57 by gregueir          #+#    #+#             */
-/*   Updated: 2026/01/26 16:49:31 by gregueir         ###   ########.fr       */
+/*   Updated: 2026/01/27 12:11:42 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void increment_shlvl(t_envar *ptr)
+static void	increment_shlvl(t_envar *ptr)
 {
-	t_envar *shlvl;
-	int value;
-	
+	t_envar	*shlvl;
+	int		value;
+
 	shlvl = find_envar("SHLVL", ptr);
 	if (shlvl->value)
 	{
@@ -31,7 +31,7 @@ static t_minishell	*init_michishell(char **env)
 {
 	t_minishell	*michi;
 
-	//print_cat();
+	print_cat();
 	michi = malloc(sizeof(t_minishell));
 	if (!michi)
 		exit(1);
@@ -93,7 +93,7 @@ static void	main_loop(t_minishell *michi)
 
 int	main(int argc, char **argv, char **env)
 {
-	t_minishell		*michi;
+	t_minishell	*michi;
 
 	if (argc != 1 || argv[1])
 	{
@@ -105,6 +105,7 @@ int	main(int argc, char **argv, char **env)
 	signal(SIGQUIT, SIG_IGN);
 	main_loop(michi);
 	clean_env_list(michi);
+	michi_exit(michi, false, NULL);
 	return (0);
 }
 

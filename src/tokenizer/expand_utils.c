@@ -6,7 +6,7 @@
 /*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/16 13:21:06 by gregueir          #+#    #+#             */
-/*   Updated: 2026/01/20 17:14:13 by gregueir         ###   ########.fr       */
+/*   Updated: 2026/01/27 11:56:08 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char	*extract_envar(t_minishell *michi, char *word)
 	str = "";
 	envname = ft_calloc(ft_strlen(word), sizeof(char));
 	if (!envname)
-		return (NULL); //Cleanup memory here
+		return (NULL);
 	while (word[++i] && ft_isalnum(word[i]))
 	{
 		envname[j] = word[i];
