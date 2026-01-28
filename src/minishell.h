@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:39:22 by gregueir          #+#    #+#             */
-/*   Updated: 2026/01/27 14:51:19 by ramarti2         ###   ########.fr       */
+/*   Updated: 2026/01/28 12:29:18 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ char	*expander(char *word, t_minishell *michi);
 int		expand_cmds(t_cmd *cmds, t_minishell *michi);
 
 // Redirections
-void	redirect_fds(t_cmd *ptr, char *line, t_minishell *michi);
+int		redirect_fds(t_cmd *ptr, char *line, t_minishell *michi);
 
 // Tokenize
 int		skip_var(char *word);

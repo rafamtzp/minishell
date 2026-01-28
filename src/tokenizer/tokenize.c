@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 11:39:57 by gregueir          #+#    #+#             */
-/*   Updated: 2026/01/23 13:10:12 by ramarti2         ###   ########.fr       */
+/*   Updated: 2026/01/28 13:01:12 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,16 +108,17 @@ int	tokenize(t_minishell *michi, int pipes)
 	{
 		node = cmd_list_new();
 		if (!node)
-			return (free_cmds(&michi->cmds), -1);
+			return (free_cmds(&michi->cmds), 1);
 		node->cmd = split_input(michi->input, i);
 		if (!node->cmd)
-			return (free_cmds(&michi->cmds), -1);
+			return (free_cmds(&michi->cmds), 1);
 		cmd_list_add_back(&michi->cmds, node);
 		i++;
 	}
-	redirect_fds(michi->cmds, michi->input, michi);
+	if (redirect_fds(michi->cmds, michi->input, michi))
+		return (free_cmds(&michi->cmds), 1);
 	err = expand_cmds(michi->cmds, michi);
 	if (err)
-		return (free_cmds(&michi->cmds), -1);
+		return (free_cmds(&michi->cmds), 1);
 	return (0);
 }

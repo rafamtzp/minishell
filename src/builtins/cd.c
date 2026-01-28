@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/16 14:41:25 by gregueir          #+#    #+#             */
-/*   Updated: 2026/01/27 18:43:19 by ramarti2         ###   ########.fr       */
+/*   Updated: 2026/01/28 13:47:56 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,12 @@ static int	chdir_wrapper(t_minishell *michi, char **cmd, char *prev_oldpwd,
 		ft_strlcpy(oldpwd->value, prev_pwd, ft_strlen(prev_pwd) + 1);
 	if (chdir(cmd[1]) != 0)
 	{
-		fprintf(stderr, "couldn't chdir\n");
+		michi->status = write(2, "couldn't chdir\n", 16);
 		return (1);
 	}
 	if (!getcwd(pwd->value, PATH_MAX))
 	{
-		fprintf(stderr, "Error: couldn't getcwd\n");
+		michi->status = write(2, "Error: couldn't getcwd\n", 24);
 		appendage = ft_strjoin("/", cmd[1]);
 		if (pwd->value)
 			free(pwd->value);

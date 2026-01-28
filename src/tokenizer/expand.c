@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 16:14:50 by ramarti2          #+#    #+#             */
-/*   Updated: 2026/01/27 16:23:13 by ramarti2         ###   ########.fr       */
+/*   Updated: 2026/01/28 17:04:59 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,18 @@ void	fill_tmp(char *tmp, char *word, t_minishell *michi)
 	int		wlen;
 	int		i;
 	char	*value;
+	int		free_doby;
 
+	free_doby = 0;
 	if (word[1] == '?')
 	{
+		free_doby = 1;
 		value = ft_itoa(michi->status);
-		if (!value)
-			return ;
 	}
 	else
 		value = extract_envar(michi, word);
 	if (!value)
-		value = "";
+		return ;
 	wlen = ft_strlen(value);
 	i = 0;
 	while (i < wlen)
@@ -35,6 +36,8 @@ void	fill_tmp(char *tmp, char *word, t_minishell *michi)
 		tmp[i] = value[i];
 		i++;
 	}
+	if (free_doby == 1)
+		free(value);
 }
 
 void	fill_expanded_word(char *tmp, char *word, t_minishell *michi)
@@ -44,7 +47,7 @@ void	fill_expanded_word(char *tmp, char *word, t_minishell *michi)
 
 	qs = 0;
 	i = 0;
-	while (*word)
+	while (word && *word)
 	{
 		qs = get_quote_status(*word, qs);
 		if (*word == '$' && qs != -1)

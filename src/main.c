@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:38:57 by gregueir          #+#    #+#             */
-/*   Updated: 2026/01/27 16:11:27 by ramarti2         ###   ########.fr       */
+/*   Updated: 2026/01/28 15:40:59 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +62,8 @@ static t_minishell	*init_michishell(char **env)
 
 static void	setup_and_execute(t_minishell *michi, int pipes)
 {
-	int	err;
-
-	err = 0;
-	err = tokenize(michi, pipes);
-	if (err)
+	michi->status = tokenize(michi, pipes);
+	if (michi->status != 0)
 		return ;
 	find_paths(michi->cmds, michi);
 	executor(michi);
@@ -79,7 +76,7 @@ static void	main_loop(t_minishell *michi)
 	while (1)
 	{
 		michi->input = readline("/^•⩊•^\\ michishell_$ ");
-		set_sigstatus(1);
+		set_sigstatus(2);
 		if (!michi->input)
 		{
 			prep_for_next_cmd(michi);

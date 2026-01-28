@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_paths.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/16 14:17:59 by gregueir          #+#    #+#             */
-/*   Updated: 2026/01/27 16:39:48 by ramarti2         ###   ########.fr       */
+/*   Updated: 2026/01/28 17:23:41 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,14 @@ char	**get_env_paths(t_minishell *michi)
 	char	**paths;
 	char	*tmp;
 	int		i;
+	t_envar	*pathvar;
 
-	paths = ft_split(find_envar("PATH", michi->envars)->value, ':');
-	if (!paths)
-	{
-		free_str_arr(paths);
+	pathvar = find_envar("PATH", michi->envars);
+	if (!pathvar)
 		return (NULL);
-	}
+	paths = ft_split(pathvar->value, ':');
+	if (!paths)
+		return (NULL);
 	i = 0;
 	while (paths[i])
 	{
@@ -74,9 +75,11 @@ void	find_paths(t_cmd *ptr, t_minishell *michi)
 	char	**paths;
 
 	paths = get_env_paths(michi);
+	if (!paths)
+		return ;
 	while (ptr)
 	{
-		if (access(ptr->cmd[0], X_OK) == 0)
+		if (ptr->cmd[0] && access(ptr->cmd[0], X_OK) == 0)
 			ptr->path = ft_strdup(ptr->cmd[0]);
 		else
 			search_paths(ptr, paths);

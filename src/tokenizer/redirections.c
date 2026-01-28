@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 11:48:48 by ramarti2          #+#    #+#             */
-/*   Updated: 2026/01/27 18:37:00 by ramarti2         ###   ########.fr       */
+/*   Updated: 2026/01/28 12:28:27 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	skip_quotes(char *line)
 	return (dquote_checker(line) + 1);
 }
 
-void	redirect_fds(t_cmd *ptr, char *line, t_minishell *michi)
+int	redirect_fds(t_cmd *ptr, char *line, t_minishell *michi)
 {
 	int	increment;
 	int	i;
@@ -96,7 +96,11 @@ void	redirect_fds(t_cmd *ptr, char *line, t_minishell *michi)
 		else
 			increment = 1;
 		if (increment == -1)
-			michi_exit(michi, false, "Error: fd redirection");
+		{
+			write(2, "Error: Could not open file\n", 28);
+			return (1);
+		}
 		i += increment;
 	}
+	return (0);
 }

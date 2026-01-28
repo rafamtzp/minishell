@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/23 13:16:28 by ramarti2          #+#    #+#             */
-/*   Updated: 2026/01/27 16:30:06 by ramarti2         ###   ########.fr       */
+/*   Updated: 2026/01/28 13:52:44 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ void	exec_single_cmd(t_minishell *michi)
 	if (is_builtin(ptr))
 	{
 		builtin_execve(ptr, michi);
-		michi->status = 0;
 		dup2(old_stdout, STDOUT_FILENO);
 		return ;
 	}

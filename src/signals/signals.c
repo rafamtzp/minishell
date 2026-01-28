@@ -6,7 +6,7 @@
 /*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/23 17:26:07 by gregueir          #+#    #+#             */
-/*   Updated: 2026/01/27 11:56:44 by gregueir         ###   ########.fr       */
+/*   Updated: 2026/01/28 13:07:27 by gregueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	set_sigstatus(int stat)
 void	sigint_handler(int sigsent)
 {
 	(void)sigsent;
-	if (g_sigstatus == 1)
+	if (g_sigstatus == 2)
 	{
 		ft_putendl_fd("", 1);
 		rl_on_new_line();
