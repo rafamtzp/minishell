@@ -67,12 +67,15 @@ Our minishell has the following main components:
 ### Compilation
 
 From the root of the repository in bash or zsh, type the following + ENTER:
+
 make
 
 ### Execution
 Then, run the following command to start minishell:
+
 ./minishell
 
+---
 Enjoy! :D
 
 Warning: This shell may not be suitable for non-cat lovers :(
