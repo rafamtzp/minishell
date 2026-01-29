@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:38:57 by gregueir          #+#    #+#             */
-/*   Updated: 2026/01/28 15:40:59 by gregueir         ###   ########.fr       */
+/*   Updated: 2026/01/29 15:58:34 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,11 @@ int	main(int argc, char **argv, char **env)
 	if (argc != 1 || argv[1])
 	{
 		write(2, "Too many arguments\n", 20);
+		return (1);
+	}
+	if (!env || !env[0])
+	{
+		write(2, "Feed me env pls /ᐠ｡‸｡ᐟ\\\n", 35);
 		return (1);
 	}
 	michi = init_michishell(env);
