@@ -6,7 +6,7 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/16 14:41:25 by gregueir          #+#    #+#             */
-/*   Updated: 2026/01/29 14:24:41 by ramarti2         ###   ########.fr       */
+/*   Updated: 2026/01/29 17:37:09 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static int	chdir_wrapper(t_minishell *michi, char **cmd, char *prev_pwd)
 	}
 	return (0);
 }
-
+// TODO: fix cd
 int	cd(char **cmd, t_minishell *michi)
 {
 	t_envar	*oldpwd;
@@ -70,9 +70,9 @@ int	cd(char **cmd, t_minishell *michi)
 	oldpwd = find_envar("OLDPWD", michi->envars);
 	pwd = find_envar("PWD", michi->envars);
 	if (!oldpwd || !pwd)
-		return (1);
-	prev_oldpwd = oldpwd->value;
-	prev_pwd = pwd->value;
+		create_pwds(&oldpwd, &pwd, michi);
+	prev_oldpwd = oldpwd->value; // could be empty str
+	prev_pwd = pwd->value; // will get it w/ getcwd
 	if (cd_calloc_new_values(oldpwd, pwd, prev_oldpwd, prev_pwd) == 1)
 		return (1);
 	if (chdir_wrapper(michi, cmd, prev_pwd) == 1)

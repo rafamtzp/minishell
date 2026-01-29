@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 13:18:48 by ramarti2          #+#    #+#             */
-/*   Updated: 2026/01/28 17:55:50 by gregueir         ###   ########.fr       */
+/*   Updated: 2026/01/29 17:06:16 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,18 +38,11 @@ void	echo(char **cmd)
 
 void	pwd(t_minishell *michi)
 {
-	t_envar	*pwd;
 	char	buf[PATH_MAX];
 
-	pwd = find_envar("PWD", michi->envars);
-	if (!getcwd(buf, PATH_MAX) && !pwd)
-		michi_exit(michi, false, "Info on working directory not found");
-	if (pwd && pwd->value)
-		free(pwd->value);
-	pwd->value = ft_strdup(buf);
-	if (!pwd->value)
-		michi_exit(michi, false, "malloc: pwd");
-	printf("%s\n", pwd->value);
+	if (!getcwd(buf, PATH_MAX))
+		michi_exit(michi, false, "Info on cwd not found\n");
+	printf("%s\n", buf);
 }
 
 void	env(t_envar *envars)
