@@ -18,6 +18,7 @@ SRC 	= src/builtins/builtins.c		src/executor/executor.c\
 		  src/tokenizer/expand_utils.c	src/executor/heredoc.c\
 		  src/paths/find_paths.c		src/builtins/cd.c\
 		  src/signals/signals.c			src/lists/env_list_finders.c\
+		  src/builtins/michi_exit.c		src/michi_init.c\
 
 OBJ 	= $(SRC:src/%.c=obj/%.o)
 OBJ_DBG	= $(SRC:src/%.c=dbg_obj/%.o)

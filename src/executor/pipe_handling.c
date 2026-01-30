@@ -6,7 +6,7 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/23 13:16:36 by ramarti2          #+#    #+#             */
-/*   Updated: 2026/01/27 16:10:13 by ramarti2         ###   ########.fr       */
+/*   Updated: 2026/01/30 16:13:38 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	**setup_pipes(t_cmd **cmds, t_minishell *michi)
 	int		**pfds;
 	int		i;
 
-	if (cmd_list_size(*cmds) == 1)
+	if (!cmds || cmd_list_size(*cmds) == 1)
 		return (NULL);
 	pfds = NULL;
 	pfds = create_pipes(michi, *cmds, pfds);

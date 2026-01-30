@@ -6,7 +6,7 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 16:07:30 by gregueir          #+#    #+#             */
-/*   Updated: 2026/01/29 15:44:48 by ramarti2         ###   ########.fr       */
+/*   Updated: 2026/01/30 16:22:23 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ void	print_cat(void)
 		i++;
 	cat[i] = catno + '0';
 	fd = open(cat, O_RDONLY);
+	if (fd == -1)
+		return (free(cat));
 	line = get_next_line(fd);
 	while (line)
 	{

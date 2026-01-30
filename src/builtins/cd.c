@@ -6,84 +6,76 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/16 14:41:25 by gregueir          #+#    #+#             */
-/*   Updated: 2026/01/29 17:37:09 by ramarti2         ###   ########.fr       */
+/*   Updated: 2026/01/30 16:26:31 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static int	cd_calloc_new_values(t_envar *oldpwd, t_envar *pwd,
-		char *prev_oldpwd, char *prev_pwd)
+static t_envar	*create_pwd(t_minishell *michi, char *pwd_type)
 {
-	oldpwd->value = ft_calloc(1, PATH_MAX);
-	if (!oldpwd->value)
+	t_envar	*pwdvar;
+
+	pwdvar = find_envar(pwd_type, michi->envars);
+	if (!pwdvar)
 	{
-		oldpwd->value = prev_oldpwd;
-		return (1);
+		if (add_envar(michi, pwd_type) != 0)
+			michi_exit(michi, false, "cd: add_envar");
+		pwdvar = find_envar(pwd_type, michi->envars);
 	}
-	pwd->value = ft_calloc(1, PATH_MAX);
-	if (!pwd->value)
-	{
-		free(oldpwd->value);
-		pwd->value = prev_pwd;
-		return (1);
-	}
-	return (0);
+	return (pwdvar);
 }
 
-static int	chdir_wrapper(t_minishell *michi, char **cmd, char *prev_pwd)
+static char	*create_and_update_pwds(char **cmd, t_minishell *michi,
+		char *prev_pwd)
 {
-	t_envar	*pwd;
-	t_envar	*oldpwd;
+	t_envar	*pwdvar;
+	t_envar	*oldpwdvar;
 	char	*appendage;
 
-	oldpwd = find_envar("OLDPWD", michi->envars);
-	pwd = find_envar("PWD", michi->envars);
-	if (!getcwd(oldpwd->value, PATH_MAX))
-		ft_strlcpy(oldpwd->value, prev_pwd, ft_strlen(prev_pwd) + 1);
-	if (cmd[1] && chdir(cmd[1]) != 0)
+	pwdvar = create_pwd(michi, "PWD");
+	oldpwdvar = create_pwd(michi, "OLDPWD");
+	if (oldpwdvar->value)
+		free(oldpwdvar->value);
+	oldpwdvar->value = prev_pwd;
+	if (pwdvar->value)
+		free(pwdvar->value);
+	pwdvar->value = getcwd(NULL, 0);
+	if (!pwdvar->value)
 	{
-		michi->status = write(2, "couldn't chdir\n", 16);
-		return (1);
-	}
-	else if (!cmd[1])
-		return (chdir("/home"));
-	if (!getcwd(pwd->value, PATH_MAX))
-	{
-		michi->status = write(2, "Error: couldn't getcwd\n", 24);
+		write(2, "cd: current working directory not found\n", 41);
 		appendage = ft_strjoin("/", cmd[1]);
-		if (pwd->value)
-			free(pwd->value);
-		pwd->value = ft_strjoin(prev_pwd, appendage);
+		if (!appendage)
+			michi_exit(michi, false, "cd2: strjoin: malloc");
+		pwdvar->value = ft_strjoin(prev_pwd, appendage);
 		free(appendage);
+		if (!pwdvar->value)
+			michi_exit(michi, false, "cd2: strjoin: malloc");
 	}
-	return (0);
+	return (pwdvar->value);
 }
-// TODO: fix cd
+
 int	cd(char **cmd, t_minishell *michi)
 {
-	t_envar	*oldpwd;
-	char	*prev_oldpwd;
 	char	*prev_pwd;
-	t_envar	*pwd;
+	char	*pwd;
 
-	oldpwd = find_envar("OLDPWD", michi->envars);
-	pwd = find_envar("PWD", michi->envars);
-	if (!oldpwd || !pwd)
-		create_pwds(&oldpwd, &pwd, michi);
-	prev_oldpwd = oldpwd->value; // could be empty str
-	prev_pwd = pwd->value; // will get it w/ getcwd
-	if (cd_calloc_new_values(oldpwd, pwd, prev_oldpwd, prev_pwd) == 1)
-		return (1);
-	if (chdir_wrapper(michi, cmd, prev_pwd) == 1)
+	prev_pwd = ft_strdup(michi->pwd);
+	if (!prev_pwd)
+		michi_exit(michi, false, "cd: malloc");
+	if (!cmd[1] || max_strncmp(cmd[1], "~") == 0)
 	{
-		free(pwd->value);
-		free(oldpwd->value);
-		pwd->value = prev_pwd;
-		oldpwd->value = prev_oldpwd;
-		return (1);
+		chdir("/home");
+		create_and_update_pwds(cmd, michi, prev_pwd);
+		return (0);
 	}
-	free(prev_pwd);
-	free(prev_oldpwd);
+	if (chdir(cmd[1]) != 0)
+		return (write(2, "cd: no such file or directory\n", 31));
+	pwd = create_and_update_pwds(cmd, michi, prev_pwd);
+	if (michi->pwd)
+		free(michi->pwd);
+	michi->pwd = ft_strdup(pwd);
+	if (!michi->pwd)
+		michi_exit(michi, false, "cd: ft_strdup");
 	return (0);
 }

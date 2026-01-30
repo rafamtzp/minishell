@@ -6,59 +6,11 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:38:57 by gregueir          #+#    #+#             */
-/*   Updated: 2026/01/29 15:58:34 by ramarti2         ###   ########.fr       */
+/*   Updated: 2026/01/30 16:21:04 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static void	increment_shlvl(t_minishell *michi)
-{
-	t_envar	*shlvl;
-	char	*str_value;
-	int		value;
-
-	shlvl = find_envar("SHLVL", michi->envars);
-	if (shlvl->value)
-	{
-		value = ft_atoi(shlvl->value);
-		value++;
-		free(shlvl->value);
-		str_value = ft_itoa(value);
-		if (!str_value)
-		{
-			printf("itoa error: increment_shlvl\n");
-			clean_env_list(michi);
-			free(michi);
-			exit(1);
-		}
-		shlvl->value = ft_strdup(str_value);
-		free(str_value);
-	}
-}
-
-static t_minishell	*init_michishell(char **env)
-{
-	t_minishell	*michi;
-
-	print_cat();
-	michi = malloc(sizeof(t_minishell));
-	if (!michi)
-		exit(1);
-	michi->envars = NULL;
-	michi->cmds = NULL;
-	michi->pfds = NULL;
-	michi->pids = NULL;
-	michi->input = NULL;
-	michi->status = 0;
-	if (init_envars(michi, env, false))
-	{
-		free(michi);
-		exit(1);
-	}
-	increment_shlvl(michi);
-	return (michi);
-}
 
 static void	setup_and_execute(t_minishell *michi, int pipes)
 {
