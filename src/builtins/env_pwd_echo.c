@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtins.c                                         :+:      :+:    :+:   */
+/*   env_pwd_echo.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 13:18:48 by ramarti2          #+#    #+#             */
-/*   Updated: 2026/01/30 16:25:11 by ramarti2         ###   ########.fr       */
+/*   Updated: 2026/02/02 16:52:37 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	echo(char **cmd)
 		printf("");
 	else if (max_strncmp(cmd[1], "-n") == 0)
 	{
-		while (max_strncmp(cmd[i], "-n") == 0)
+		while (cmd[i] && max_strncmp(cmd[i], "-n") == 0)
 			i++;
 		while (cmd[i])
 			printf("%s ", cmd[i++]);

@@ -75,6 +75,18 @@ Then, run the following command to start minishell:
 
 ./minishell
 
+## Resources
+- The use of AI was very limited.  Mostly for learning about how shells and project functions work.
+  Used very occasionally for help with bug fixing.
+
+- Helpful overview article: https://www.gibbontech.com/ecole42/minishell/index.html
+
+- Another helpful overview by hgamiz-: https://www.notion.so/Minishell-Project-Research-Resources-42-School-23673fe6c2188095beeee6f8e06af9a6?source=copy_link
+
+- Helpful tutorial for pipe() syscall (in spanish): https://youtu.be/l-UhKLdh4aY?si=cA8GoupGACbNKRVu
+
+- Getting help from our peers in person was our most important resource :)
+
 ---
 Enjoy! :D
 

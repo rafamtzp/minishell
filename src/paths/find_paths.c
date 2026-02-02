@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_paths.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gregueir <gregueir@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/16 14:17:59 by gregueir          #+#    #+#             */
-/*   Updated: 2026/01/28 17:23:41 by gregueir         ###   ########.fr       */
+/*   Updated: 2026/02/02 17:01:31 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,15 +75,15 @@ void	find_paths(t_cmd *ptr, t_minishell *michi)
 	char	**paths;
 
 	paths = get_env_paths(michi);
-	if (!paths)
-		return ;
 	while (ptr)
 	{
 		if (ptr->cmd[0] && access(ptr->cmd[0], X_OK) == 0)
 			ptr->path = ft_strdup(ptr->cmd[0]);
-		else
+		else if (paths)
 			search_paths(ptr, paths);
+		printf("%s\n", ptr->path);
 		ptr = ptr->next;
 	}
-	free_str_arr(paths);
+	if (paths)
+		free_str_arr(paths);
 }
