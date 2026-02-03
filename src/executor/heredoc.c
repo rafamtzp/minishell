@@ -6,22 +6,25 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/23 13:15:10 by ramarti2          #+#    #+#             */
-/*   Updated: 2026/01/27 13:03:25 by ramarti2         ###   ########.fr       */
+/*   Updated: 2026/02/03 20:13:06 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static char	*get_next_exp_line(int fd, t_minishell *michi)
+static char	*get_next_exp_line(t_minishell *michi)
 {
 	char	*line;
 	char	*exp_line;
+	char	*line_nl;
 
-	line = get_next_line(fd);
+	line = readline("🐾 ");
 	if (!line)
 		return (NULL);
-	exp_line = expander(line, michi);
+	line_nl = ft_strjoin(line, "\n");
 	free(line);
+	exp_line = expander(line_nl, michi);
+	free(line_nl);
 	if (!exp_line)
 	{
 		write(2, "Error: Heredoc expansion\n", 26);
@@ -36,8 +39,7 @@ void	fill_heredoc(int write_end, t_cmd *ptr, t_minishell *michi)
 
 	while (1)
 	{
-		write(1, "🐾 ", 6);
-		exp_line = get_next_exp_line(STDIN_FILENO, michi);
+		exp_line = get_next_exp_line(michi);
 		if (!exp_line)
 			return ;
 		if (max_strncmp(exp_line, ptr->delim) == 0)
@@ -50,6 +52,16 @@ void	fill_heredoc(int write_end, t_cmd *ptr, t_minishell *michi)
 	}
 }
 
+static void	free_unused(t_minishell *michi)
+{
+	if (michi->pwd)
+		free(michi->pwd);
+	if (michi->input)
+		free(michi->input);
+	michi->pwd = NULL;
+	michi->input = NULL;
+}
+
 void	get_heredoc(t_cmd *ptr, t_minishell *michi)
 {
 	int	hfd[2];
@@ -59,13 +71,16 @@ void	get_heredoc(t_cmd *ptr, t_minishell *michi)
 	pid = fork();
 	if (pid == 0)
 	{
+		free_unused(michi);
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_IGN);
 		close(hfd[READ_END]);
 		fill_heredoc(hfd[WRITE_END], ptr, michi);
 		close(hfd[WRITE_END]);
 		close_pipe_ends(-1, michi->pfds, cmd_list_size(michi->cmds));
 		michi_exit(michi, false, NULL);
 	}
-	waitpid(pid, &michi->status, 0);
+	wait_and_update(pid, michi);
 	close(hfd[WRITE_END]);
 	ptr->infile = hfd[READ_END];
 }
@@ -79,9 +94,8 @@ void	write_heredocs(t_minishell *michi)
 	{
 		if (ptr->delim)
 		{
-			if (ptr->infile != STDIN_FILENO)
-				close(ptr->infile);
-			get_heredoc(ptr, michi);
+			if (michi->status != 130)
+				get_heredoc(ptr, michi);
 		}
 		ptr = ptr->next;
 	}

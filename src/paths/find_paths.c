@@ -6,7 +6,7 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/16 14:17:59 by gregueir          #+#    #+#             */
-/*   Updated: 2026/02/02 17:01:31 by ramarti2         ###   ########.fr       */
+/*   Updated: 2026/02/03 11:55:33 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,8 @@ void	find_paths(t_cmd *ptr, t_minishell *michi)
 	{
 		if (ptr->cmd[0] && access(ptr->cmd[0], X_OK) == 0)
 			ptr->path = ft_strdup(ptr->cmd[0]);
-		else if (paths)
+		else if (paths && ptr->cmd[0] && !ft_strchr(ptr->cmd[0], '/'))
 			search_paths(ptr, paths);
-		printf("%s\n", ptr->path);
 		ptr = ptr->next;
 	}
 	if (paths)

@@ -6,7 +6,7 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/23 13:16:22 by ramarti2          #+#    #+#             */
-/*   Updated: 2026/01/27 13:18:45 by ramarti2         ###   ########.fr       */
+/*   Updated: 2026/02/03 17:23:25 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,15 @@ char	**env_list_to_arr(t_envar *env)
 	return (env_arr);
 }
 
+void	wait_and_update(pid_t pid, t_minishell *michi)
+{
+	waitpid(pid, &michi->status, 0);
+	if (WIFEXITED(michi->status))
+		michi->status = WEXITSTATUS(michi->status);
+	else if (WIFSIGNALED(michi->status))
+		michi->status = WTERMSIG(michi->status) + 128;
+}
+
 void	builtin_execve(t_cmd *ptr, t_minishell *michi)
 {
 	if (ptr->infile != STDIN_FILENO)
@@ -64,26 +73,40 @@ void	builtin_execve(t_cmd *ptr, t_minishell *michi)
 		michi_exit(michi, false, NULL);
 }
 
-void	start_children(t_minishell *michi)
+void	prep_for_next_cmd(t_minishell *michi)
 {
-	t_cmd	*ptr;
-	int		i;
-
-	write_heredocs(michi);
-	ptr = michi->cmds;
-	i = 0;
-	while (ptr)
+	if (michi->pids)
 	{
-		michi->pids[i] = fork();
-		if (michi->pids[i] == 0)
-		{
-			signal(SIGQUIT, SIG_DFL);
-			dup2(ptr->outfile, STDOUT_FILENO);
-			dup2(ptr->infile, STDIN_FILENO);
-			close_pipe_ends(i, michi->pfds, cmd_list_size(michi->cmds));
-			exec(ptr, michi);
-		}
-		i++;
-		ptr = ptr->next;
+		free(michi->pids);
+		michi->pids = NULL;
 	}
+	if (michi->pfds)
+	{
+		free_pipe_arr(michi->pfds);
+		michi->pfds = NULL;
+	}
+	free_cmds(&michi->cmds);
+	michi->cmds = NULL;
+	free(michi->input);
+	michi->input = NULL;
+}
+
+void	execve_wrapper(t_cmd *ptr, t_minishell *michi)
+{
+	char	**env;
+
+	if (is_builtin(ptr) == true)
+	{
+		builtin_execve(ptr, michi);
+		michi_exit(michi, false, NULL);
+	}
+	env = env_list_to_arr(michi->envars);
+	if (!env)
+		michi_exit(michi, false, "exec_rest error: env");
+	if (ptr->path)
+		execve(ptr->path, ptr->cmd, env);
+	if (ptr->cmd[0])
+		write(2, "Error: command not found\n", 26);
+	michi->status = 1;
+	michi_exit(michi, false, NULL);
 }

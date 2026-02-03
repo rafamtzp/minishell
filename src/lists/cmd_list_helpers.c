@@ -6,7 +6,7 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 11:43:31 by rafamtz           #+#    #+#             */
-/*   Updated: 2026/01/27 16:03:27 by ramarti2         ###   ########.fr       */
+/*   Updated: 2026/02/03 18:13:55 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,10 @@ static void	free_cmd_content(t_cmd *current)
 	if (current->path)
 		free(current->path);
 	while (current->cmd && current->cmd[i])
-		free(current->cmd[i++]);
+	{
+		free(current->cmd[i]);
+		i++;
+	}
 	if (current->cmd)
 		free(current->cmd);
 	if (current->infile != STDIN_FILENO && fstat(current->infile, &buf) == 0)

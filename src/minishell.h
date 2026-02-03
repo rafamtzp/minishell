@@ -6,7 +6,7 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:39:22 by gregueir          #+#    #+#             */
-/*   Updated: 2026/01/30 16:23:52 by ramarti2         ###   ########.fr       */
+/*   Updated: 2026/02/03 15:12:02 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,14 +158,16 @@ void				write_heredocs(t_minishell *michi);
 void				get_heredoc(t_cmd *ptr, t_minishell *michi);
 
 // executor
-char				**env_list_to_arr(t_envar *env);
-void				exec(t_cmd *ptr, t_minishell *michi);
 void				executor(t_minishell *michi);
+void				start_multiple_cmds(t_minishell *michi);
+void				start_single_cmd(t_minishell *michi);
 
 // executor helpers
-void				start_children(t_minishell *michi);
 void				prep_for_next_cmd(t_minishell *michi);
 void				builtin_execve(t_cmd *ptr, t_minishell *michi);
+void				execve_wrapper(t_cmd *ptr, t_minishell *michi);
+void				wait_and_update(pid_t pid, t_minishell *michi);
+char				**env_list_to_arr(t_envar *env);
 
 // pipe handling
 int					**setup_pipes(t_cmd **cmds, t_minishell *michi);

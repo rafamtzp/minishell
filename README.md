@@ -60,7 +60,7 @@ Our minishell has the following main components:
 
 ### Requirements
 
-- GCC or Clang  
+- GCC or Clang
 - Make  
 - Unix-like system (Linux or macOS)
 
