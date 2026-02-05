@@ -6,7 +6,7 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 13:19:33 by ramarti2          #+#    #+#             */
-/*   Updated: 2026/01/27 13:04:36 by ramarti2         ###   ########.fr       */
+/*   Updated: 2026/02/05 14:55:27 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,4 +69,20 @@ void	set_ascii_indices(t_envar **s)
 		ptr = ptr->next;
 	}
 	return ;
+}
+
+bool	is_valid_varname(char *varname)
+{
+	int	i;
+
+	if (!ft_isalpha(varname[0]))
+		return (false);
+	i = 0;
+	while (varname[i])
+	{
+		if (is_nonalpha(varname[i]))
+			return (false);
+		i++;
+	}
+	return (true);
 }

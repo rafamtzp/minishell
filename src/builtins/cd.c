@@ -6,7 +6,7 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/16 14:41:25 by gregueir          #+#    #+#             */
-/*   Updated: 2026/01/30 16:26:31 by ramarti2         ###   ########.fr       */
+/*   Updated: 2026/02/05 16:27:29 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,8 @@ int	cd(char **cmd, t_minishell *michi)
 		return (0);
 	}
 	if (chdir(cmd[1]) != 0)
-		return (write(2, "cd: no such file or directory\n", 31));
+		return (free(prev_pwd), write(2, "cd: no such file or directory\n",
+				31));
 	pwd = create_and_update_pwds(cmd, michi, prev_pwd);
 	if (michi->pwd)
 		free(michi->pwd);

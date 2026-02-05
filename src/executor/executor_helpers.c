@@ -6,7 +6,7 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/23 13:16:22 by ramarti2          #+#    #+#             */
-/*   Updated: 2026/02/03 17:23:25 by ramarti2         ###   ########.fr       */
+/*   Updated: 2026/02/05 16:15:06 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,8 @@ void	execve_wrapper(t_cmd *ptr, t_minishell *michi)
 	if (ptr->path)
 		execve(ptr->path, ptr->cmd, env);
 	if (ptr->cmd[0])
-		write(2, "Error: command not found\n", 26);
+		write(2, "Error: unable to execute\n", 26);
+	free_str_arr(env);
 	michi->status = 1;
 	michi_exit(michi, false, NULL);
 }

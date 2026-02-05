@@ -6,7 +6,7 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 11:38:59 by gregueir          #+#    #+#             */
-/*   Updated: 2026/01/26 16:39:40 by ramarti2         ###   ########.fr       */
+/*   Updated: 2026/02/05 13:55:29 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,9 @@ int	skip_var(char *word)
 {
 	int	i;
 
-	i = 0;
+	i = 1;
 	while (!is_breakpoint(word[i]) && !is_separator(word[i])
-		&& !is_quotes(word[i]))
+		&& !is_quotes(word[i]) && !is_nonalpha(word[i]))
 		i++;
 	return (i);
 }

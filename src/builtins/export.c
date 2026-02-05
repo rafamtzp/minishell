@@ -6,7 +6,7 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 13:17:07 by ramarti2          #+#    #+#             */
-/*   Updated: 2026/01/27 16:59:06 by ramarti2         ###   ########.fr       */
+/*   Updated: 2026/02/05 14:52:55 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,10 @@ int	mod_envar(t_minishell *michi, char *arg)
 	char	*varname;
 
 	varname = getvarname(arg);
+	if (!varname)
+		return (1);
+	if (!is_valid_varname(varname))
+		return (free(varname), write(2, "Export: invalid variable name\n", 31));
 	var = find_envar(varname, michi->envars);
 	if (var->value)
 		free(var->value);
@@ -74,7 +78,14 @@ int	mod_envar(t_minishell *michi, char *arg)
 int	add_envar(t_minishell *michi, char *arg)
 {
 	t_envar	*new;
+	char	*varname;
 
+	varname = getvarname(arg);
+	if (!varname)
+		return (1);
+	if (!is_valid_varname(varname))
+		return (free(varname), write(2, "Export: invalid variable name\n", 31));
+	free(varname);
 	new = env_list_new(arg);
 	if (!new)
 		return (write(2, "malloc err: export\n", 20));

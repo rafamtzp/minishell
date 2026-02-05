@@ -6,7 +6,7 @@
 /*   By: ramarti2 <ramarti2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:39:22 by gregueir          #+#    #+#             */
-/*   Updated: 2026/02/03 15:12:02 by ramarti2         ###   ########.fr       */
+/*   Updated: 2026/02/05 14:31:01 by ramarti2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ int					export(t_minishell *michi, char **cmd);
 void				write_envars(t_envar *envar, bool order_alpha);
 
 // builtins: export helpers
+bool				is_valid_varname(char *varname);
 void				set_ascii_indices(t_envar **s);
 int					max_strncmp(char *s1, char *s2);
 
