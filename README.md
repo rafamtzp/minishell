@@ -94,3 +94,5 @@ Particular examples that come to mind:
 Enjoy! :D
 
 Warning: This shell may not be suitable for non-cat lovers :(
+
+Upcoming update: properly closing file descriptors
