@@ -76,8 +76,11 @@ Then, run the following command to start minishell:
 ./minishell
 
 ## Resources
-- The use of AI was very limited.  Mostly for learning about how shells and project functions work.
-  Used very occasionally for help with bug fixing.
+- AI was used in this project as a helpful tutor to explain how some of the allowed functions for this
+project worked and how shells are supposed to work.  Particularly in cases of debugging.
+Particular examples that come to mind:
+1. Explaining how to use waitpid correctly so that the exit status would be updated to its actual value;
+2. Explaining where in the program's flow the heredocs should be written;
 
 - Helpful overview article: https://www.gibbontech.com/ecole42/minishell/index.html
 
