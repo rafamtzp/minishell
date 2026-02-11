@@ -76,12 +76,6 @@ Then, run the following command to start minishell:
 ./minishell
 
 ## Resources
-- AI was used in this project as a helpful tutor to explain how some of the allowed functions for this
-project worked and how shells are supposed to work.  Particularly in cases of debugging.
-Particular examples that come to mind:
-1. Explaining how to use waitpid correctly so that the exit status would be updated to its actual value;
-2. Explaining where in the program's flow the heredocs should be written;
-
 - Helpful overview article: https://www.gibbontech.com/ecole42/minishell/index.html
 
 - Another helpful overview by hgamiz-: https://www.notion.so/Minishell-Project-Research-Resources-42-School-23673fe6c2188095beeee6f8e06af9a6?source=copy_link
@@ -93,6 +87,4 @@ Particular examples that come to mind:
 ---
 Enjoy! :D
 
-Warning: This shell may not be suitable for non-cat lovers :(
-
-Upcoming update: properly closing file descriptors
+Warning: This shell may not be suitable for non-cat lovers ₍^.‸.^₎⟆
