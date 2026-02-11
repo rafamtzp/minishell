@@ -1,6 +1,6 @@
 *This project has been created as part of the 42 curriculum by ramarti2 and gregueir.*
 
-# Minishell (AKA "Michishell" /^•⩊•^\)
+# Minishell (AKA "Michishell" /^•⩊•^\\)
 
 ## Description
 
