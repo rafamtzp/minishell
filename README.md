@@ -1,6 +1,6 @@
 *This project has been created as part of the 42 curriculum by ramarti2 and gregueir.*
 
-# Minishell
+# Minishell (AKA "Michishell" /^•⩊•^\)
 
 ## Description
 
@@ -75,10 +75,10 @@ Then, run the following command to start minishell:
 
 ./minishell
 
-## Resources
+## Some Resources
 - Helpful overview article: https://www.gibbontech.com/ecole42/minishell/index.html
 
-- Another helpful overview by hgamiz-: https://www.notion.so/Minishell-Project-Research-Resources-42-School-23673fe6c2188095beeee6f8e06af9a6?source=copy_link
+- Another helpful resource compilation by hgamiz-: https://www.notion.so/Minishell-Project-Research-Resources-42-School-23673fe6c2188095beeee6f8e06af9a6?source=copy_link
 
 - Helpful tutorial for pipe() syscall (in spanish): https://youtu.be/l-UhKLdh4aY?si=cA8GoupGACbNKRVu
 
